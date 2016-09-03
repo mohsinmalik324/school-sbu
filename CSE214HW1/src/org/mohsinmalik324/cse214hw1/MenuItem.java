@@ -73,10 +73,11 @@ public class MenuItem {
 	 *    <code>price</code> was not greater than 0.
 	 */
 	public void setPrice(double price) {
-		if(price <= 0) {
-			throw new IllegalArgumentException();
+		if(price > 0) {
+			this.price = price;
+		} else {
+			throw new IllegalArgumentException("Price must be greater than 0.");
 		}
-		this.price = price;
 	}
 	
 	/**

@@ -21,6 +21,12 @@ public class Menu {
 	 */
 	public Menu() {
 		menuItems = new MenuItem[MAX_ITEMS];
+		// Null all elements in the array.
+		// Note: Null in the array represents the end of the Menu.
+		// TODO: Check if I need to do this in the first place.
+		for(int i = 0; i < MAX_ITEMS; i++) {
+			menuItems[i] = null;
+		}
 	}
 	
 	/**
@@ -41,7 +47,9 @@ public class Menu {
 				  currentMenuItem.getPrice());
 				clonedMenu.menuItems[x] = menuItem;
 			} else {
+				// Set this index as null to represent the end of the Menu.
 				clonedMenu.menuItems[x] = null;
+				break;
 			}
 		}
 		return clonedMenu;
@@ -62,24 +70,29 @@ public class Menu {
 			// The Menu we are comparing to this Menu.
 			Menu compareMenu = (Menu) obj;
 			// Loop through all MenuItems in both Menus and compare MenuItems.
-			for(int x = 0; x < MAX_ITEMS; x++) {
-				MenuItem compareMenuItem = compareMenu.menuItems[x];
-				MenuItem thisMenuItem = this.menuItems[x];
-				// Check each MenuItem to see if it is null. If both are null
-				// they are equal. If one is not null, the equals method is
-				// ran from the not null MenuItem to compare.
-				if(compareMenuItem != null) {
+			for(int i = 0; i < MAX_ITEMS; i++) {
+				MenuItem compareMenuItem = compareMenu.menuItems[i];
+				MenuItem thisMenuItem = this.menuItems[i];
+				// Check each MenuItem to see if it is null. Since null
+				// represents the end of the Menu, there is nothing
+				// after this point to compare.
+				if(compareMenuItem == null && thisMenuItem == null) {
+					isEqual = true;
+					break;
+				}
+				// If both MenuItems are not null, we compare them with the
+				// equals method. Otherwise, the loop is broken and as both
+				// Menus don't end at the same index.
+				if(compareMenuItem != null && thisMenuItem != null) {
+					// If the MenuItems are not equal, break the loop.
 					if(!compareMenuItem.equals(thisMenuItem)) {
 						break;
 					}
-				}
-				if(thisMenuItem != null) {
-					if(!thisMenuItem.equals(compareMenuItem)) {
-						break;
-					}
+				} else {
+					break;
 				}
 				// Check if this iteration is the last iteration.
-				if(x == MAX_ITEMS - 1) {
+				if(i == MAX_ITEMS - 1) {
 					// If this block is ran, all MenuItems which have been
 					// compared have been found to be equal.
 					isEqual = true;
@@ -88,5 +101,19 @@ public class Menu {
 		}
 		return isEqual;
 	}
+	
+	public int size() {
+		int size = 0;
+		for(MenuItem currentMenuItem : menuItems) {
+			if(currentMenuItem != null) {
+				size++;
+			} else {
+				break;
+			}
+		}
+		return size;
+	}
+	
+	
 	
 }
