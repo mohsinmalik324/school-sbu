@@ -102,6 +102,15 @@ public class Menu {
 		return isEqual;
 	}
 	
+	/**
+	 * Returns the number of MenuItems in the Menu.
+	 * 
+	 * @return
+	 *    The number of MenuItems in the Menu.
+	 *    
+	 * <dt>Precondition:
+	 *    <dd>This Menu object has been instantiated.
+	 */
 	public int size() {
 		int size = 0;
 		for(MenuItem currentMenuItem : menuItems) {
@@ -114,6 +123,34 @@ public class Menu {
 		return size;
 	}
 	
-	
+	/**
+	 * Adds a MenuItem to the Menu at a certain position.
+	 * 
+	 * @param menuItem
+	 *    The new MenuItem to add to this Menu.
+	 *    
+	 * @param position
+	 *    The position in the Menu where <code>menuItem</code> will be placed.
+	 *    
+	 * <dt>Precondition:
+	 *    <dd>This Menu object has been instantiated, 1 <=
+	 *    <code>position</code> <= items_currently_in_list + 1, and
+	 *    items_currently_in_list < <code>MAX_ITEMS</code>.
+	 *    
+	 * <dt>Postcondition:
+	 *    <dd>The new MenuItem is now stored at the desired position in the
+	 *    Menu. All MenuItems that were originally in positions greater than
+	 *    or equal to <code>position</code> are moved back one position.
+	 *    
+	 * @exception IllegalArgumentException
+	 *    Indicates the <code>position</code> is not within valid range.
+	 *    
+	 * @exception FullListException
+	 *    Indicates that there is no more room inside of the Menu to store the
+	 *    new MenuItem object.
+	 */
+	public void addItem(MenuItem menuItem, int position) {
+		
+	}
 	
 }
