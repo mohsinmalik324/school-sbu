@@ -148,9 +148,115 @@ public class Menu {
 	 * @exception FullListException
 	 *    Indicates that there is no more room inside of the Menu to store the
 	 *    new MenuItem object.
+	 *    
+	 * <dt>Note:
+	 *    <dd><code>position</code> refers to the position in the Menu and not
+	 *    the position inside the array.
+	 *    <dd>Inserting an item to position (items_currently_in_list + 1) is
+	 *    effectively the same as adding an item to the end of the Menu.
 	 */
 	public void addItem(MenuItem menuItem, int position) {
 		
+	}
+	
+	/**
+	 * Removes a MenuItem from the Menu at a certain position.
+	 * 
+	 * @param position
+	 *    The position in the Menu where the MenuItem will be removed from.
+	 *    
+	 * <dt>Precondition:
+	 *    <dd>This Menu object has been instantiated and
+	 *    1 <= <code>position</code> <= items_currently_in_list.
+	 *    
+	 * <dt>Postcondition:
+	 *    <dd>The MenuItem at the desired position in the Menu has been
+	 *    removed. All MenuItems that were originally in positions greater
+	 *    than or equal to <code>position</code> are moved forward one
+	 *    position.
+	 *    
+	 * @exception IllegalArgumentException
+	 *    Indicates that <code>position</code> is not within the valid range.
+	 *    
+	 * <dt>Note:
+	 *    <dd><code>position</code> refers to the position in the Menu and
+	 *    not the position inside the array.
+	 */
+	public void removeItem(int position) {
+		
+	}
+	
+	/**
+	 * Get the MenuItem at the given position in this Menu object.
+	 * 
+	 * @param position
+	 *    Position of the MenuItem to retrieve.
+	 * 
+	 * @return
+	 *    The MenuItem at the specified position in this Menu object.
+	 *    
+	 * <dt>Precondition:
+	 *    <dd>This Menu object has been instantiated and
+	 *    1 <= <code>position</code> <= items_currently_in_list.
+	 *    
+	 * @exception IllegalArgumentException
+	 *    Indicates that <code>position</code> is not within the valid range.
+	 */
+	public MenuItem getItem(int position) {
+		MenuItem menuItem = null;
+		return menuItem;
+	}
+	
+	/**
+	 * Return the MenuItem with the given name.
+	 * 
+	 * @param name
+	 *    Name of the item to retrieve.
+	 * 
+	 * @return
+	 *    The MenuItem with the specified name.
+	 *    
+	 * <dt>Precondition:
+	 *    <dd>This Menu object has been instantiated.
+	 *    
+	 * @exception IllegalArgumentException
+	 *    Indicates that the given item does not exist in this Menu.
+	 */
+	public MenuItem getItemByName(String name) {
+		MenuItem menuItem = null;
+		return menuItem;
+	}
+	
+	/**
+	 * Prints a neatly formatted table of each item in the Menu on its own
+	 * line with its position number.
+	 * 
+	 * <dt>Precondition:
+	 *    <dd>This Menu object has been instantiated.
+	 *    
+	 * <dt>Postcondition:
+	 *    <dd>A neatly formatted table of each MenuItem in the Menu on its own
+	 *    line with its position number has been displayed to the user.
+	 *    
+	 * <dt>Note:
+	 *    <dd><code>position</code> refers to the position in the Menu and not
+	 *    the position inside the array.
+	 */
+	public void printAllItems() {
+		
+	}
+	
+	/**
+	 * Gets the String representation of this Menu object, which is a neatly
+	 * formatted table of each MenuItem in the Menu on its own line with its
+	 * position number.
+	 * 
+	 * @return
+	 *    The String representation of this Menu object.
+	 */
+	public String toString() {
+		String table = "";
+		return table;
 	}
 	
 }
