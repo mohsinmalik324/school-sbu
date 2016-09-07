@@ -5,10 +5,9 @@ package org.mohsinmalik324.cse214hw1;
  * <code>MenuItem</code> object, which represents an item on a menu.
  * 
  * @author Mohsin Malik
- *    <br>email: mohsin.malik@stonybrook.edu
- *    <br>Stony Brook ID: 110880864
+ *    <dd>email: mohsin.malik@stonybrook.edu
+ *    <dd>Stony Brook ID: 110880864
  */
-
 public class MenuItem {
 	
 	private String name;
@@ -76,7 +75,7 @@ public class MenuItem {
 		if(price > 0) {
 			this.price = price;
 		} else {
-			throw new IllegalArgumentException("Price must be greater than 0.");
+			throw new IllegalArgumentException("Invalid price.");
 		}
 	}
 	

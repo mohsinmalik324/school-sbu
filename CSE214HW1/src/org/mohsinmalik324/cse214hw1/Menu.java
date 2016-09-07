@@ -1,13 +1,13 @@
 package org.mohsinmalik324.cse214hw1;
 
 /**
- * The Menu class implements an array of MenuItem objects.
+ * The <code>Menu</code> class implements an array of <code>MenuItem</code>
+ * objects.
  * 
  * @author: Mohsin Malik
- *    <br>email: mohsin.malik@stonybrook.edu
- *    <br>Stony Brook ID: 110880864
+ *    <dd>email: mohsin.malik@stonybrook.edu
+ *    <dd>Stony Brook ID: 110880864
  */
-
 public class Menu {
 	
 	private static final int MAX_ITEMS = 50; // Max MenuItems in a Menu.
@@ -113,6 +113,7 @@ public class Menu {
 	 */
 	public int size() {
 		int size = 0;
+		// Loop through all MenuItems until end of array or null.
 		for(MenuItem currentMenuItem : menuItems) {
 			if(currentMenuItem != null) {
 				size++;
@@ -155,8 +156,34 @@ public class Menu {
 	 *    <dd>Inserting an item to position (items_currently_in_list + 1) is
 	 *    effectively the same as adding an item to the end of the Menu.
 	 */
-	public void addItem(MenuItem menuItem, int position) {
-		
+	public void addItem(MenuItem menuItem, int position) throws FullListException {
+		// TODO: Check if there should be a null check.
+		int listSize = size();
+		// Check if list is full.
+		if(listSize < MAX_ITEMS) {
+			// Check precondition.
+			if(1 <= position && position <= listSize + 1) {
+				if(position == listSize + 1) {
+					menuItems[position - 1] = menuItem;
+					menuItems[position] = null;
+				} else {
+					// Stores the MenuItem from the previous loop.
+					MenuItem previousMenuItem = menuItems[position - 1];
+					// Stores the MenuItem of the current loop.
+					MenuItem currentMenuItem = null;
+					menuItems[position - 1] = menuItem;
+					for(int i = position; i <= listSize; i++) {
+						currentMenuItem = menuItems[i];
+						menuItems[i] = previousMenuItem;
+						previousMenuItem = currentMenuItem;
+					}
+				}
+			} else {
+				throw new IllegalArgumentException("Invalid position.");
+			}
+		} else {
+			throw new FullListException("List is full.");
+		}
 	}
 	
 	/**
@@ -183,7 +210,23 @@ public class Menu {
 	 *    not the position inside the array.
 	 */
 	public void removeItem(int position) {
-		
+		int listSize = size();
+		// Check precondition.
+		if(1 <= position && position <= listSize) {
+			// Check if removing last item in list.
+			if(position == listSize) {
+				menuItems[position - 1] = null;
+			} else {
+				// TODO: Finish this method.
+				MenuItem previousMenuItem = null;
+				MenuItem nextMenuItem = null;
+				for(int i = listSize - 1; i >= position - 1; i--) {
+					
+				}
+			}
+		} else {
+			throw new IllegalArgumentException("Invalid position.");
+		}
 	}
 	
 	/**
@@ -204,6 +247,13 @@ public class Menu {
 	 */
 	public MenuItem getItem(int position) {
 		MenuItem menuItem = null;
+		int listSize = size();
+		// Check precondition.
+		if(1 <= position && position <= listSize) {
+			menuItem = menuItems[position - 1];
+		} else {
+			throw new IllegalArgumentException("Invalid position.");
+		}
 		return menuItem;
 	}
 	
@@ -224,6 +274,15 @@ public class Menu {
 	 */
 	public MenuItem getItemByName(String name) {
 		MenuItem menuItem = null;
+		for(MenuItem currentMenuItem : menuItems) {
+			// TODO: Check if case-sensitive.
+			if(currentMenuItem.getName().equalsIgnoreCase(name)) {
+				menuItem = currentMenuItem;
+			}
+		}
+		if(menuItem == null) {
+			throw new IllegalArgumentException("MenuItem does not exist.");
+		}
 		return menuItem;
 	}
 	
@@ -243,7 +302,8 @@ public class Menu {
 	 *    the position inside the array.
 	 */
 	public void printAllItems() {
-		
+		System.out.printf("%-5s%-20s%-50s%8s\n\n", "#", "Name", "Description", "Price");
+		System.out.println(toString());
 	}
 	
 	/**
@@ -256,6 +316,11 @@ public class Menu {
 	 */
 	public String toString() {
 		String table = "";
+		int position = 1;
+		for(MenuItem menuItem : menuItems) {
+			System.out.printf("%-5d%-20s%-47s%8-f\n", position++, menuItem.getName(),
+			  menuItem.getDescription(), menuItem.getPrice());
+		}
 		return table;
 	}
 	
