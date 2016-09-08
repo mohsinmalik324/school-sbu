@@ -11,6 +11,7 @@ package org.mohsinmalik324.cse214hw1;
 public class Menu {
 	
 	private static final int MAX_ITEMS = 50; // Max MenuItems in a Menu.
+	private int listSize = 0; // Number of MenuItems in the Menu.
 	private MenuItem[] menuItems; // An array of the MenuItems in a Menu.
 	
 	/**
@@ -21,12 +22,7 @@ public class Menu {
 	 */
 	public Menu() {
 		menuItems = new MenuItem[MAX_ITEMS];
-		// Null all elements in the array.
-		// Note: Null in the array represents the end of the Menu.
-		// TODO: Check if I need to do this in the first place.
-		for(int i = 0; i < MAX_ITEMS; i++) {
-			menuItems[i] = null;
-		}
+		listSize = 0;
 	}
 	
 	/**
@@ -39,18 +35,17 @@ public class Menu {
 		// Create new Menu object.
 		Menu clonedMenu = new Menu();
 		// Loop through MenuItems in this Menu and copy into the new Menu.
-		for(int x = 0; x < MAX_ITEMS; x++) {
+		for(int x = 0; x < size(); x++) {
 			MenuItem currentMenuItem = menuItems[x];
-			if(currentMenuItem != null) {
-				MenuItem menuItem = new MenuItem(currentMenuItem.getName(),
-				  currentMenuItem.getDescription(),
-				  currentMenuItem.getPrice());
-				clonedMenu.menuItems[x] = menuItem;
-			} else {
-				// Set this index as null to represent the end of the Menu.
-				clonedMenu.menuItems[x] = null;
-				break;
+			MenuItem menuItem = new MenuItem(currentMenuItem.getName(),
+			  currentMenuItem.getDescription(),
+			  currentMenuItem.getPrice());
+			try {
+				clonedMenu.addItem(menuItem, x + 1);
+			} catch (FullListException e) {
+				e.printStackTrace();
 			}
+			//clonedMenu.menuItems[x] = menuItem;
 		}
 		return clonedMenu;
 	}
@@ -67,35 +62,21 @@ public class Menu {
 	public boolean equals(Object obj) {
 		boolean isEqual = false;
 		if(obj != null && obj instanceof Menu) {
-			// The Menu we are comparing to this Menu.
 			Menu compareMenu = (Menu) obj;
-			// Loop through all MenuItems in both Menus and compare MenuItems.
-			for(int i = 0; i < MAX_ITEMS; i++) {
-				MenuItem compareMenuItem = compareMenu.menuItems[i];
-				MenuItem thisMenuItem = this.menuItems[i];
-				// Check each MenuItem to see if it is null. Since null
-				// represents the end of the Menu, there is nothing
-				// after this point to compare.
-				if(compareMenuItem == null && thisMenuItem == null) {
-					isEqual = true;
-					break;
-				}
-				// If both MenuItems are not null, we compare them with the
-				// equals method. Otherwise, the loop is broken and as both
-				// Menus don't end at the same index.
-				if(compareMenuItem != null && thisMenuItem != null) {
-					// If the MenuItems are not equal, break the loop.
-					if(!compareMenuItem.equals(thisMenuItem)) {
+			int listSize = size();
+			if(compareMenu.size() == listSize) {
+				for(int i = 0; i < listSize; i++) {
+					MenuItem thisMenuItem = menuItems[i];
+					MenuItem compareMenuItem = compareMenu.menuItems[i];
+					if(!thisMenuItem.equals(compareMenuItem)) {
 						break;
 					}
-				} else {
-					break;
-				}
-				// Check if this iteration is the last iteration.
-				if(i == MAX_ITEMS - 1) {
-					// If this block is ran, all MenuItems which have been
-					// compared have been found to be equal.
-					isEqual = true;
+					// Checks if loop is on the last iteration.
+					if(i == listSize - 1) {
+						// If this block is ran, all comparisons ran returned
+						// true.
+						isEqual = true;
+					}
 				}
 			}
 		}
@@ -112,16 +93,7 @@ public class Menu {
 	 *    <dd>This Menu object has been instantiated.
 	 */
 	public int size() {
-		int size = 0;
-		// Loop through all MenuItems until end of array or null.
-		for(MenuItem currentMenuItem : menuItems) {
-			if(currentMenuItem != null) {
-				size++;
-			} else {
-				break;
-			}
-		}
-		return size;
+		return listSize;
 	}
 	
 	/**
@@ -157,7 +129,6 @@ public class Menu {
 	 *    effectively the same as adding an item to the end of the Menu.
 	 */
 	public void addItem(MenuItem menuItem, int position) throws FullListException {
-		// TODO: Check if there should be a null check.
 		int listSize = size();
 		// Check if list is full.
 		if(listSize < MAX_ITEMS) {
@@ -165,7 +136,6 @@ public class Menu {
 			if(1 <= position && position <= listSize + 1) {
 				if(position == listSize + 1) {
 					menuItems[position - 1] = menuItem;
-					menuItems[position] = null;
 				} else {
 					// Stores the MenuItem from the previous loop.
 					MenuItem previousMenuItem = menuItems[position - 1];
@@ -178,6 +148,7 @@ public class Menu {
 						previousMenuItem = currentMenuItem;
 					}
 				}
+				this.listSize++;
 			} else {
 				throw new IllegalArgumentException("Invalid position.");
 			}
@@ -214,16 +185,16 @@ public class Menu {
 		// Check precondition.
 		if(1 <= position && position <= listSize) {
 			// Check if removing last item in list.
-			if(position == listSize) {
-				menuItems[position - 1] = null;
-			} else {
-				// TODO: Finish this method.
-				MenuItem previousMenuItem = null;
+			if(position != listSize) {
+				MenuItem currentMenuItem = menuItems[listSize - 1];
 				MenuItem nextMenuItem = null;
-				for(int i = listSize - 1; i >= position - 1; i--) {
-					
+				for(int i = listSize - 1; i >= position; i--) {
+					nextMenuItem = menuItems[i - 1];
+					menuItems[i - 1] = currentMenuItem;
+					currentMenuItem = nextMenuItem;
 				}
 			}
+			listSize--;
 		} else {
 			throw new IllegalArgumentException("Invalid position.");
 		}
@@ -274,10 +245,12 @@ public class Menu {
 	 */
 	public MenuItem getItemByName(String name) {
 		MenuItem menuItem = null;
-		for(MenuItem currentMenuItem : menuItems) {
-			// TODO: Check if case-sensitive.
+		int listSize = size();
+		for(int i = 0; i < listSize; i++) {
+			MenuItem currentMenuItem = menuItems[i];
 			if(currentMenuItem.getName().equalsIgnoreCase(name)) {
 				menuItem = currentMenuItem;
+				break;
 			}
 		}
 		if(menuItem == null) {
@@ -303,7 +276,7 @@ public class Menu {
 	 */
 	public void printAllItems() {
 		System.out.printf("%-5s%-20s%-50s%8s\n\n", "#", "Name", "Description", "Price");
-		System.out.println(toString());
+		System.out.print(toString());
 	}
 	
 	/**
@@ -317,9 +290,15 @@ public class Menu {
 	public String toString() {
 		String table = "";
 		int position = 1;
-		for(MenuItem menuItem : menuItems) {
-			System.out.printf("%-5d%-20s%-47s%8-f\n", position++, menuItem.getName(),
+		int listSize = size();
+		for(int i = 0; i < listSize; i++) {
+			MenuItem menuItem = menuItems[i];
+			String row = String.format("%-5d%-20s%-50s%8.2f", position++, menuItem.getName(),
 			  menuItem.getDescription(), menuItem.getPrice());
+			if(i < listSize) {
+				row += "\n";
+			}
+			table += row;
 		}
 		return table;
 	}

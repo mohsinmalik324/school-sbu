@@ -133,4 +133,8 @@ public class MenuItem {
 		return isEqual;
 	}
 	
+	public String toString() {
+		return "";
+	}
+	
 }

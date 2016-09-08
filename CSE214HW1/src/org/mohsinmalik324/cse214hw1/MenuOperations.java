@@ -12,7 +12,10 @@ import java.util.Scanner;
  */
 public class MenuOperations {
 	
+	// TODO: Check if input is formatted correctly (ex: expecting double input, gets String input)
 	public static void main(String[] args) {
+		Menu menu = new Menu();
+		
 		boolean exit = false;
 		
 		println("Main menu:");
@@ -36,19 +39,54 @@ public class MenuOperations {
 			print("Select an operation: ");
 			String operation = scanner.nextLine();
 			if(operation.equalsIgnoreCase("a")) {
-				
+				print("Enter the name: ");
+				String name = scanner.nextLine();
+				print("Enter the description: ");
+				String desc = scanner.nextLine();
+				print("Enter the price: ");
+				double price = scanner.nextDouble();
+				print("Enter the position: ");
+				int position = scanner.nextInt();
+				MenuItem menuItem = new MenuItem(name, desc, price);
+				try {
+					menu.addItem(menuItem, position);
+					println("Added \"" + name + ": " + desc + "\" for " +
+					formatPrice(price) + " at position " + position);
+				} catch (FullListException e) {
+					e.printStackTrace();
+				}
 			} else if(operation.equalsIgnoreCase("g")) {
-				
+				print("Enter the position: ");
+				int position = scanner.nextInt();
+				try {
+					MenuItem menuItem = menu.getItem(position);
+					System.out.printf("%-5s%-20s%-50s%8s\n\n", "#", "Name",
+					  "Description", "Price");
+					System.out.printf("%-5d%-20s%-50s%8.2f\n", position,
+					  menuItem.getName(), menuItem.getDescription(), menuItem.getPrice());
+				} catch(IllegalArgumentException e) {
+					e.printStackTrace();
+				}
 			} else if(operation.equalsIgnoreCase("r")) {
 				
 			} else if(operation.equalsIgnoreCase("p")) {
-				
+				menu.printAllItems();
 			} else if(operation.equalsIgnoreCase("s")) {
-				
+				println("There are " + menu.size() + " item(s) in the menu");
 			} else if(operation.equalsIgnoreCase("d")) {
 				
 			} else if(operation.equalsIgnoreCase("c")) {
-				
+				print("Enter the name of the item: ");
+				String name = scanner.nextLine();
+				print("Enter the new price: ");
+				double price = scanner.nextDouble();
+				try {
+					MenuItem menuItem = menu.getItemByName(name);
+					menuItem.setPrice(price);
+					println("Changed the price of \"" + name + "\" to " + formatPrice(price));
+				} catch(IllegalArgumentException e) {
+					e.printStackTrace();
+				}
 			} else if(operation.equalsIgnoreCase("o")) {
 				
 			} else if(operation.equalsIgnoreCase("i")) {
@@ -63,18 +101,10 @@ public class MenuOperations {
 		scanner.close();
 		
 		println("Program exiting...");
-		
-		/*System.out.printf("%-5s%-20s%-50s%8s\n\n", "#", "Name", "Description", "Price");
-		
-		int position = 1;
-		
-		MenuItem menuItem = new MenuItem("Beef", "This yummy shit", 1.99);
-		System.out.printf("%-5d%-20s%-50s%8.2f\n", position++, menuItem.getName(),
-				  menuItem.getDescription(), menuItem.getPrice());
-		
-		menuItem = new MenuItem("Cum", "The most delicious substance", 69.99);
-		System.out.printf("%-5d%-20s%-50s%8.2f", position++, menuItem.getName(),
-				  menuItem.getDescription(), menuItem.getPrice());*/
+	}
+	
+	public static String formatPrice(double price) {
+		return String.format("$%.2f", price);
 	}
 	
 	public static void print(String text) {
@@ -83,6 +113,10 @@ public class MenuOperations {
 	
 	public static void println(String text) {
 		System.out.println(text);
+	}
+	
+	public static void errorln(String text) {
+		System.err.println(text);
 	}
 	
 }
