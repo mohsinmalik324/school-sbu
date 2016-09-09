@@ -1,4 +1,4 @@
-package org.mohsinmalik324.cse214hw1;
+package org.mohsinmalik324.menu;
 
 /**
  * The <code>Menu</code> class implements an array of <code>MenuItem</code>

@@ -1,4 +1,4 @@
-package org.mohsinmalik324.cse214hw1;
+package org.mohsinmalik324.menu;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package org.mohsinmalik324.cse214hw1;
+package org.mohsinmalik324.menu;
 
 /**
  * The <code>FullListException</code> class represents an exception where the

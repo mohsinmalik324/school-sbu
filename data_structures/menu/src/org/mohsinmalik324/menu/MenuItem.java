@@ -1,4 +1,4 @@
-package org.mohsinmalik324.cse214hw1;
+package org.mohsinmalik324.menu;
 
 /**
  * The <code>MenuItem</code> class implements an instance of the
