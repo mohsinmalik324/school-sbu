@@ -5,17 +5,35 @@ package org.mohsinmalik324.cse214hw1;
  * list of a <code>Menu</code> object is full.
  * 
  * @author Mohsin Malik
- *    <dd>email: mohsin.malik@stonybrook.edu
+ *    <dd>Email: mohsin.malik@stonybrook.edu
  *    <dd>Stony Brook ID: 110880864
  */
 public class FullListException extends Exception {
-
-	private static final long serialVersionUID = 5156219367199525400L;
 	
+	/**
+	 * Version ID of this exception.
+	 */
+	private static final long serialVersionUID = 2556454590171773739L;
+
+	/**
+	 * Constructor which passes a default message.
+	 * 
+	 * <dt>Postcondition:
+	 *    <dd>The object is created and contains the default message.
+	 */
 	public FullListException() {
-		
+		super("List is full.");
 	}
 	
+	/**
+	 * Constructor which passes the provided String.
+	 * 
+	 * @param message
+	 *    The message the object will contain.
+	 *    
+	 * <dt>Postcondition:
+	 *    <dd>The object is created and contains the provided message.
+	 */
 	public FullListException(String message) {
 		super(message);
 	}

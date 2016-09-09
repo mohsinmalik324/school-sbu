@@ -4,12 +4,15 @@ package org.mohsinmalik324.cse214hw1;
  * The <code>Menu</code> class implements an array of <code>MenuItem</code>
  * objects.
  * 
- * @author: Mohsin Malik
- *    <dd>email: mohsin.malik@stonybrook.edu
+ * @author Mohsin Malik
+ *    <dd>Email: mohsin.malik@stonybrook.edu
  *    <dd>Stony Brook ID: 110880864
  */
 public class Menu {
 	
+	/**
+	 * Max numbers of items that can fit in a menu.
+	 */
 	private static final int MAX_ITEMS = 50; // Max MenuItems in a Menu.
 	private int listSize = 0; // Number of MenuItems in the Menu.
 	private MenuItem[] menuItems; // An array of the MenuItems in a Menu.
@@ -37,15 +40,12 @@ public class Menu {
 		// Loop through MenuItems in this Menu and copy into the new Menu.
 		for(int x = 0; x < size(); x++) {
 			MenuItem currentMenuItem = menuItems[x];
-			MenuItem menuItem = new MenuItem(currentMenuItem.getName(),
-			  currentMenuItem.getDescription(),
-			  currentMenuItem.getPrice());
+			MenuItem menuItem = (MenuItem) currentMenuItem.clone();
 			try {
 				clonedMenu.addItem(menuItem, x + 1);
 			} catch (FullListException e) {
 				e.printStackTrace();
 			}
-			//clonedMenu.menuItems[x] = menuItem;
 		}
 		return clonedMenu;
 	}
@@ -94,6 +94,29 @@ public class Menu {
 	 */
 	public int size() {
 		return listSize;
+	}
+	
+	/**
+	 * Returns the position of the menu item in the list.
+	 * 
+	 * @param menuItem
+	 *    The menu item in which the position will be returned.
+	 *    
+	 * @return
+	 *    The position of the menu item in the list.
+	 *    
+	 * @exception IllegalArgumentException
+	 *    The menu item is not in the list.
+	 */
+	public int getPosition(MenuItem menuItem) {
+		int listSize = size();
+		for(int i = 0; i < listSize; i++) {
+			MenuItem currentMenuItem = menuItems[i];
+			if(currentMenuItem.equals(menuItem)) {
+				return i + 1;
+			}
+		}
+		throw new IllegalArgumentException("Invalid menu item.");
 	}
 	
 	/**
@@ -194,7 +217,7 @@ public class Menu {
 					currentMenuItem = nextMenuItem;
 				}
 			}
-			listSize--;
+			this.listSize--;
 		} else {
 			throw new IllegalArgumentException("Invalid position.");
 		}
@@ -217,15 +240,13 @@ public class Menu {
 	 *    Indicates that <code>position</code> is not within the valid range.
 	 */
 	public MenuItem getItem(int position) {
-		MenuItem menuItem = null;
 		int listSize = size();
 		// Check precondition.
 		if(1 <= position && position <= listSize) {
-			menuItem = menuItems[position - 1];
+			return menuItems[position - 1];
 		} else {
 			throw new IllegalArgumentException("Invalid position.");
 		}
-		return menuItem;
 	}
 	
 	/**
@@ -275,7 +296,7 @@ public class Menu {
 	 *    the position inside the array.
 	 */
 	public void printAllItems() {
-		System.out.printf("%-5s%-20s%-50s%8s\n\n", "#", "Name", "Description", "Price");
+		System.out.printf("%-5s%-25s%-75s%8s\n\n", "#", "Name", "Description", "Price");
 		System.out.print(toString());
 	}
 	
@@ -293,7 +314,7 @@ public class Menu {
 		int listSize = size();
 		for(int i = 0; i < listSize; i++) {
 			MenuItem menuItem = menuItems[i];
-			String row = String.format("%-5d%-20s%-50s%8.2f", position++, menuItem.getName(),
+			String row = String.format("%-5d%-25s%-75s%8.2f", position++, menuItem.getName(),
 			  menuItem.getDescription(), menuItem.getPrice());
 			if(i < listSize) {
 				row += "\n";

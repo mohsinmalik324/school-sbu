@@ -5,7 +5,7 @@ package org.mohsinmalik324.cse214hw1;
  * <code>MenuItem</code> object, which represents an item on a menu.
  * 
  * @author Mohsin Malik
- *    <dd>email: mohsin.malik@stonybrook.edu
+ *    <dd>Email: mohsin.malik@stonybrook.edu
  *    <dd>Stony Brook ID: 110880864
  */
 public class MenuItem {
@@ -131,6 +131,16 @@ public class MenuItem {
 			}
 		}
 		return isEqual;
+	}
+	
+	/**
+	 * Returns a clone of this MenuItem.
+	 * 
+	 * @return
+	 *    A clone of this MenuItem.
+	 */
+	public Object clone() {
+		return new MenuItem(name, description, price);
 	}
 	
 	public String toString() {
