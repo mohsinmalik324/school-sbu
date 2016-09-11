@@ -1,7 +1,12 @@
 package org.mohsinmalik324.menu;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  * The <code>MenuOperations</code> class implements the main method which
@@ -13,169 +18,235 @@ import java.util.Scanner;
  */
 public class MenuOperations {
 	
+	/**
+	 * The text which displays on the title.
+	 */
+	private static final String TITLE = "Menu";
+	/**
+	 * The names of the columns when listing items in a table.
+	 */
+	private static String[] columnNames = {"#", "Name", "Description",
+	  "Price"};
+	private static Menu menu = new Menu();
+	private static Menu order = new Menu();
+	private static boolean menuLoop = true;
+	
+	static {
+		order.setName("Order");
+	}
+	
+	/**
+	 * The main method.
+	 * 
+	 * @param args
+	 *    Arguments passed through to the program.
+	 */
 	public static void main(String[] args) {
-		Menu menu = new Menu();
-		Menu order = new Menu();
-		
-		boolean exit = false;
-		
-		println("Main menu:");
-		println("");
-		println("A) Add Item");
-		println("G) Get Item");
-		println("R) Remove Item");
-		println("P) Print All Items");
-		println("S) Size");
-		println("D) Update description");
-		println("C) Update price");
-		println("O) Add to order");
-		println("I) Remove from order");
-		println("V) View order");
-		println("Q) Quit");
-		println("");
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		while(!exit) {
-			print("Select an operation: ");
-			String operation = scanner.nextLine();
-			if(operation.equalsIgnoreCase("a")) {
-				print("Enter the name: ");
-				String name = scanner.nextLine();
-				print("Enter the description: ");
-				String desc = scanner.nextLine();
-				print("Enter the price: ");
+		startMenuLoop();
+	}
+	
+	/**
+	 * Runs the main menu loop to allow user input.
+	 */
+	public static void startMenuLoop() {
+		menuLoop = true;
+		// Continue looping until the user exits the program.
+		while(menuLoop) {
+			String operation = getInputString("Main menu:\n\nA) Add Item\n"
+			  + "G) Get Item\nR) Remove Item\nP) Print All Items\n"
+			  + "S) Size\nD) Update description\nC) Update price\n"
+			  + "O) Add to order\nI) Remove from order\nV) View order\n"
+			  + "Q) Quit\n\nSelect an operation:");
+			if(operation == null || operation.equalsIgnoreCase("q")) {
+				menuLoop = false;
+			} else if(operation.equalsIgnoreCase("a")) {
+				String name = getInputString("Enter the name:");
+				String desc = getInputString("Enter the description:");
 				try {
-					double price = scanner.nextDouble();
-					print("Enter the position: ");
-					int position = scanner.nextInt();
+					double price = getInputDouble("Enter the price:");
+					int position = getInputInt("Enter the position:");
 					MenuItem menuItem = new MenuItem(name, desc, price);
 					menu.addItem(menuItem, position);
-					println("Added \"" + name + ": " + desc + "\" for " +
-					formatPrice(price) + " at position " + position);
+					displayMessage("Added \"" + name + ": " + desc +
+					  "\" for " + formatPrice(price) + " at position " +
+					  position);
 				} catch (FullListException e) {
-					e.printStackTrace();
-				} catch(InputMismatchException e) {
-					e.printStackTrace();
+					displayMessage(e.getMessage());
+				} catch(NumberFormatException e) {
+					displayMessage(e.getMessage());
+				} catch(IllegalArgumentException e) {
+					displayMessage(e.getMessage());
 				}
 			} else if(operation.equalsIgnoreCase("g")) {
-				print("Enter the position: ");
 				try {
-					int position = scanner.nextInt();
+					int position = getInputInt("Enter the position:");
 					MenuItem menuItem = menu.getItem(position);
-					System.out.printf("%-5s%-20s%-50s%8s\n\n", "#", "Name",
-					  "Description", "Price");
-					System.out.printf("%-5d%-25s%-75s%8.2f\n", position,
-					  menuItem.getName(), menuItem.getDescription(), menuItem.getPrice());
+					displayTable(menuItem, position);
+				} catch(NumberFormatException e) {
+					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch(InputMismatchException e) {
-					e.printStackTrace();
+					displayMessage(e.getMessage());
 				}
 			} else if(operation.equalsIgnoreCase("r")) {
-				print("Enter the name: ");
-				String name = scanner.nextLine();
+				String name = getInputString("Enter the name:");
 				try {
 					MenuItem menuItem = menu.getItemByName(name);
 					int position = menu.getPosition(menuItem);
 					menu.removeItem(position);
-					println("Removed \"" + name + "\"");
+					displayMessage("Removed \"" + name + "\"");
 				} catch(IllegalArgumentException e) {
-					e.printStackTrace();
+					displayMessage(e.getMessage());
 				}
 			} else if(operation.equalsIgnoreCase("p")) {
-				println("MENU:\n");
-				menu.printAllItems();
+				displayTable(menu);
 			} else if(operation.equalsIgnoreCase("s")) {
-				println("There are " + menu.size() + " item(s) in the menu");
+				displayMessage("There are " + menu.size() +
+				  " item(s) in the menu");
 			} else if(operation.equalsIgnoreCase("d")) {
-				print("Enter the position: ");
 				try {
-					int position = scanner.nextInt();
-					// Run a blank nextLine to consume new line character.
-					scanner.nextLine();
-					print("Enter the new description: ");
-					String desc = scanner.nextLine();
+					int position = getInputInt("Enter the position:");
+					String desc = getInputString("Enter the new description:");
 					MenuItem menuItem = menu.getItem(position);
 					menuItem.setDescription(desc);
-					println("New description set");
+					displayMessage("New description set");
+				} catch(NumberFormatException e) {
+					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch(InputMismatchException e) {
-					e.printStackTrace();
+					displayMessage(e.getMessage());
 				}
 			} else if(operation.equalsIgnoreCase("c")) {
-				print("Enter the name of the item: ");
-				String name = scanner.nextLine();
-				print("Enter the new price: ");
+				String name = getInputString("Enter the name of the item:");
 				try {
-					double price = scanner.nextDouble();
+					double price = getInputDouble("Enter the new price:");
 					MenuItem menuItem = menu.getItemByName(name);
 					menuItem.setPrice(price);
-					println("Changed the price of \"" + name + "\" to " + formatPrice(price));
+					displayMessage("Changed the price of \"" + name + "\" to "
+					  + formatPrice(price));
+				} catch(NumberFormatException e) {
+					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch(InputMismatchException e) {
-					e.printStackTrace();
+					displayMessage(e.getMessage());
 				}
 			} else if(operation.equalsIgnoreCase("o")) {
-				print("Enter the position of item to add to order: ");
 				try {
-					int position = scanner.nextInt();
-					// Run a blank nextLine to consume new line character.
-					scanner.nextLine();
+					int position = getInputInt("Enter the position of item "
+					  + "to add to order:");
 					MenuItem menuItem = menu.getItem(position);
 					MenuItem clonedMenuItem = (MenuItem) menuItem.clone();
 					order.addItem(clonedMenuItem, order.size() + 1);
-					println("Added \"" + clonedMenuItem.getName() + "\" to order");
-				} catch(IllegalArgumentException e) {
-					e.printStackTrace();
+					displayMessage("Added \"" + clonedMenuItem.getName() + "\" to order");
+				} catch(NumberFormatException e) {
+					displayMessage(e.getMessage());
 				} catch (FullListException e) {
-					e.printStackTrace();
-				} catch(InputMismatchException e) {
-					e.printStackTrace();
+					displayMessage(e.getMessage());
+				} catch(IllegalArgumentException e) {
+					displayMessage(e.getMessage());
 				}
 			} else if(operation.equalsIgnoreCase("i")) {
-				print("Enter the position: ");
 				try {
-					int position = scanner.nextInt();
-					// Run a blank nextLine to consume new line character.
-					scanner.nextLine();
+					int position = getInputInt("Enter the position:");
 					MenuItem menuItem = order.getItem(position);
 					order.removeItem(position);
-					println("Removed \"" + menuItem.getName() + "\" from order");
+					displayMessage("Removed \"" + menuItem.getName() + "\" from order");
+				} catch(NumberFormatException e) {
+					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch(InputMismatchException e) {
-					e.printStackTrace();
+					displayMessage(e.getMessage());
 				}
 			} else if(operation.equalsIgnoreCase("v")) {
-				println("ORDER:\n");
-				order.printAllItems();
-			} else if(operation.equalsIgnoreCase("q")) {
-				exit = true;
+				displayTable(order);
+			} else {
+				displayMessage("Unknown  operation \"" + operation + "\"");
 			}
 		}
-		
-		scanner.close();
-		
-		println("Program exiting...");
+	}
+	
+	/**
+	 * Stops the main menu loop. User will not be prompted for input until
+	 * startMenuLoop() is called.
+	 */
+	public static void stopMenuLoop() {
+		menuLoop = false;
+	}
+	
+	public static void displayTable(MenuItem menuItem, int position) {
+		Object[][] data = {{Integer.toString(position), menuItem.getName(),
+		  menuItem.getDescription(), menuItem.getPrice()}};
+		displayTable(data);
+	}
+	
+	public static void displayTable(Menu menu) {
+		int listSize = menu.size();
+		Object[][] data = new Object[listSize][4];
+		for(int i = 0; i < listSize; i++) {
+			MenuItem currentMenuItem = menu.getItem(i + 1);
+			data[i][0] = i + 1;
+			data[i][1] = currentMenuItem.getName();
+			data[i][2] = currentMenuItem.getDescription();
+			data[i][3] = currentMenuItem.getPrice();
+		}
+		displayTable(data);
+	}
+	
+	public static void displayTable(Object[][] data) {
+		// Create a new table with non-editable cells.
+		JTable table = new JTable(data, columnNames) {
+			
+			private static final long serialVersionUID = 110431749943291610L;
+			
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+			
+		};
+		// Create a new frame. When the user exits the frame, the table is
+		// disposed of and the menu loop starts again.
+		JFrame tableFrame = new JFrame();
+		tableFrame.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent event) {
+				event.getWindow().dispose();
+				startMenuLoop();
+			}
+			
+		});
+		tableFrame.add(new JScrollPane(table));
+		tableFrame.setSize(500, 200);
+		// Center the table frame.
+		tableFrame.setLocationRelativeTo(null);
+		tableFrame.setVisible(true);
+		// Temporarily stop the menu loop to allow user to view the table.
+		stopMenuLoop();
+	}
+	
+	public static String getInputString(String message) {
+		return JOptionPane.showInputDialog(message);
+	}
+	
+	public static int getInputInt(String message) throws NumberFormatException {
+		try {
+			return Integer.valueOf(getInputString(message));
+		} catch(NumberFormatException e) {
+			throw new NumberFormatException("Input must be a number.");
+		}
+	}
+	
+	public static double getInputDouble(String message) throws NumberFormatException {
+		try {
+			return Double.valueOf(getInputString(message));
+		} catch(NumberFormatException e) {
+			throw new NumberFormatException("Input must be a number.");
+		}
+	}
+	
+	public static void displayMessage(String message) {
+		JOptionPane.showMessageDialog(null, message, TITLE, JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	public static String formatPrice(double price) {
 		return String.format("$%.2f", price);
-	}
-	
-	public static void print(String text) {
-		System.out.print(text);
-	}
-	
-	public static void println(String text) {
-		System.out.println(text);
-	}
-	
-	public static void errorln(String text) {
-		System.err.println(text);
 	}
 	
 }

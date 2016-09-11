@@ -13,9 +13,10 @@ public class Menu {
 	/**
 	 * Max numbers of items that can fit in a menu.
 	 */
-	private static final int MAX_ITEMS = 50; // Max MenuItems in a Menu.
+	private static final int MAX_ITEMS = 50;
 	private int listSize = 0; // Number of MenuItems in the Menu.
 	private MenuItem[] menuItems; // An array of the MenuItems in a Menu.
+	private String name = "Menu"; // The name of the menu.
 	
 	/**
 	 * Returns an instance of <code>Menu</code>.
@@ -26,6 +27,26 @@ public class Menu {
 	public Menu() {
 		menuItems = new MenuItem[MAX_ITEMS];
 		listSize = 0;
+	}
+	
+	/**
+	 * Set the name of the menu.
+	 * 
+	 * @param name
+	 *    The new name of the menu.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	/**
+	 * Returns the name of the menu.
+	 * 
+	 * @return
+	 *    The name of the menu.
+	 */
+	public String getName() {
+		return name;
 	}
 	
 	/**
@@ -275,7 +296,7 @@ public class Menu {
 			}
 		}
 		if(menuItem == null) {
-			throw new IllegalArgumentException("MenuItem does not exist.");
+			throw new IllegalArgumentException("Invalid menu item.");
 		}
 		return menuItem;
 	}
@@ -296,7 +317,6 @@ public class Menu {
 	 *    the position inside the array.
 	 */
 	public void printAllItems() {
-		System.out.printf("%-5s%-25s%-75s%8s\n\n", "#", "Name", "Description", "Price");
 		System.out.print(toString());
 	}
 	
@@ -309,7 +329,7 @@ public class Menu {
 	 *    The String representation of this Menu object.
 	 */
 	public String toString() {
-		String table = "";
+		String table = String.format("%-5s%-25s%-75s%8s\n\n", "#", "Name", "Description", "Price");
 		int position = 1;
 		int listSize = size();
 		for(int i = 0; i < listSize; i++) {
