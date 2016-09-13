@@ -53,18 +53,24 @@ public class MenuOperations {
 		// Continue looping until the user exits the program or loop is
 		// manually stopped.
 		while(menuLoop) {
-			String operation = getInputString("Main menu:\n\nA) Add Item\n"
-			  + "G) Get Item\nR) Remove Item\nP) Print All Items\n"
-			  + "S) Size\nD) Update description\nC) Update price\n"
-			  + "O) Add to order\nI) Remove from order\nV) View order\n"
-			  + "Q) Quit\n\nSelect an operation:");
+			String operation = null;
+			try {
+				operation = getInputString("Main menu:\n\nA) Add Item\n"
+				  + "G) Get Item\nR) Remove Item\nP) Print All Items\n"
+				  + "S) Size\nD) Update description\nC) Update price\n"
+				  + "O) Add to order\nI) Remove from order\nV) View order\n"
+				  + "Q) Quit\n\nSelect an operation:");
+			} catch(NullPointerException e) {
+				// Set operation to null so the program exits.
+				operation = null;
+			}
 			// Check the operation.
 			if(operation == null || operation.equalsIgnoreCase("q")) {
 				menuLoop = false;
 			} else if(operation.equalsIgnoreCase("a")) {
-				String name = getInputString("Enter the name:");
-				String desc = getInputString("Enter the description:");
 				try {
+					String name = getInputString("Enter the name:");
+					String desc = getInputString("Enter the description:");
 					double price = getInputDouble("Enter the price:");
 					int position = getInputInt("Enter the position:");
 					MenuItem menuItem = new MenuItem(name, desc, price);
@@ -78,6 +84,8 @@ public class MenuOperations {
 					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
 					displayMessage(e.getMessage());
+				} catch(NullPointerException e) {
+					// Cancels the current operation.
 				}
 			} else if(operation.equalsIgnoreCase("g")) {
 				try {
@@ -88,16 +96,20 @@ public class MenuOperations {
 					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
 					displayMessage(e.getMessage());
+				} catch(NullPointerException e) {
+					// Cancels the current operation.
 				}
 			} else if(operation.equalsIgnoreCase("r")) {
-				String name = getInputString("Enter the name:");
 				try {
+					String name = getInputString("Enter the name:");
 					MenuItem menuItem = menu.getItemByName(name);
 					int position = menu.getPosition(menuItem);
 					menu.removeItem(position);
 					displayMessage("Removed \"" + name + "\"");
 				} catch(IllegalArgumentException e) {
 					displayMessage(e.getMessage());
+				} catch(NullPointerException e) {
+					// Cancels the current operation.
 				}
 			} else if(operation.equalsIgnoreCase("p")) {
 				displayTable(menu);
@@ -107,7 +119,8 @@ public class MenuOperations {
 			} else if(operation.equalsIgnoreCase("d")) {
 				try {
 					int position = getInputInt("Enter the position:");
-					String desc = getInputString("Enter the new description:");
+					String desc = getInputString("Enter the new "
+					  + "description:");
 					MenuItem menuItem = menu.getItem(position);
 					menuItem.setDescription(desc);
 					displayMessage("New description set");
@@ -115,10 +128,13 @@ public class MenuOperations {
 					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
 					displayMessage(e.getMessage());
+				} catch(NullPointerException e) {
+					// Cancels the current operation.
 				}
 			} else if(operation.equalsIgnoreCase("c")) {
-				String name = getInputString("Enter the name of the item:");
 				try {
+					String name = getInputString("Enter the name of the "
+					  + "item:");
 					double price = getInputDouble("Enter the new price:");
 					MenuItem menuItem = menu.getItemByName(name);
 					menuItem.setPrice(price);
@@ -128,6 +144,8 @@ public class MenuOperations {
 					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
 					displayMessage(e.getMessage());
+				} catch(NullPointerException e) {
+					// Cancels the current operation.
 				}
 			} else if(operation.equalsIgnoreCase("o")) {
 				try {
@@ -136,24 +154,30 @@ public class MenuOperations {
 					MenuItem menuItem = menu.getItem(position);
 					MenuItem clonedMenuItem = (MenuItem) menuItem.clone();
 					order.addItem(clonedMenuItem, order.size() + 1);
-					displayMessage("Added \"" + clonedMenuItem.getName() + "\" to order");
+					displayMessage("Added \"" + clonedMenuItem.getName() +
+					  "\" to order");
 				} catch(NumberFormatException e) {
 					displayMessage(e.getMessage());
 				} catch (FullListException e) {
 					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
 					displayMessage(e.getMessage());
+				} catch(NullPointerException e) {
+					// Cancels the current operation.
 				}
 			} else if(operation.equalsIgnoreCase("i")) {
 				try {
 					int position = getInputInt("Enter the position:");
 					MenuItem menuItem = order.getItem(position);
 					order.removeItem(position);
-					displayMessage("Removed \"" + menuItem.getName() + "\" from order");
+					displayMessage("Removed \"" + menuItem.getName() +
+					  "\" from order");
 				} catch(NumberFormatException e) {
 					displayMessage(e.getMessage());
 				} catch(IllegalArgumentException e) {
 					displayMessage(e.getMessage());
+				} catch(NullPointerException e) {
+					// Cancels the current operation.
 				}
 			} else if(operation.equalsIgnoreCase("v")) {
 				displayTable(order);
@@ -171,12 +195,27 @@ public class MenuOperations {
 		menuLoop = false;
 	}
 	
+	/**
+	 * Display a table with a single MenuItem.
+	 * 
+	 * @param menuItem
+	 *    The menu item to display.
+	 * 
+	 * @param position
+	 *    The position of the item in a menu.
+	 */
 	public static void displayTable(MenuItem menuItem, int position) {
 		Object[][] data = {{Integer.toString(position), menuItem.getName(),
 		  menuItem.getDescription(), formatPrice(menuItem.getPrice())}};
 		displayTable(data);
 	}
 	
+	/**
+	 * Display a table with all the items in a menu.
+	 * 
+	 * @param menu
+	 *    The menu to display.
+	 */
 	public static void displayTable(Menu menu) {
 		int listSize = menu.size();
 		Object[][] data = new Object[listSize][4];
@@ -191,6 +230,12 @@ public class MenuOperations {
 		displayTable(data);
 	}
 	
+	/**
+	 * Display a table with specified data.
+	 * 
+	 * @param data
+	 *    The data to display in the table.
+	 */
 	public static void displayTable(Object[][] data) {
 		// Create a new table with non-editable cells.
 		JTable table = new JTable(data, columnNames) {
@@ -225,30 +270,102 @@ public class MenuOperations {
 		stopMenuLoop();
 	}
 	
-	public static String getInputString(String message) {
-		return JOptionPane.showInputDialog(message);
+	/**
+	 * Returns string input from the user.
+	 * 
+	 * @param message
+	 *    The message dialog which will be displayed.
+	 * 
+	 * @return
+	 *    String input from the user.
+	 *    
+	 * @throws NullPointerException
+	 *    The input was null (usually indicating the cancel button was
+	 *    pushed).
+	 */
+	public static String getInputString(String message)
+	  throws NullPointerException {
+		String input = JOptionPane.showInputDialog(message);
+		if(input == null) {
+			throw new NullPointerException();
+		}
+		return input;
 	}
 	
-	public static int getInputInt(String message) throws NumberFormatException {
+	/**
+	 * Returns int input from the user.
+	 * 
+	 * @param message
+	 *    The message dialog which will be displayed.
+	 * 
+	 * @return
+	 *    Int input from the user.
+	 * 
+	 * @throws NumberFormatException
+	 *    The input was not an int.
+	 *    
+	 * @throws NullPointerException
+	 *    The input was null (usually indicating the cancel button was
+	 *    pushed).
+	 */
+	public static int getInputInt(String message)
+	  throws NumberFormatException, NullPointerException {
 		try {
 			return Integer.valueOf(getInputString(message));
 		} catch(NumberFormatException e) {
-			throw new NumberFormatException("Input must be a number.");
+			throw new NumberFormatException("Input must be an integer.");
+		} catch(NullPointerException e) {
+			throw e;
 		}
 	}
 	
-	public static double getInputDouble(String message) throws NumberFormatException {
+	/**
+	 * Returns double input from the user.
+	 * 
+	 * @param message
+	 *    The message dialog which will be displayed.
+	 * 
+	 * @return
+	 *    Double input from the user.
+	 * 
+	 * @throws NumberFormatException
+	 *    The input was not a number.
+	 *    
+	 * @throws NullPointerException
+	 *    The input was null (usually indicating the cancel button was
+	 *    pushed).
+	 */
+	public static double getInputDouble(String message)
+	  throws NumberFormatException, NullPointerException {
 		try {
 			return Double.valueOf(getInputString(message));
 		} catch(NumberFormatException e) {
 			throw new NumberFormatException("Input must be a number.");
+		} catch(NullPointerException e) {
+			throw e;
 		}
 	}
 	
+	/**
+	 * Displays a message to the user.
+	 * 
+	 * @param message
+	 *    The message to display.
+	 */
 	public static void displayMessage(String message) {
-		JOptionPane.showMessageDialog(null, message, TITLE, JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, TITLE,
+		  JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	/**
+	 * Correctly formats a double to proper price representation.
+	 * 
+	 * @param price
+	 *    The double to be formatted.
+	 * 
+	 * @return
+	 *    The correctly formatted price as a string.
+	 */
 	public static String formatPrice(double price) {
 		// Format String to have two decimals.
 		return String.format("$%.2f", price);

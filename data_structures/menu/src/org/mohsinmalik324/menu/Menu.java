@@ -176,7 +176,8 @@ public class Menu {
 	 *    <dd>Inserting an item to position (items_currently_in_list + 1) is
 	 *    effectively the same as adding an item to the end of the Menu.
 	 */
-	public void addItem(MenuItem menuItem, int position) throws FullListException {
+	public void addItem(MenuItem menuItem, int position)
+	  throws FullListException {
 		int listSize = size();
 		// Check if list is full.
 		if(listSize < MAX_ITEMS) {
@@ -234,7 +235,9 @@ public class Menu {
 		if(1 <= position && position <= listSize) {
 			// Check if removing last item in list.
 			if(position != listSize) {
+				// Stores the menu item of the current loop.
 				MenuItem currentMenuItem = menuItems[listSize - 1];
+				// Stores the menu item of the next iteration.
 				MenuItem nextMenuItem = null;
 				for(int i = listSize - 1; i >= position; i--) {
 					nextMenuItem = menuItems[i - 1];
@@ -244,7 +247,8 @@ public class Menu {
 			}
 			this.listSize--;
 		} else {
-			throw new IllegalArgumentException("Invalid position.");
+			throw new IllegalArgumentException("No item at position " +
+			  position);
 		}
 	}
 	
@@ -270,7 +274,8 @@ public class Menu {
 		if(1 <= position && position <= listSize) {
 			return menuItems[position - 1];
 		} else {
-			throw new IllegalArgumentException("Invalid position.");
+			throw new IllegalArgumentException("No item at position " +
+			  position);
 		}
 	}
 	
@@ -301,7 +306,8 @@ public class Menu {
 			}
 		}
 		if(menuItem == null) {
-			throw new IllegalArgumentException("Invalid menu item.");
+			throw new IllegalArgumentException("No menu item with name: " +
+			  name);
 		}
 		return menuItem;
 	}
@@ -335,13 +341,16 @@ public class Menu {
 	 */
 	public String toString() {
 		// Format is table based.
-		String table = String.format("%-5s%-25s%-75s%8s\n\n", "#", "Name", "Description", "Price");
+		String table = String.format("%-5s%-25s%-75s%8s\n\n", "#", "Name",
+		  "Description", "Price");
 		int position = 1;
 		int listSize = size();
+		// Loop through items, create formatted row and add to table string.
 		for(int i = 0; i < listSize; i++) {
 			MenuItem menuItem = menuItems[i];
-			String row = String.format("%-5d%-25s%-75s%8.2f", position++, menuItem.getName(),
-			  menuItem.getDescription(), menuItem.getPrice());
+			String row = String.format("%-5d%-25s%-75s%8.2f", position++,
+			  menuItem.getName(), menuItem.getDescription(),
+			  menuItem.getPrice());
 			if(i < listSize) {
 				row += "\n";
 			}

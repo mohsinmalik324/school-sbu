@@ -30,12 +30,17 @@ public class MenuItem {
 	 *    <dd><code>price</code> must be greater than 0.
 	 *    
 	 * @exception IllegalArgumentException
-	 *    <code>price</code> was not greater than 0.
+	 *    <code>price</code> was less than or equal to 0.
 	 */
-	public MenuItem(String name, String description, double price) {
+	public MenuItem(String name, String description, double price)
+	  throws IllegalArgumentException {
 		setName(name);
 		setDescription(description);
-		setPrice(price);
+		try {
+			setPrice(price);
+		} catch(IllegalArgumentException e) {
+			throw e;
+		}
 	}
 	
 	
@@ -75,7 +80,8 @@ public class MenuItem {
 		if(price > 0) {
 			this.price = price;
 		} else {
-			throw new IllegalArgumentException("Invalid price.");
+			throw new IllegalArgumentException("Price must be greater than "
+			  + "0.");
 		}
 	}
 	
