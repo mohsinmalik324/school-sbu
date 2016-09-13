@@ -50,13 +50,15 @@ public class MenuOperations {
 	 */
 	public static void startMenuLoop() {
 		menuLoop = true;
-		// Continue looping until the user exits the program.
+		// Continue looping until the user exits the program or loop is
+		// manually stopped.
 		while(menuLoop) {
 			String operation = getInputString("Main menu:\n\nA) Add Item\n"
 			  + "G) Get Item\nR) Remove Item\nP) Print All Items\n"
 			  + "S) Size\nD) Update description\nC) Update price\n"
 			  + "O) Add to order\nI) Remove from order\nV) View order\n"
 			  + "Q) Quit\n\nSelect an operation:");
+			// Check the operation.
 			if(operation == null || operation.equalsIgnoreCase("q")) {
 				menuLoop = false;
 			} else if(operation.equalsIgnoreCase("a")) {
@@ -156,7 +158,7 @@ public class MenuOperations {
 			} else if(operation.equalsIgnoreCase("v")) {
 				displayTable(order);
 			} else {
-				displayMessage("Unknown  operation \"" + operation + "\"");
+				displayMessage("Unknown operation \"" + operation + "\"");
 			}
 		}
 	}
@@ -171,19 +173,20 @@ public class MenuOperations {
 	
 	public static void displayTable(MenuItem menuItem, int position) {
 		Object[][] data = {{Integer.toString(position), menuItem.getName(),
-		  menuItem.getDescription(), menuItem.getPrice()}};
+		  menuItem.getDescription(), formatPrice(menuItem.getPrice())}};
 		displayTable(data);
 	}
 	
 	public static void displayTable(Menu menu) {
 		int listSize = menu.size();
 		Object[][] data = new Object[listSize][4];
+		// Set the data in the two-dimensional array for the table.
 		for(int i = 0; i < listSize; i++) {
 			MenuItem currentMenuItem = menu.getItem(i + 1);
 			data[i][0] = i + 1;
 			data[i][1] = currentMenuItem.getName();
 			data[i][2] = currentMenuItem.getDescription();
-			data[i][3] = currentMenuItem.getPrice();
+			data[i][3] = formatPrice(currentMenuItem.getPrice());
 		}
 		displayTable(data);
 	}
@@ -212,8 +215,9 @@ public class MenuOperations {
 			}
 			
 		});
+		tableFrame.setTitle("Close this window to go back to the main menu");
 		tableFrame.add(new JScrollPane(table));
-		tableFrame.setSize(500, 200);
+		tableFrame.setSize(550, 200);
 		// Center the table frame.
 		tableFrame.setLocationRelativeTo(null);
 		tableFrame.setVisible(true);
@@ -246,6 +250,7 @@ public class MenuOperations {
 	}
 	
 	public static String formatPrice(double price) {
+		// Format String to have two decimals.
 		return String.format("$%.2f", price);
 	}
 	

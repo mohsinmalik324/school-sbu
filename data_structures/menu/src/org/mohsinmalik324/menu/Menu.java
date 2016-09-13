@@ -89,6 +89,8 @@ public class Menu {
 				for(int i = 0; i < listSize; i++) {
 					MenuItem thisMenuItem = menuItems[i];
 					MenuItem compareMenuItem = compareMenu.menuItems[i];
+					// If the items aren't equal, the loop is broken and
+					// false returned.
 					if(!thisMenuItem.equals(compareMenuItem)) {
 						break;
 					}
@@ -131,6 +133,8 @@ public class Menu {
 	 */
 	public int getPosition(MenuItem menuItem) {
 		int listSize = size();
+		// Loop through array until desired item is found and returns its
+		// position.
 		for(int i = 0; i < listSize; i++) {
 			MenuItem currentMenuItem = menuItems[i];
 			if(currentMenuItem.equals(menuItem)) {
@@ -288,6 +292,7 @@ public class Menu {
 	public MenuItem getItemByName(String name) {
 		MenuItem menuItem = null;
 		int listSize = size();
+		// Loop through array until item with the name is found.
 		for(int i = 0; i < listSize; i++) {
 			MenuItem currentMenuItem = menuItems[i];
 			if(currentMenuItem.getName().equalsIgnoreCase(name)) {
@@ -317,7 +322,7 @@ public class Menu {
 	 *    the position inside the array.
 	 */
 	public void printAllItems() {
-		System.out.print(toString());
+		System.out.println(toString());
 	}
 	
 	/**
@@ -329,6 +334,7 @@ public class Menu {
 	 *    The String representation of this Menu object.
 	 */
 	public String toString() {
+		// Format is table based.
 		String table = String.format("%-5s%-25s%-75s%8s\n\n", "#", "Name", "Description", "Price");
 		int position = 1;
 		int listSize = size();
