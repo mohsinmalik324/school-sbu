@@ -1,7 +1,8 @@
 package org.mohsinmalik324.tripplanner;
 
 /**
- * <code>Itinerary</code> 
+ * <code>Itinerary</code> represents a doubly-linked list of
+ * <code>TripStops</code>.
  * 
  * @author Mohsin Malik
  *    <dd>Email: mohsin.malik@stonybrook.edu
@@ -14,7 +15,7 @@ public class Itinerary {
 	private TripStopNode cursor;
 	
 	/**
-	 * 
+	 * Returns an instance of <code>Itinerary</code>.
 	 */
 	public Itinerary() {
 		head = null;
@@ -23,63 +24,46 @@ public class Itinerary {
 	}
 	
 	/**
-	 * Sets a new head.
-	 * 
-	 * @param head
-	 *    The new head.
-	 */
-	public void setHead(TripStopNode head) {
-		this.head = head;
-	}
-	
-	/**
-	 * Sets a new tail.
-	 * 
-	 * @param tail
-	 *    The new tail.
-	 */
-	public void setTail(TripStopNode tail) {
-		this.tail = tail;
-	}
-
-	/**
-	 * Sets a new cursor.
-	 * 
-	 * @param cursor
-	 *    The new cursor.
-	 */
-	public void setCursor(TripStopNode cursor) {
-		this.cursor = cursor;
-	}
-	
-	/**
-	 * Returns the head.
+	 * Returns the total number of stops.
 	 * 
 	 * @return
-	 *    The head.
+	 *    The total number of stops.
 	 */
-	public TripStopNode getHead() {
-		return head;
+	public int getStopsCount() {
+		return 0;
 	}
 	
 	/**
-	 * Returns the tail.
+	 * Returns the total distance of the trip.
 	 * 
 	 * @return
-	 *    The tail.
+	 *    The total distance of the trip.
 	 */
-	public TripStopNode getTail() {
-		return tail;
+	public int getTotalDistance() {
+		return 0;
 	}
 	
 	/**
-	 * Returns the cursor.
+	 * Returns the <code>TripStop</code> that the cursor node is wrapping.
 	 * 
 	 * @return
-	 *    The cursor.
+	 *    The <code>TripStop</code> that the cursor node is wrapping.
 	 */
-	public TripStopNode getCursor() {
-		return cursor;
+	public TripStop getCursorStop() {
+		return cursor.getData();
+	}
+	
+	/**
+	 * Sets the cursor to point to the start of the list.
+	 * 
+	 * <dt>Postconditions:
+	 *    <dd>If <code>head</code> is not null, cursor now points to the start
+	 *    of the list.
+	 *    <dd>If <code>head</code> is null, cursor is now null and the list is
+	 *    empty.
+	 */
+	public void resetCursorToHead() {
+		cursor = head;
 	}
 	
 }
