@@ -13,6 +13,8 @@ public class Itinerary {
 	private TripStopNode head;
 	private TripStopNode tail;
 	private TripStopNode cursor;
+	private int stops = 0;
+	private int distance = 0;
 	
 	/**
 	 * Returns an instance of <code>Itinerary</code>.
@@ -21,6 +23,8 @@ public class Itinerary {
 		head = null;
 		tail = null;
 		cursor = null;
+		stops = 0;
+		distance = 0;
 	}
 	
 	/**
@@ -30,7 +34,7 @@ public class Itinerary {
 	 *    The total number of stops.
 	 */
 	public int getStopsCount() {
-		return 0;
+		return stops;
 	}
 	
 	/**
@@ -40,7 +44,7 @@ public class Itinerary {
 	 *    The total distance of the trip.
 	 */
 	public int getTotalDistance() {
-		return 0;
+		return distance;
 	}
 	
 	/**
@@ -114,7 +118,23 @@ public class Itinerary {
 	 *    <code>newStop</code> is null.
 	 */
 	public void insertBeforeCursor(TripStop newStop) throws IllegalArgumentException {
-		
+		if(newStop == null) {
+			throw new IllegalArgumentException("The new stop is null.");
+		}
+		TripStopNode newNode = new TripStopNode(newStop);
+		if(cursor == null) {
+			head = newNode;
+			tail = newNode;
+		} else {
+			newNode.setPrevious(cursor.getPrevious());
+			newNode.setNext(cursor);
+			if(newNode.getPrevious() != null) {
+				newNode.getPrevious().setNext(newNode);
+			}
+		}
+		cursor = newNode;
+		stops++;
+		distance += newNode.getData().getDistance();
 	}
 	
 	/**
@@ -122,6 +142,7 @@ public class Itinerary {
 	 * at the end of the list.
 	 * 
 	 * @param newStop
+	 *    The new stop to be wrapped and appended into the list.
 	 * 
 	 * <dt>Precondition:
 	 *    <dd><code>newStop</code> is not null.
@@ -130,7 +151,7 @@ public class Itinerary {
 	 *    <dd>The new stop has been wrapped in a node.
 	 *    <dd>If the tail was not null, the node was inserted after the
 	 *    tail.
-	 *    <dd>If the cursor was null, the node is now the beginning of the
+	 *    <dd>If the tail was null, the node is now the beginning of the
 	 *    list (as is the tail).
 	 *    <dd>The tail now points to the new node.
 	 * 
@@ -138,7 +159,22 @@ public class Itinerary {
 	 *    <code>newStop</code> is null.
 	 */
 	public void appendToTail(TripStop newStop) throws IllegalArgumentException {
-		
+		if(newStop == null) {
+			throw new IllegalArgumentException("The new stop is null.");
+		}
+		TripStopNode newNode = new TripStopNode(newStop);
+		if(tail == null) {
+			head = newNode;
+			tail = newNode;
+			cursor = newNode;
+		} else {
+			newNode.setNext(null);
+			newNode.setPrevious(tail);
+			tail.setNext(newNode);
+			tail = newNode;
+		}
+		stops++;
+		distance += newNode.getData().getDistance();
 	}
 	
 	/**
@@ -162,7 +198,34 @@ public class Itinerary {
 	 *    <code>cursor</code> is null.
 	 */
 	public TripStop removeCursor() throws EndOfListException {
-		return null;
+		if(cursor == null) {
+			throw new EndOfListException();
+		}
+		TripStop toReturn = cursor.getData();
+		if(head == cursor && tail == cursor) {
+			head = null;
+			tail = null;
+			cursor = null;
+		} else if(head == cursor) {
+			TripStopNode newHead = cursor.getNext();
+			newHead.setPrevious(null);
+			head = newHead;
+			cursor = newHead;
+		} else if(tail == cursor) {
+			TripStopNode newTail = cursor.getPrevious();
+			newTail.setNext(null);
+			tail = newTail;
+			cursor = newTail;
+		} else {
+			TripStopNode prev = cursor.getPrevious();
+			TripStopNode next = cursor.getNext();
+			prev.setNext(next);
+			next.setPrevious(prev);
+			cursor = prev;
+		}
+		stops--;
+		distance -= toReturn.getDistance();
+		return toReturn;
 	}
 	
 }
