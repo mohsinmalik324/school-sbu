@@ -11,8 +11,8 @@ package org.mohsinmalik324.tripplanner;
 public class TripStopNode {
 	
 	private TripStop data;
-	private TripStop next;
-	private TripStop prev;
+	private TripStopNode next;
+	private TripStopNode prev;
 	
 	/**
 	 * Returns an instance of <code>TripStopNode</code>.
@@ -72,7 +72,7 @@ public class TripStopNode {
 	 * @return
 	 *    The next node.
 	 */
-	public TripStop getNext() {
+	public TripStopNode getNext() {
 		return next;
 	}
 	
@@ -82,7 +82,7 @@ public class TripStopNode {
 	 * @param newNext
 	 *    The new next node.
 	 */
-	public void setNext(TripStop newNext) {
+	public void setNext(TripStopNode newNext) {
 		next = newNext;
 	}
 	
@@ -92,7 +92,7 @@ public class TripStopNode {
 	 * @return
 	 *    The previous node.
 	 */
-	public TripStop getPrevious() {
+	public TripStopNode getPrevious() {
 		return prev;
 	}
 	
@@ -102,7 +102,7 @@ public class TripStopNode {
 	 * @param newPrev
 	 *    The new previous node.
 	 */
-	public void setPrevious(TripStop newPrev) {
+	public void setPrevious(TripStopNode newPrev) {
 		prev = newPrev;
 	}
 	
