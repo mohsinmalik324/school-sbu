@@ -108,4 +108,18 @@ public class TripStop {
 		return distance;
 	}
 	
+	/**
+	 * Returns a formatted row of the information in this trip stop.
+	 * 
+	 * @param cursor
+	 *    If the cursor symbol ">" should display for this trip stop.
+	 * 
+	 * @return
+	 *    A formatted row of the information in this trip stop.
+	 */
+	public String toString(boolean cursor) {
+		return String.format((cursor ? ">" : " ") + "%-25s%-75s%12s\n",
+		  location, activity, distance + " miles");
+	}
+	
 }

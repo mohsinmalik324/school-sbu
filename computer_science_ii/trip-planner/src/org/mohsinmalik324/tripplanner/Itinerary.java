@@ -52,9 +52,14 @@ public class Itinerary {
 	 * 
 	 * @return
 	 *    The <code>TripStop</code> that the cursor node is wrapping.
+	 *    If <code>cursor</code> is null, this returns null.
 	 */
 	public TripStop getCursorStop() {
-		return cursor.getData();
+		if(cursor == null) {
+			return null;
+		} else {
+			return cursor.getData();
+		}
 	}
 	
 	/**
