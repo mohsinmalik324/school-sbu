@@ -33,16 +33,26 @@ public class TripPlanner {
 			// Get operation from user input.
 			String operation = getStringInput();
 			if(operation.equalsIgnoreCase("f")) {
-				try {
-					tripCurrent.cursorForward();
-				} catch (EndOfItineraryException e) {
-					error(e.getMessage());
+				if(tripCurrent.getCursorStop() != null) {
+					try {
+						tripCurrent.cursorForward();
+						println("Cursor moved forward.\n");
+					} catch (EndOfItineraryException e) {
+						error(e.getMessage());
+					}
+				} else {
+					println("Cursor is not pointing to anything.");
 				}
 			} else if(operation.equalsIgnoreCase("b")) {
-				try {
-					tripCurrent.cursorBackward();
-				} catch (EndOfItineraryException e) {
-					error(e.getMessage());
+				if(tripCurrent.getCursorStop() != null) {
+					try {
+						tripCurrent.cursorBackward();
+						println("Cursor moved back.\n");
+					} catch (EndOfItineraryException e) {
+						error(e.getMessage());
+					}
+				} else {
+					println("Cursor is not pointing to anything.");
 				}
 			} else if(operation.equalsIgnoreCase("i")) {
 				TripStop newStop = createNewStop();
@@ -66,14 +76,18 @@ public class TripPlanner {
 				tripCurrent.resetCursorToHead();
 				println("Cursor moved to head.\n");
 			} else if(operation.equalsIgnoreCase("t")) {
-				while(true) {
-					try {
-						tripCurrent.cursorForward();
-					} catch (EndOfItineraryException e) {
-						break;
+				if(tripCurrent.getCursorStop() != null) {
+					while(true) {
+						try {
+							tripCurrent.cursorForward();
+						} catch (EndOfItineraryException e) {
+							break;
+						}
 					}
+					println("Cursor moved to tail.\n");
+				} else {
+					println("Cursor is not pointing to anything.");
 				}
-				println("Cursor moved to tail.\n");
 			} else if(operation.equalsIgnoreCase("e")) {
 				TripStop cursorStop = tripCurrent.getCursorStop();
 				if(cursorStop == null) {
@@ -133,15 +147,19 @@ public class TripPlanner {
 				println("Other itinerary cloned and set "
 				  + "as current itinerary.");
 			} else if(operation.equalsIgnoreCase("p")) {
-				
+				println(tripCurrent.toString());
+			} else if(operation.equalsIgnoreCase("c")) {
 				tripCurrent.resetCursorToHead();
 				while(true) {
-					
+					try {
+						tripCurrent.removeCursor();
+					} catch (EndOfListException e) {
+						break;
+					}
 				}
-			} else if(operation.equalsIgnoreCase("c")) {
-				
+				println("Itinerary cleared.");
 			} else if(operation.equalsIgnoreCase("q")) {
-				
+				exit = true;
 			} else {
 				println("Unknown operation \"" + operation + "\"");
 			}

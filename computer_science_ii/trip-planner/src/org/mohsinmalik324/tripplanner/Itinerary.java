@@ -135,6 +135,8 @@ public class Itinerary {
 			newNode.setNext(cursor);
 			if(newNode.getPrevious() != null) {
 				newNode.getPrevious().setNext(newNode);
+			} else {
+				head = newNode;
 			}
 		}
 		cursor = newNode;
@@ -231,6 +233,26 @@ public class Itinerary {
 		stops--;
 		distance -= toReturn.getDistance();
 		return toReturn;
+	}
+	
+	/**
+	 * Returns a table of the nodes in this Itinerary.
+	 * 
+	 * @return
+	 *    A table of the nodes in this Itinerary.
+	 */
+	public String toString() {
+		TripStopNode tmp = head;
+		String toString = "";
+		while(tmp != null) {
+			String prefix = " ";
+			if(cursor == tmp) {
+				prefix = ">";
+			}
+			toString += prefix + tmp.getData().toString();
+			tmp = tmp.getNext();
+		}
+		return toString;
 	}
 	
 }
