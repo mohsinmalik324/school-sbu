@@ -255,4 +255,26 @@ public class Itinerary {
 		return toString;
 	}
 	
+	/**
+	 * Returns a deep clone of this itinerary object.
+	 * 
+	 * @return
+	 *    A deep clone of this itinerary object.
+	 */
+	public Object clone() {
+		Itinerary cloneTrip = new Itinerary();
+		if(cursor != null) {
+			TripStopNode tmp = head;
+			// Loop through list and append copied node into new trip.
+			while(tmp != null) {
+				cloneTrip.appendToTail((TripStop) tmp.getData().clone());
+				if(tmp == cursor) {
+					cloneTrip.cursor = cloneTrip.tail;
+				}
+				tmp = tmp.getNext();
+			}
+		}
+		return cloneTrip;
+	}
+	
 }

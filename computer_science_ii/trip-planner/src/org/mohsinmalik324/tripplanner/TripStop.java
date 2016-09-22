@@ -116,7 +116,18 @@ public class TripStop {
 	 */
 	public String toString() {
 		return String.format("%-25s%-75s%12s\n",
-		  location, activity, distance + " miles");
+		  location, activity, distance + " mile" +
+		  (distance != 1 ? "s" : " "));
+	}
+	
+	/**
+	 * Returns a deep clone of this trip stop.
+	 * 
+	 * @return
+	 *    A deep clone of this trip stop.
+	 */
+	public Object clone() {
+		return new TripStop(location, activity, distance);
 	}
 	
 }

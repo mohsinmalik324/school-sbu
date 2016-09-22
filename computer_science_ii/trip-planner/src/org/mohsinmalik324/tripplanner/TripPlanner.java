@@ -31,28 +31,30 @@ public class TripPlanner {
 		while(!exit) {
 			printMenu();
 			// Get operation from user input.
-			String operation = getStringInput();
+			String operation = getStringInput("Operation: ");
 			if(operation.equalsIgnoreCase("f")) {
+				// Check if cursor is pointing to anything.
 				if(tripCurrent.getCursorStop() != null) {
 					try {
 						tripCurrent.cursorForward();
 						println("Cursor moved forward.\n");
 					} catch (EndOfItineraryException e) {
-						error(e.getMessage());
+						println(e.getMessage() + "\n");
 					}
 				} else {
-					println("Cursor is not pointing to anything.");
+					println("Cursor is not pointing to anything.\n");
 				}
 			} else if(operation.equalsIgnoreCase("b")) {
+				// Check if cursor is pointing to anything.
 				if(tripCurrent.getCursorStop() != null) {
 					try {
 						tripCurrent.cursorBackward();
 						println("Cursor moved back.\n");
 					} catch (EndOfItineraryException e) {
-						error(e.getMessage());
+						println(e.getMessage() + "\n");
 					}
 				} else {
-					println("Cursor is not pointing to anything.");
+					println("Cursor is not pointing to anything.\n");
 				}
 			} else if(operation.equalsIgnoreCase("i")) {
 				TripStop newStop = createNewStop();
@@ -67,9 +69,9 @@ public class TripPlanner {
 					tripCurrent.removeCursor();
 					tripCurrent.cursorForward();
 				} catch (EndOfListException e) {
-					error(e.getMessage());
+					println(e.getMessage());
 				} catch (EndOfItineraryException e) {
-					error(e.getMessage());
+					println(e.getMessage());
 				}
 				println("Deleted cursor.\n");
 			} else if(operation.equalsIgnoreCase("h")) {
@@ -94,11 +96,11 @@ public class TripPlanner {
 					println("Cursor is not pointing to anything.");
 				} else {
 					String location = getStringInput("Edit Location, or press"
-					  + " enter without typing anything to keep:");
+					  + " enter without typing anything to keep: ");
 					String activity = getStringInput("Edit Activity, or press"
-					  + " enter without typing anything to keep:");
+					  + " enter without typing anything to keep: ");
 					int distance = getDistanceInput("Edit Distance, or press"
-					  + " -1 without typing anything to keep:", true);
+					  + " -1 without typing anything to keep: ", true);
 					if(!location.equals("")) {
 						cursorStop.setLocation(location);
 					}
@@ -108,7 +110,7 @@ public class TripPlanner {
 					if(distance != -1) {
 						cursorStop.setLocation(location);
 					}
-					println("Edits applied.");
+					println("Edits applied.\n");
 				}
 			} else if(operation.equalsIgnoreCase("s")) {
 				if(tripCurrent == tripOne) {
@@ -116,7 +118,7 @@ public class TripPlanner {
 				} else {
 					tripCurrent = tripOne;
 				}
-				println("Itinerary switched.");
+				println("Itinerary switched.\n");
 			} else if(operation.equalsIgnoreCase("o")) {
 				TripStop cursorStop = null;
 				if(tripCurrent == tripOne) {
@@ -126,28 +128,29 @@ public class TripPlanner {
 				}
 				if(cursorStop == null) {
 					println("Cursor of other itinerary is not pointing to "
-					  + "anything.");
+					  + "anything.\n");
 				} else {
-					TripStop clonedStop = (TripStop) cloneTripStop(cursorStop);
+					TripStop clonedStop = (TripStop) cursorStop.clone();
 					tripCurrent.insertBeforeCursor(clonedStop);
 					println("Cloned cursor from other itinerary and "
-					  + "inserted before cursor.");
+					  + "inserted before cursor.\n");
 				}
 			} else if(operation.equalsIgnoreCase("r")) {
-				Itinerary clone = null;
 				if(tripOne == tripCurrent) {
-					clone = cloneTrip(tripTwo);
-					tripOne = clone;
+					tripOne = (Itinerary) tripTwo.clone();
 					tripCurrent = tripOne;
 				} else {
-					clone = cloneTrip(tripOne);
-					tripTwo = clone;
+					tripTwo = (Itinerary) tripOne.clone();
 					tripCurrent = tripTwo;
 				}
 				println("Other itinerary cloned and set "
-				  + "as current itinerary.");
+				  + "as current itinerary.\n");
 			} else if(operation.equalsIgnoreCase("p")) {
-				println(tripCurrent.toString());
+				if(tripCurrent.getCursorStop() == null) {
+					println("Nothing to print.\n");
+				} else {
+					println(tripCurrent.toString());
+				}
 			} else if(operation.equalsIgnoreCase("c")) {
 				tripCurrent.resetCursorToHead();
 				while(true) {
@@ -157,11 +160,11 @@ public class TripPlanner {
 						break;
 					}
 				}
-				println("Itinerary cleared.");
+				println("Itinerary cleared.\n");
 			} else if(operation.equalsIgnoreCase("q")) {
 				exit = true;
 			} else {
-				println("Unknown operation \"" + operation + "\"");
+				println("Unknown operation \"" + operation + "\"\n");
 			}
 		}
 		scanner.close();
@@ -280,17 +283,6 @@ public class TripPlanner {
 	}
 	
 	/**
-	 * Prints a message to console with a new line
-	 * character via standard error.
-	 * 
-	 * @param message
-	 *    Message to print.
-	 */
-	private static void error(String message) {
-		System.err.println(message);
-	}
-	
-	/**
 	 * Prints the menu.
 	 */
 	private static void printMenu() {
@@ -335,14 +327,14 @@ public class TripPlanner {
 					break;
 				} else {
 					if(allowNegativeOne) {
-						error("distance must be >= 0 or equal to -1."
+						println("distance must be >= 0 or equal to -1."
 						  + " Try again.");
 					} else {
-						error("distance must be >= 0. Try again.");
+						println("distance must be >= 0. Try again.");
 					}
 				}
 			} catch (InvalidInputTypeException e) {
-				error("distance must be an int. Try again.");
+				println("distance must be an int. Try again.");
 			}
 		}
 		return distance;
@@ -361,52 +353,6 @@ public class TripPlanner {
 		// Create new trip stop.
 		TripStop newStop = new TripStop(location, activity, distance);
 		return newStop;
-	}
-	
-	/**
-	 * Deep clones the given trip stop.
-	 * 
-	 * @param stop
-	 *    The trip stop to deep clone.
-	 * 
-	 * @return
-	 *    A deep clone of the given trip stop.
-	 */
-	private static TripStop cloneTripStop(TripStop stop) {
-		return new TripStop(stop.getLocation(), stop.getActivity(),
-		  stop.getDistance());
-	}
-	
-	/**
-	 * Deep clones the given trip.
-	 * 
-	 * @param trip
-	 *    The trip to deep clone.
-	 * 
-	 * @return
-	 *    A deep clone of the given trip.
-	 */
-	private static Itinerary cloneTrip(Itinerary trip) {
-		Itinerary clonedTrip = new Itinerary();
-		if(trip.getCursorStop() != null) {
-			// Move cursor to head so deep clone will start from head.
-			trip.resetCursorToHead();
-			// Loop until EndOfItineraryException (indicating end of list).
-			while(true) {
-				// Clone the cursor trip stop.
-				TripStop clonedCursorStop = cloneTripStop(trip.getCursorStop());
-				// Append it to the tail.
-				clonedTrip.appendToTail(clonedCursorStop);
-				try {
-					// Move cursor forward.
-					trip.cursorForward();
-				} catch (EndOfItineraryException e) {
-					// If this block is ran, the end of the list was reached.
-					break;
-				}
-			}
-		}
-		return clonedTrip;
 	}
 	
 }
