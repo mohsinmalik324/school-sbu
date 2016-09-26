@@ -9,6 +9,12 @@ import java.util.Scanner;
  * @author Mohsin Malik
  *    <dd>Email: mohsin.malik@stonybrook.edu
  *    <dd>Stony Brook ID: 110880864
+ *    
+ * <dt>More:
+ *    <dd>Course: CSE214
+ *    <dd>Assignment #: 2
+ *    <dd>Recitation #: 4
+ *    <dd>TA: Jun Young Kim
  */
 public class TripPlanner {
 	
@@ -78,6 +84,8 @@ public class TripPlanner {
 				tripCurrent.resetCursorToHead();
 				println("Cursor moved to head.\n");
 			} else if(operation.equalsIgnoreCase("t")) {
+				// See if cursor is null, then move cursor forward until
+				// EndOfItineraryException.
 				if(tripCurrent.getCursorStop() != null) {
 					while(true) {
 						try {
@@ -88,19 +96,21 @@ public class TripPlanner {
 					}
 					println("Cursor moved to tail.\n");
 				} else {
-					println("Cursor is not pointing to anything.");
+					println("Cursor is not pointing to anything.\n");
 				}
 			} else if(operation.equalsIgnoreCase("e")) {
 				TripStop cursorStop = tripCurrent.getCursorStop();
 				if(cursorStop == null) {
-					println("Cursor is not pointing to anything.");
+					println("Cursor is not pointing to anything.\n");
 				} else {
+					// Get user input for edits.
 					String location = getStringInput("Edit Location, or press"
 					  + " enter without typing anything to keep: ");
 					String activity = getStringInput("Edit Activity, or press"
 					  + " enter without typing anything to keep: ");
 					int distance = getDistanceInput("Edit Distance, or press"
 					  + " -1 without typing anything to keep: ", true);
+					// Check the field for edits before applying changes.
 					if(!location.equals("")) {
 						cursorStop.setLocation(location);
 					}
@@ -121,6 +131,7 @@ public class TripPlanner {
 				println("Itinerary switched.\n");
 			} else if(operation.equalsIgnoreCase("o")) {
 				TripStop cursorStop = null;
+				// Get the cursor stop of the other itinerary.
 				if(tripCurrent == tripOne) {
 					cursorStop = tripTwo.getCursorStop();
 				} else {
@@ -130,12 +141,14 @@ public class TripPlanner {
 					println("Cursor of other itinerary is not pointing to "
 					  + "anything.\n");
 				} else {
+					// Clone it and insert.
 					TripStop clonedStop = (TripStop) cursorStop.clone();
 					tripCurrent.insertBeforeCursor(clonedStop);
 					println("Cloned cursor from other itinerary and "
 					  + "inserted before cursor.\n");
 				}
 			} else if(operation.equalsIgnoreCase("r")) {
+				// Clone the other itinerary.
 				if(tripOne == tripCurrent) {
 					tripOne = (Itinerary) tripTwo.clone();
 					tripCurrent = tripOne;
@@ -150,8 +163,33 @@ public class TripPlanner {
 					println("Nothing to print.\n");
 				} else {
 					println(tripCurrent.toString());
+					print("Summary: This trip has " +
+					  tripCurrent.getStopsCount() + " stop(s), totaling " +
+					  tripCurrent.getTotalDistance() + " mile(s). ");
+					int cursorPos = 1, stopsBefore = 0, stopsAfter = 0;
+					TripStop tmp = tripCurrent.getCursorStop();
+					tripCurrent.resetCursorToHead();
+					// Get the cursor position by looping from the beginning
+					// until it hits its old spot.
+					while(tripCurrent.getCursorStop() != tmp) {
+						cursorPos++;
+						try {
+							tripCurrent.cursorForward();
+						} catch (EndOfItineraryException e) {
+							break;
+						}
+					}
+					// Calculate stops after and before based on cursor
+					// position.
+					stopsAfter = tripCurrent.getStopsCount() - cursorPos;
+					stopsBefore = tripCurrent.getStopsCount() - stopsAfter - 1;
+					println("There are " + stopsBefore + " stop(s) before the"
+					  + " cursor and " + stopsAfter + " stop(s) after the "
+					  + "cursor.\n");
 				}
 			} else if(operation.equalsIgnoreCase("c")) {
+				// Reset cursor to head and remove cursor until
+				// EndOfListException.
 				tripCurrent.resetCursorToHead();
 				while(true) {
 					try {
@@ -297,7 +335,7 @@ public class TripPlanner {
 		println("E-Edit cursor");
 		println("S-Switch itinerary");
 		println("O-Insert cursor from other itinerary "
-		  + "after cursor from this itinerary");
+		  + "before cursor from this itinerary");
 		println("R-Replace this itinerary with a copy "
 		  + "of the other itinerary");
 		println("P-Print current itinerary, including summary");
@@ -347,6 +385,7 @@ public class TripPlanner {
 	 *    The new trip stop.
 	 */
 	private static TripStop createNewStop() {
+		// Get input.
 		String location = getStringInput("Enter location: ");
 		String activity = getStringInput("Enter activity: ");
 		int distance = getDistanceInput("Enter distance: ", false);

@@ -7,6 +7,12 @@ package org.mohsinmalik324.tripplanner;
  * @author Mohsin Malik
  *    <dd>Email: mohsin.malik@stonybrook.edu
  *    <dd>Stony Brook ID: 110880864
+ *    
+ * <dt>More:
+ *    <dd>Course: CSE214
+ *    <dd>Assignment #: 2
+ *    <dd>Recitation #: 4
+ *    <dd>TA: Jun Young Kim
  */
 public class Itinerary {
 	
@@ -126,7 +132,9 @@ public class Itinerary {
 		if(newStop == null) {
 			throw new IllegalArgumentException("The new stop is null.");
 		}
+		// Wrap trip stop.
 		TripStopNode newNode = new TripStopNode(newStop);
+		// Check different cases for insertion method.
 		if(cursor == null) {
 			head = newNode;
 			tail = newNode;
@@ -140,6 +148,7 @@ public class Itinerary {
 			}
 		}
 		cursor = newNode;
+		// Increment stops and distance.
 		stops++;
 		distance += newNode.getData().getDistance();
 	}
@@ -169,7 +178,9 @@ public class Itinerary {
 		if(newStop == null) {
 			throw new IllegalArgumentException("The new stop is null.");
 		}
+		// Wrap trip stop.
 		TripStopNode newNode = new TripStopNode(newStop);
+		// Check for different cases for node appending.
 		if(tail == null) {
 			head = newNode;
 			tail = newNode;
@@ -180,6 +191,7 @@ public class Itinerary {
 			tail.setNext(newNode);
 			tail = newNode;
 		}
+		// Increment stops and distance travelled.
 		stops++;
 		distance += newNode.getData().getDistance();
 	}
@@ -209,6 +221,7 @@ public class Itinerary {
 			throw new EndOfListException();
 		}
 		TripStop toReturn = cursor.getData();
+		// Check all the cases for node removal.
 		if(head == cursor && tail == cursor) {
 			head = null;
 			tail = null;
@@ -230,6 +243,7 @@ public class Itinerary {
 			next.setPrevious(prev);
 			cursor = prev;
 		}
+		// Decrement stops and distance travelled.
 		stops--;
 		distance -= toReturn.getDistance();
 		return toReturn;
@@ -244,7 +258,9 @@ public class Itinerary {
 	public String toString() {
 		TripStopNode tmp = head;
 		String toString = "";
+		// Loop through all nodes and toString() them.
 		while(tmp != null) {
+			// Apply prefix.
 			String prefix = " ";
 			if(cursor == tmp) {
 				prefix = ">";
