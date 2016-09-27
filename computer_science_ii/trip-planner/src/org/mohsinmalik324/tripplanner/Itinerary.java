@@ -128,7 +128,8 @@ public class Itinerary {
 	 * @throws IllegalArgumentException
 	 *    <code>newStop</code> is null.
 	 */
-	public void insertBeforeCursor(TripStop newStop) throws IllegalArgumentException {
+	public void insertBeforeCursor(TripStop newStop)
+	  throws IllegalArgumentException {
 		if(newStop == null) {
 			throw new IllegalArgumentException("The new stop is null.");
 		}
@@ -138,14 +139,18 @@ public class Itinerary {
 		if(cursor == null) {
 			head = newNode;
 			tail = newNode;
+		} else if(cursor == head) {
+			newNode.setPrevious(null);
+			newNode.setNext(cursor);
+			cursor.setPrevious(newNode);
+			head = newNode;
+			cursor = newNode;
 		} else {
 			newNode.setPrevious(cursor.getPrevious());
 			newNode.setNext(cursor);
-			if(newNode.getPrevious() != null) {
-				newNode.getPrevious().setNext(newNode);
-			} else {
-				head = newNode;
-			}
+			cursor.getPrevious().setNext(newNode);
+			cursor.setPrevious(newNode);
+			cursor = newNode;
 		}
 		cursor = newNode;
 		// Increment stops and distance.
@@ -174,7 +179,8 @@ public class Itinerary {
 	 * @throws IllegalArgumentException
 	 *    <code>newStop</code> is null.
 	 */
-	public void appendToTail(TripStop newStop) throws IllegalArgumentException {
+	public void appendToTail(TripStop newStop)
+	  throws IllegalArgumentException {
 		if(newStop == null) {
 			throw new IllegalArgumentException("The new stop is null.");
 		}
@@ -250,10 +256,10 @@ public class Itinerary {
 	}
 	
 	/**
-	 * Returns a table of the nodes in this Itinerary.
+	 * Returns a String table of the nodes in this Itinerary.
 	 * 
 	 * @return
-	 *    A table of the nodes in this Itinerary.
+	 *    A String table of the nodes in this Itinerary.
 	 */
 	public String toString() {
 		TripStopNode tmp = head;

@@ -20,7 +20,7 @@ public class TripStop {
 	private int distance;
 	
 	/**
-	 * Returns an instance of <code>TripStop</code>.
+	 * Returns an instance of <code>TripStop</code> with default arguments.
 	 */
 	public TripStop() {
 		this(null, null, 0);
@@ -121,9 +121,9 @@ public class TripStop {
 	 *    A formatted row of the information in this trip stop.
 	 */
 	public String toString() {
-		return String.format("%-25s%-75s%12s\n",
-		  location, activity, distance + " mile" +
-		  (distance != 1 ? "s" : " "));
+		// Return String formatted for 25 characters per field.
+		return String.format("%-25s%-25s%25s\n",
+		  location, activity, distance + " mile(s)");
 	}
 	
 	/**

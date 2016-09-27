@@ -118,7 +118,7 @@ public class TripPlanner {
 						cursorStop.setActivity(activity);
 					}
 					if(distance != -1) {
-						cursorStop.setLocation(location);
+						cursorStop.setDistance(distance);
 					}
 					println("Edits applied.\n");
 				}
@@ -166,13 +166,13 @@ public class TripPlanner {
 					print("Summary: This trip has " +
 					  tripCurrent.getStopsCount() + " stop(s), totaling " +
 					  tripCurrent.getTotalDistance() + " mile(s). ");
-					int cursorPos = 1, stopsBefore = 0, stopsAfter = 0;
+					int stopsBefore = 0, stopsAfter = 0;
 					TripStop tmp = tripCurrent.getCursorStop();
 					tripCurrent.resetCursorToHead();
 					// Get the cursor position by looping from the beginning
 					// until it hits its old spot.
 					while(tripCurrent.getCursorStop() != tmp) {
-						cursorPos++;
+						stopsBefore++;
 						try {
 							tripCurrent.cursorForward();
 						} catch (EndOfItineraryException e) {
@@ -181,8 +181,7 @@ public class TripPlanner {
 					}
 					// Calculate stops after and before based on cursor
 					// position.
-					stopsAfter = tripCurrent.getStopsCount() - cursorPos;
-					stopsBefore = tripCurrent.getStopsCount() - stopsAfter - 1;
+					stopsAfter = tripCurrent.getStopsCount() - 1 - stopsBefore;
 					println("There are " + stopsBefore + " stop(s) before the"
 					  + " cursor and " + stopsAfter + " stop(s) after the "
 					  + "cursor.\n");
@@ -247,7 +246,8 @@ public class TripPlanner {
 	 * @throws InvalidInputTypeException
 	 *     User input was not an int.
 	 */
-	private static int getIntInput(String prompt) throws InvalidInputTypeException {
+	private static int getIntInput(String prompt)
+	  throws InvalidInputTypeException {
 		print(prompt);
 		return getIntInput();
 	}
@@ -272,30 +272,6 @@ public class TripPlanner {
 		} catch(NumberFormatException e) {
 			throw new InvalidInputTypeException("Input "
 			  + "type must be an integer.");
-		}
-	}
-	
-	/**
-	 * Takes in user input as a double.
-	 * 
-	 * @return
-	 *    User input as a double.
-	 * 
-	 * <dt>Precondition:
-	 *    <dd>User input must be a double.
-	 * 
-	 * @throws InvalidInputTypeException
-	 *     User input was not a double.
-	 */
-	@SuppressWarnings("unused")
-	private static double getDoubleInput() throws InvalidInputTypeException {
-		try {
-			// Get user input as a String then convert to double.
-			double doubleInput = Double.valueOf(getStringInput());
-			return doubleInput;
-		} catch(NumberFormatException e) {
-			throw new InvalidInputTypeException("Input "
-			  + "type must be a double.");
 		}
 	}
 	
