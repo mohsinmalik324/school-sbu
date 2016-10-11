@@ -3,7 +3,7 @@ package org.mohsinmalik324.jsformatter;
 import java.util.EmptyStackException;
 
 /**
- * 
+ * An instance of this class can format JavaScript code.
  * 
  * @author Mohsin Malik
  *    <dd>Email: mohsin.malik@stonybrook.edu
@@ -11,7 +11,7 @@ import java.util.EmptyStackException;
  *    
  * <dt>More:
  *    <dd>Course: CSE214
- *    <dd>Assignment #: 2
+ *    <dd>Assignment #: 3
  *    <dd>Recitation #: 4
  *    <dd>TA: Jun Young Kim
  */

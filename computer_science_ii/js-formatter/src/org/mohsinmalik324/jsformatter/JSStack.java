@@ -11,7 +11,7 @@ import java.util.Stack;
  *    
  * <dt>More:
  *    <dd>Course: CSE214
- *    <dd>Assignment #: 2
+ *    <dd>Assignment #: 3
  *    <dd>Recitation #: 4
  *    <dd>TA: Jun Young Kim
  */
