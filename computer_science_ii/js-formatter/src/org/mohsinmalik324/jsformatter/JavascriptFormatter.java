@@ -90,7 +90,8 @@ public class JavascriptFormatter {
 					boolean extraBrace = false;
 					boolean missingParen = false;
 					// If there is a tab, remove it.
-					if(formattedCode.charAt(formattedCode.length() - 1) == '\t') {
+					if(formattedCode.charAt(formattedCode.length() - 1)
+					  == '\t') {
 						formattedCode = formattedCode.substring(0,
 						  formattedCode.length() - 1);
 					}
