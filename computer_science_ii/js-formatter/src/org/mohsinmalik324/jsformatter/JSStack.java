@@ -3,7 +3,7 @@ package org.mohsinmalik324.jsformatter;
 import java.util.Stack;
 
 /**
- * Represents a stack.
+ * Represents a stack which stores BlockTypes.
  * 
  * @author Mohsin Malik
  *    <dd>Email: mohsin.malik@stonybrook.edu

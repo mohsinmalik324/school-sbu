@@ -30,15 +30,19 @@ public class JavascriptFormatterRunner {
 	 * @param args
 	 *    Arguments passes to the program.
 	 */
-	public static void main(String[] args) {
-		JavascriptFormatter formatter = new JavascriptFormatter();
+	public static void main1(String[] args) {
+		// Get file input.
 		String input = "";
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("File name: ");
 		String fileName = scanner.nextLine();
 		scanner.close();
 		File file = new File(fileName);
+		// Check if file exists.
 		if(file.exists()) {
+			// Initialize main formatter object.
+			JavascriptFormatter formatter = new JavascriptFormatter();
+			// Read contents of file into a String.
 			BufferedReader reader = null;
 			try {
 				InputStream in = new FileInputStream(file);
@@ -46,17 +50,17 @@ public class JavascriptFormatterRunner {
 				input = "";
 				String line = reader.readLine();
 				while(line != null) {
-					input += line;// + "\n";
+					input += line;
 					line = reader.readLine();
 				}
-				// Remove last new line character.
-				//input = input.substring(0, input.length() - 1);
+				// Output formatted code.
 				System.out.print(formatter.format(input));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
+				// Close reader.
 				if(reader != null) {
 					try {
 						reader.close();

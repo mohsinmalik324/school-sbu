@@ -14,7 +14,20 @@ package org.mohsinmalik324.jsformatter;
  *    <dd>TA: Jun Young Kim
  */
 public enum BlockType {
+	
+	/**
+	 * Represents an opening curly brace.
+	 */
 	BRACE,
+	
+	/**
+	 * Represents an opening parenthesis.
+	 */
 	PAREN,
+	
+	/**
+	 * Represents an opening parenthesis associated with a for loop.
+	 */
 	FOR
+	
 }
