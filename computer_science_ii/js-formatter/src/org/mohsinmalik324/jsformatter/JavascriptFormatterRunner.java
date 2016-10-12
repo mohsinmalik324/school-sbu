@@ -30,7 +30,7 @@ public class JavascriptFormatterRunner {
 	 * @param args
 	 *    Arguments passes to the program.
 	 */
-	public static void main1(String[] args) {
+	public static void main(String[] args) {
 		// Get file input.
 		String input = "";
 		Scanner scanner = new Scanner(System.in);
