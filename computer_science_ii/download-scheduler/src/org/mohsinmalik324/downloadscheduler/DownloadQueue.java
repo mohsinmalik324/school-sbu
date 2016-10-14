@@ -22,4 +22,42 @@ public class DownloadQueue extends LinkedList<DownloadJob> {
 	 */
 	private static final long serialVersionUID = 7003636788044224140L;
 	
+	/**
+	 * Enqueues item into queue.
+	 * 
+	 * @param job The item to enqueue.
+	 */
+	public void enqueue(DownloadJob job) {
+		addLast(job);
+	}
+	
+	/**
+	 * Dequeues from queue and returns.
+	 * 
+	 * @return The dequeued item.
+	 */
+	public DownloadJob dequeue() throws EmptyQueueException {
+		if(isEmpty()) {
+			throw new EmptyQueueException();
+		}
+		return removeFirst();
+	}
+	
+	/**
+	 * Returns a String representation of this queue.
+	 * 
+	 * @return A String representation of this queue.
+	 */
+	public String toString() {
+		if(isEmpty()) {
+			return "empty";
+		}
+		String toString = "";
+		for(DownloadJob job : this) {
+			toString += "[#" + job.getId() + ":" + job.getDownloadSize() +
+			  "Mb]";
+		}
+		return toString;
+	}
+	
 }

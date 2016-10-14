@@ -20,45 +20,79 @@ public class DownloadJob {
 	private int timeRequested;
 	private boolean isPremium;
 	private int id;
+	
+	/**
+	 * Returns an instance of DownloadJob.
+	 * 
+	 * @param downloadSize The download size of this job.
+	 * 
+	 * @param timeRequested When the job was requested.
+	 * 
+	 * @param isPremium If the job is premium.
+	 * 
+	 * @param id The ID of the download job.
+	 */
+	public DownloadJob(int downloadSize, int timeRequested, boolean isPremium,
+	  int id) {
+		this.downloadSize = downloadSize;
+		downloadSizeRemaining = downloadSize;
+		this.timeRequested = timeRequested;
+		this.isPremium = isPremium;
+		this.id = id;
+	}
 
+	/**
+	 * Returns the download size.
+	 * 
+	 * @return The download size.
+	 */
 	public int getDownloadSize() {
 		return downloadSize;
 	}
 
-	public void setDownloadSize(int downloadSize) {
-		this.downloadSize = downloadSize;
-	}
-
+	/**
+	 * Returns the download size remaining.
+	 * 
+	 * @return The download size remaining.
+	 */
 	public int getDownloadSizeRemaining() {
 		return downloadSizeRemaining;
 	}
 
+	/**
+	 * Sets the download size remaining.
+	 * 
+	 * @param downloadSizeRemaining The new download size remaining.
+	 */
 	public void setDownloadSizeRemaining(int downloadSizeRemaining) {
 		this.downloadSizeRemaining = downloadSizeRemaining;
 	}
 
+	/**
+	 * Returns the time requested.
+	 * 
+	 * @return The time requested.
+	 */
 	public int getTimeRequested() {
 		return timeRequested;
 	}
 
-	public void setTimeRequested(int timeRequested) {
-		this.timeRequested = timeRequested;
-	}
-
+	/**
+	 * Returns if the download is premium.
+	 * 
+	 * @return If the download is premium.
+	 */
 	public boolean isPremium() {
 		return isPremium;
 	}
 
-	public void setPremium(boolean isPremium) {
-		this.isPremium = isPremium;
-	}
-
+	/**
+	 * Returns the ID of this download.
+	 * 
+	 * @return The ID of this download.
+	 */
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 }

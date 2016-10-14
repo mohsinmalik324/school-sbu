@@ -1,8 +1,8 @@
 package org.mohsinmalik324.downloadscheduler;
 
 /**
- * <code>InvalidInputTypeException</code> is an exception thrown when user
- * input does not match the type desired.
+ * <code>EmptyQueueException</code> is an exception thrown when a queue is
+ * empty.
  * 
  * @author Mohsin Malik
  *    <dd>Email: mohsin.malik@stonybrook.edu
@@ -14,29 +14,29 @@ package org.mohsinmalik324.downloadscheduler;
  *    <dd>Recitation #: 4
  *    <dd>TA: Jun Young Kim
  */
-public class InvalidInputTypeException extends Exception {
-
+public class EmptyQueueException extends Exception {
+	
 	/**
 	 * Version ID of this exception.
 	 */
 	private static final long serialVersionUID = 2490824033179545387L;
 	
 	/**
-	 * Returns an instance of <code>InvalidInputTypeException</code>. Contains
+	 * Returns an instance of <code>EmptyQueueException</code>. Contains
 	 * a default message.
 	 */
-	public InvalidInputTypeException() {
-		this("Invalid input type.");
+	public EmptyQueueException() {
+		this("Queue is empty.");
 	}
 	
 	/**
-	 * Returns an instance of <code>InvalidInputTypeException</code>. Contains
+	 * Returns an instance of <code>EmptyQueueException</code>. Contains
 	 * a custom message.
 	 * 
 	 * @param message
 	 *    A custom message for the exception.
 	 */
-	public InvalidInputTypeException(String message) {
+	public EmptyQueueException(String message) {
 		super(message);
 	}
 	

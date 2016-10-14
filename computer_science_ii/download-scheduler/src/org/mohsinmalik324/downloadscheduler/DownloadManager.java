@@ -25,16 +25,19 @@ public class DownloadManager {
 	 * @param args
 	 *    Arguments passed to program.
 	 */
-	public static void main1(String[] args) {
+	public static void main(String[] args) {
 		scanner = new Scanner(System.in);
 		try {
 			// Get input.
 			int servers = getIntInput("Number of servers: ");
 			int downloadSpeed = getIntInput("Download speed: ");
 			int time = getIntInput("Length of time: ");
-			double premiumProb = getDoubleInput("Probability of new premium job per timestep: ");
-			double regularProb = getDoubleInput("Probability of new regular job per timestep: ");
-			DownloadScheduler scheduler = new DownloadScheduler(time, downloadSpeed, servers, premiumProb, regularProb);
+			double premiumProb = getDoubleInput("Probability of new premium"
+			  + " job per timestep: ");
+			double regularProb = getDoubleInput("Probability of new regular"
+			  + " job per timestep: ");
+			DownloadScheduler scheduler = new DownloadScheduler(time,
+			  downloadSpeed, servers, premiumProb, regularProb);
 			println(scheduler.simulate());
 		} catch (InvalidInputTypeException e) {
 			println(e.getMessage());
@@ -66,7 +69,8 @@ public class DownloadManager {
 	 * 
 	 * @throws InvalidInputTypeException An int was not input.
 	 */
-	public static int getIntInput(String prompt) throws InvalidInputTypeException {
+	public static int getIntInput(String prompt)
+	  throws InvalidInputTypeException {
 		try {
 			return Integer.valueOf(getStringInput(prompt));
 		} catch(NumberFormatException e) {
@@ -86,7 +90,8 @@ public class DownloadManager {
 	 * 
 	 * @throws InvalidInputTypeException A double was not input.
 	 */
-	public static double getDoubleInput(String prompt) throws InvalidInputTypeException {
+	public static double getDoubleInput(String prompt)
+	  throws InvalidInputTypeException {
 		try {
 			return Double.valueOf(getStringInput(prompt));
 		} catch(NumberFormatException e) {
