@@ -27,21 +27,27 @@ public class DownloadManager {
 	 */
 	public static void main(String[] args) {
 		scanner = new Scanner(System.in);
-		try {
-			// Get input.
-			int servers = getIntInput("Number of servers: ");
-			int downloadSpeed = getIntInput("Download speed: ");
-			int time = getIntInput("Length of time: ");
-			double premiumProb = getDoubleInput("Probability of new premium"
-			  + " job per timestep: ");
-			double regularProb = getDoubleInput("Probability of new regular"
-			  + " job per timestep: ");
-			DownloadScheduler scheduler = new DownloadScheduler(time,
-			  downloadSpeed, servers, premiumProb, regularProb);
-			println(scheduler.simulate());
-		} catch (InvalidInputTypeException e) {
-			println(e.getMessage());
+		int servers = 0;
+		int downloadSpeed = 0;
+		int time = 0;
+		double premiumProb = 0D;
+		double regularProb = 0D;
+		// Get input.
+		while((servers = getIntInput("Number of servers: ")) <= 0) {
+			println("Input must be positive. Try again.");
 		}
+		while((downloadSpeed = getIntInput("Download speed: ")) <= 0) {
+			println("Input must be positive. Try again.");
+		}
+		while((time = getIntInput("Length of time: ")) < 0) {
+			println("Input must be non-negative. Try again.");
+		}
+		premiumProb = getDoubleInput("Probability of new premium job per timestep: ");
+		regularProb = getDoubleInput("Probability of new regular job per timestep: ");
+		DownloadScheduler scheduler = new DownloadScheduler(time,
+		  downloadSpeed, servers, premiumProb, regularProb);
+		println(scheduler.simulate());
+		// Close scanner.
 		scanner.close();
 	}
 	
@@ -63,18 +69,14 @@ public class DownloadManager {
 	 * @param prompt Message displayed to user.
 	 * 
 	 * @return User int input.
-	 * 
-	 * <dt>Precondition:
-	 *    <dd>User input must be an int.
-	 * 
-	 * @throws InvalidInputTypeException An int was not input.
 	 */
-	public static int getIntInput(String prompt)
-	  throws InvalidInputTypeException {
-		try {
-			return Integer.valueOf(getStringInput(prompt));
-		} catch(NumberFormatException e) {
-			throw new InvalidInputTypeException("Input must be an integer.");
+	public static int getIntInput(String prompt) {
+		while(true) {
+			try {
+				return Integer.valueOf(getStringInput(prompt));
+			} catch(NumberFormatException e) {
+				println("Input must be an int. Try again.");
+			}
 		}
 	}
 	
@@ -84,18 +86,14 @@ public class DownloadManager {
 	 * @param prompt Message displayed to user.
 	 * 
 	 * @return User double input.
-	 * 
-	 * <dt>Precondition:
-	 *    <dd>User input must be a double.
-	 * 
-	 * @throws InvalidInputTypeException A double was not input.
 	 */
-	public static double getDoubleInput(String prompt)
-	  throws InvalidInputTypeException {
-		try {
-			return Double.valueOf(getStringInput(prompt));
-		} catch(NumberFormatException e) {
-			throw new InvalidInputTypeException("Input must be a double.");
+	public static double getDoubleInput(String prompt) {
+		while(true) {
+			try {
+				return Double.valueOf(getStringInput(prompt));
+			} catch(NumberFormatException e) {
+				println("Input must be a double. Try again.");
+			}
 		}
 	}
 	

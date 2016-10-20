@@ -25,11 +25,8 @@ public class DownloadJob {
 	 * Returns an instance of DownloadJob.
 	 * 
 	 * @param downloadSize The download size of this job.
-	 * 
 	 * @param timeRequested When the job was requested.
-	 * 
 	 * @param isPremium If the job is premium.
-	 * 
 	 * @param id The ID of the download job.
 	 */
 	public DownloadJob(int downloadSize, int timeRequested, boolean isPremium,

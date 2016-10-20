@@ -23,18 +23,24 @@ public class DownloadQueue extends LinkedList<DownloadJob> {
 	private static final long serialVersionUID = 7003636788044224140L;
 	
 	/**
-	 * Enqueues item into queue.
+	 * Appends the item to the end of the list.
 	 * 
 	 * @param job The item to enqueue.
+	 * 
+	 * <dt>Postcondition:
+	 *    <dd>The appended item is now the last item in the list.
 	 */
 	public void enqueue(DownloadJob job) {
 		addLast(job);
 	}
 	
 	/**
-	 * Dequeues from queue and returns.
+	 * Removes the first item in the list and returns it.
 	 * 
-	 * @return The dequeued item.
+	 * @return The first item in the list.
+	 * 
+	 * <dt>Postcondition:
+	 *    <dd>First item in the list has been removed.
 	 */
 	public DownloadJob dequeue() throws EmptyQueueException {
 		if(isEmpty()) {

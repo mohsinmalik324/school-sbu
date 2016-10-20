@@ -1,7 +1,7 @@
 package org.mohsinmalik324.downloadscheduler;
 
 /**
- * DownloadScheduler simulates the downloads.
+ * DownloadScheduler simulates a series of downloads.
  * 
  * @author Mohsin Malik
  *    <dd>Email: mohsin.malik@stonybrook.edu
@@ -31,15 +31,9 @@ public class DownloadScheduler {
 	 * @param servers The amount of servers.
 	 * @param probPremium The probability of a new premium job in a timestep.
 	 * @param probRegular The probability of a new regular job in a timestep.
-	 * 
-	 * @throws IllegalArgumentException
-	 *    simulationEndTime is less than 0, downloadSpeed is less than 1,
-	 *    servers is less than 1, probPremium is less than 0 or greater than
-	 *    1, or probRegular is less than 0 or greater than 1.
 	 */
 	public DownloadScheduler(int simulationEndTime, int downloadSpeed,
-	  int servers, double probPremium, double probRegular)
-	  throws IllegalArgumentException {
+	  int servers, double probPremium, double probRegular) {
 		this.simulationEndTime = simulationEndTime;
 		this.downloadSpeed = downloadSpeed;
 		regularQ = new DownloadQueue();
@@ -55,6 +49,7 @@ public class DownloadScheduler {
 	 */
 	public String simulate() {
 		String simulation = "";
+		// Initialize stats variables.
 		int jobsServed = 0;
 		int premiumJobsServed = 0;
 		int regularJobsServed = 0;
@@ -65,8 +60,10 @@ public class DownloadScheduler {
 		simulation = append(simulation, "--------------------------"
 		  + "Simulation Starting--------------------------\n");
 		int id = 1;
+		// Loop through timestamps.
 		for(currentTime = 0; currentTime <= simulationEndTime; currentTime++) {
 			simulation = append(simulation, "Timestep " + currentTime + ":\n");
+			// Get new jobs.
 			int regNewJob = randomizer.getRegular();
 			int preNewJob = randomizer.getPremium();
 			simulation = append(simulation, "\t\tNew Regular Job: ");
@@ -90,8 +87,10 @@ public class DownloadScheduler {
 				  ": Size: " + job.getDownloadSize() + "Mb\n");
 			}
 			String finishedJobs = "";
+			// Loop through the servers.
 			for(int i = 0; i < currentJobs.length; i++) {
 				DownloadJob job = currentJobs[i];
+				// Check if job is done.
 				if(job != null && job.getDownloadSizeRemaining() == 0) {
 					int waitTime = currentTime - job.getTimeRequested();
 					finishedJobs += "Job " + job.getId() + " finished, " +
@@ -109,6 +108,7 @@ public class DownloadScheduler {
 					}
 					currentJobs[i] = null;
 				}
+				// Check if server is idle.
 				if(currentJobs[i] == null) {
 					job = null;
 					try {
@@ -123,10 +123,12 @@ public class DownloadScheduler {
 					currentJobs[i] = job;
 				}
 			}
+			// Print queues.
 			simulation = append(simulation, "\t\tRegularQueue:" +
 			  regularQ.toString() + '\n');
 			simulation = append(simulation, "\t\tPremiumQueue:" +
 			  premiumQ.toString() + '\n');
+			// Loop through servers and update file size remaining.
 			for(int i = 1; i <= currentJobs.length; i++) {
 				simulation = append(simulation, serverToString(i) + '\n');
 				DownloadJob job = currentJobs[i - 1];
@@ -143,6 +145,7 @@ public class DownloadScheduler {
 			simulation = append(simulation, "----------------------------"
 			  + "-------------------------------------------\n");
 		}
+		// Calculate and print stats.
 		regularJobsServed = jobsServed - premiumJobsServed;
 		simulation = append(simulation, "Simulation Ended:\n");
 		simulation = append(simulation, "\t\tTotal jobs served: " +
@@ -157,8 +160,8 @@ public class DownloadScheduler {
 		  premiumDataServed + "Mb\n");
 		simulation = append(simulation, "\t\tTotal Regular Data served: " +
 		  (dataServed - premiumDataServed) + "Mb\n");
-		averagePremiumWaitTime /= premiumJobsServed;
-		averageRegularWaitTime /= regularJobsServed;
+		averagePremiumWaitTime /= (premiumJobsServed != 0 ? premiumJobsServed : 1);
+		averageRegularWaitTime /= (regularJobsServed != 0 ? regularJobsServed : 1);
 		simulation = append(simulation, "\t\tAverage Premium Wait Time: " +
 		  averagePremiumWaitTime + '\n');
 		simulation = append(simulation, "\t\tAverage Regular Wait Time: " +
@@ -208,7 +211,6 @@ public class DownloadScheduler {
 	 * Appends a String to another String and returns it.
 	 * 
 	 * @param original The String to be appended to.
-	 * 
 	 * @param toAppend The String to append to original.
 	 * 
 	 * @return The appended String.
