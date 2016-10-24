@@ -63,7 +63,7 @@ public class DownloadScheduler {
 		// Loop through timestamps.
 		for(currentTime = 0; currentTime <= simulationEndTime; currentTime++) {
 			simulation = append(simulation, "Timestep " + currentTime + ":\n");
-			// Get new jobs.
+			// Get new jobs and print them.
 			int regNewJob = randomizer.getRegular();
 			int preNewJob = randomizer.getPremium();
 			simulation = append(simulation, "\t\tNew Regular Job: ");
@@ -87,16 +87,17 @@ public class DownloadScheduler {
 				  ": Size: " + job.getDownloadSize() + "Mb\n");
 			}
 			String finishedJobs = "";
-			// Loop through the servers.
+			// Loop through the servers to check for finished jobs.
 			for(int i = 0; i < currentJobs.length; i++) {
 				DownloadJob job = currentJobs[i];
 				// Check if job is done.
 				if(job != null && job.getDownloadSizeRemaining() == 0) {
 					int waitTime = currentTime - job.getTimeRequested();
-					finishedJobs += "Job " + job.getId() + " finished, " +
-				      (job.isPremium() ? "Premium" : "Regular") + " job. " +
+					finishedJobs = append(finishedJobs, "Job " + job.getId() +
+					  " finished, " +
+					  (job.isPremium() ? "Premium" : "Regular") + " job. " +
 					  job.getDownloadSize() + "Mb served, Total wait time: " +
-				      waitTime + '\n';
+					  waitTime + '\n');
 					jobsServed++;
 					dataServed += job.getDownloadSize();
 					if(job.isPremium()) {
@@ -160,8 +161,10 @@ public class DownloadScheduler {
 		  premiumDataServed + "Mb\n");
 		simulation = append(simulation, "\t\tTotal Regular Data served: " +
 		  (dataServed - premiumDataServed) + "Mb\n");
-		averagePremiumWaitTime /= (premiumJobsServed != 0 ? premiumJobsServed : 1);
-		averageRegularWaitTime /= (regularJobsServed != 0 ? regularJobsServed : 1);
+		averagePremiumWaitTime /= (premiumJobsServed != 0 ?
+		  premiumJobsServed : 1);
+		averageRegularWaitTime /= (regularJobsServed != 0 ?
+		  regularJobsServed : 1);
 		simulation = append(simulation, "\t\tAverage Premium Wait Time: " +
 		  averagePremiumWaitTime + '\n');
 		simulation = append(simulation, "\t\tAverage Regular Wait Time: " +
