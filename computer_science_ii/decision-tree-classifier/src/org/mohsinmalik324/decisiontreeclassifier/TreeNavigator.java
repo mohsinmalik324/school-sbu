@@ -110,9 +110,7 @@ public class TreeNavigator {
 		String[] nodePosition = parts[0].split("-");
 		String[] keys = parts[1].split(",");
 		TreeNode node = new TreeNode();
-		for(String key : keys) {
-			node.getKeywords().add(key);
-		}
+		node.setKeywords(keys);
 		int maxDepth = nodePosition.length - 1;
 		
 		// Check if inserting root node.
@@ -159,7 +157,7 @@ public class TreeNavigator {
 		
 		while(cursor != null) {
 			if(cursor.isLeaf()) {
-				classification = cursor.getKeywords().get(0);
+				classification = cursor.getKeywords()[0];
 				break;
 			}
 			boolean setRight = false;
@@ -201,33 +199,99 @@ public class TreeNavigator {
 	 * @return The current path of the cursor.
 	 */
 	public String getPath() {
+		// This method will use a helper method to return a raw version of the
+		// path taken to get to the cursor node. This method will then clean up
+		// the raw version to make it look pretty.
 		if(cursor == null) {
 			return null;
 		}
+		// Get raw path.
 		String path = getPath(root, cursor);
-		String[] pathArray = path.split(",");
-		TreeNode tmp = root;
-		for(int i = pathArray.length - 1; i >= 0; i++) {
-			// TODO: finish this
+		if(path == null) {
+			return path;
 		}
-		return path;
+		// Split path by comma separator.
+		String[] pathArray = path.split(",");
+		// If path length is 1, return first element.
+		if(pathArray.length == 1) {
+			return pathArray[0];
+		}
+		TreeNode tmp = root;
+		String actualPath = "";
+		// Start from second to last until 0 OR tmp is null.
+		for(int i = pathArray.length - 2; i >= 0 && tmp != null; i--) {
+			// Get current path part.
+			String pathPart = pathArray[i];
+			// Get left and right child.
+			TreeNode left = tmp.getLeft();
+			TreeNode right = tmp.getRight();
+			boolean isYes;
+			// Check if the left child contains the keyword.
+			// Otherwise, check if right child contains keyword.
+			if(left != null && left.containsKeyword(pathPart)) {
+				isYes = false;
+			} else if(right != null && right.containsKeyword(pathPart)) {
+				isYes = true;
+			} else {
+				return null;
+			}
+			String[] keys = tmp.getKeywords();
+			if(isYes) {
+				tmp = tmp.getRight();
+			} else {
+				actualPath += "NOT ";
+				tmp = tmp.getLeft();
+			}
+			// Add keywords.
+			for(String key : keys) {
+				actualPath += key + ",";
+			}
+			// Remove last character.
+			actualPath = actualPath.substring(0, actualPath.length() - 1);
+			actualPath += " -> ";
+		}
+		actualPath += tmp.getKeywords()[0];
+		return actualPath;
 	}
 	
+	/**
+	 * Recursive helper method for getPath().
+	 * 
+	 * @param root The root node of the tree/sub-tree.
+	 * @param dest The destination node.
+	 * 
+	 * @return The path to the destination node.
+	 */
 	private String getPath(TreeNode root, TreeNode dest) {
 		if(root == null) {
 			return null;
 		}
 		String path = "";
-		if(root == dest || (path = getPath(root.getLeft(), dest)) != null || (path = getPath(root.getRight(), dest)) != null) {
+		if(root == dest || (path = getPath(root.getLeft(), dest)) != null ||
+		  (path = getPath(root.getRight(), dest)) != null) {
+			
 			String toAdd = "";
-			for(String key : root.getKeywords()) {
-				toAdd += key + "-";
+			if(root.getKeywords() != null && root.getKeywords().length >= 1) {
+				toAdd = root.getKeywords()[0] + ",";
 			}
-			toAdd += ",";
 			path += toAdd;
 			return path;
 		}
 		return null;
+	}
+	
+	public TreeNode getParent(TreeNode root, TreeNode node) {
+		if(root.getLeft() == node || root.getRight() == node) {
+			return root;
+		}
+		TreeNode parent = null;
+		if(root.getLeft() != null) {
+			parent = getParent(root.getLeft(), node);
+		}
+		if(parent == null && root.getRight() != null) {
+			parent = getParent(root.getRight(), node);
+		}
+		return parent;
 	}
 	
 	/**
@@ -244,12 +308,39 @@ public class TreeNavigator {
 	}
 	
 	/**
+	 * Moves cursor to the parent of the cursor.
+	 */
+	public void cursorParent() {
+		if(cursor == null) {
+			DecisionTreeClassifier.println("");
+			return;
+		}
+		if(cursor == root) {
+			DecisionTreeClassifier.println("Cursor is root, therefore, "
+			  + "it has no parent.");
+			
+			return;
+		}
+		cursor = getParent(root, cursor);
+		DecisionTreeClassifier.println("Cursor moved to parent. "
+		  + cursor.toString());
+	}
+	
+	/**
 	 * Moves the cursor to the left child.
 	 * 
 	 * <dt>Postcondition:
 	 *    <dd>Cursor contents are printed.
 	 */
 	public void cursorLeft() {
+		if(cursor == null) {
+			DecisionTreeClassifier.println("Cursor is null.");
+			return;
+		}
+		if(cursor.getLeft() == null) {
+			DecisionTreeClassifier.println("Cursor's left child is null.");
+			return;
+		}
 		cursor = cursor.getLeft();
 		DecisionTreeClassifier.println("Cursor moved to the left child. " +
 		  cursor.toString());
@@ -262,6 +353,14 @@ public class TreeNavigator {
 	 *    <dd>Cursor contents are printed.
 	 */
 	public void cursorRight() {
+		if(cursor == null) {
+			DecisionTreeClassifier.println("Cursor is null.");
+			return;
+		}
+		if(cursor.getRight() == null) {
+			DecisionTreeClassifier.println("Cursor's right child is null.");
+			return;
+		}
 		cursor = cursor.getRight();
 		DecisionTreeClassifier.println("Cursor moved to the right child. " +
 		  cursor.toString());

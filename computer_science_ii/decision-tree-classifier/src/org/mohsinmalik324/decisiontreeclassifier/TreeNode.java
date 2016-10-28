@@ -1,8 +1,5 @@
 package org.mohsinmalik324.decisiontreeclassifier;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents the node of a tree.
  * 
@@ -18,7 +15,7 @@ import java.util.List;
  */
 public class TreeNode {
 	
-	private List<String> keywords = new ArrayList<>();
+	private String[] keywords = null;
 	private TreeNode left;
 	private TreeNode right;
 	
@@ -27,8 +24,17 @@ public class TreeNode {
 	 * 
 	 * @return The keywords list.
 	 */
-	public List<String> getKeywords() {
+	public String[] getKeywords() {
 		return keywords;
+	}
+	
+	/**
+	 * Sets the keywords.
+	 * 
+	 * @param keywords The new keywords.
+	 */
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
 	}
 	
 	/**
@@ -83,6 +89,21 @@ public class TreeNode {
 	}
 	
 	/**
+	 * Checks if this node contains the keyword.
+	 * 
+	 * @param keyword The keyword to check for.
+	 * @return If the keyword is in this node.
+	 */
+	public boolean containsKeyword(String keyword) {
+		for(String key : keywords) {
+			if(key.equalsIgnoreCase(keyword)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Returns the String representation of this node.
 	 * 
 	 * @return The String representation of this node.
@@ -91,10 +112,10 @@ public class TreeNode {
 		String toString = "";
 		
 		if(isLeaf()) {
-			if(keywords.isEmpty()) {
+			if(keywords == null || keywords.length == 0) {
 				toString = "Node is a leaf. No message.";
 			} else {
-				String message = keywords.get(0);
+				String message = keywords[0];
 				toString = "Node is a leaf. Message is: '" + message + "'";
 			}
 		} else {

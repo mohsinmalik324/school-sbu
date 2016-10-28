@@ -46,6 +46,7 @@ public class DecisionTreeClassifier {
 							}
 							try {
 								tree = TreeNavigator.buildTree(fileName);
+								println("File successfully imported.");
 								break;
 							} catch(IllegalArgumentException e) {
 								println(e.getMessage() + " Try again.");
@@ -68,9 +69,99 @@ public class DecisionTreeClassifier {
 					case "Q":
 						quit = true;
 						break;
+					default:
+						println("Invalid operation.");
+						break;
 				}
 			} else {
-				
+				switch(operator.toUpperCase()) {
+					case "E":
+						if(tree.getCursor() == null) {
+							println("Cursor is null.");
+							break;
+						}
+						while(true) {
+							String newKeys = getInput("Enter new keywords for "
+							  + "this node, seperated by a comma (type -1 to "
+							  + "quit): ");
+							
+							if(newKeys == null || newKeys == "") {
+								println("Invalid new keywords. Try again.");
+							} else if(newKeys.equals("-1")) {
+								break;
+							} else {
+								String[] keywords = newKeys.split(",");
+								tree.getCursor().setKeywords(keywords);
+								print("Keywords updated for cursor: ");
+								String toPrint = "";
+								for(String keyword : keywords) {
+									toPrint += keyword + ", ";
+								}
+								// Get rid of last comma and space.
+								toPrint = toPrint.substring(0, toPrint.length() - 2);
+								println(toPrint);
+								break;
+							}
+						}
+						break;
+					case "C":
+						TreeNode cursor = tree.getCursor();
+						if(cursor == null) {
+							println("Cursor is null.");
+							break;
+						}
+						if(!cursor.isLeaf()) {
+							println("The cursor must be a "
+							  + "leaf to add children.");
+							
+							break;
+						}
+						String left = getInput("Input 'no' child text: ");
+						String right = getInput("Input 'yes' child text: ");
+						cursor.setLeft(new TreeNode());
+						cursor.setRight(new TreeNode());
+						cursor.getLeft().setKeywords(new String[]{left});
+						cursor.getRight().setKeywords(new String[]{right});
+						println("Children added: yes -> '" + right +
+						  "' no -> '" + left + "'");
+						
+						break;
+					case "D":
+						cursor = tree.getCursor();
+						if(cursor == null) {
+							println("Cursor is null.");
+							break;
+						}
+						if(cursor.isLeaf()) {
+							println("Cursor is a leaf.");
+							break;
+						}
+						cursor.setLeft(null);
+						cursor.setRight(null);
+						println("Cursor's children deleted.");
+						String newKeyword = getInput("Input new message for leaf: ");
+						cursor.setKeywords(new String[]{newKeyword});
+						println("New keyword set for cursor: " + newKeyword);
+						break;
+					case "N":
+						tree.cursorLeft();
+						break;
+					case "Y":
+						tree.cursorRight();
+						break;
+					case "R":
+						tree.resetCursor();
+						break;
+					case "P":
+						tree.cursorParent();
+						break;
+					case "M":
+						mainMenu = true;
+						break;
+					default:
+						println("Invalid operation.");
+						break;
+				}
 			}
 		}
 		
