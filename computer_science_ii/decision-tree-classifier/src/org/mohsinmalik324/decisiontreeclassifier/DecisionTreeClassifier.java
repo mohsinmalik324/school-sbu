@@ -29,21 +29,26 @@ public class DecisionTreeClassifier {
 		
 		boolean mainMenu = true;
 		boolean quit = false;
-		TreeNavigator tree = null;
+		TreeNavigator tree = new TreeNavigator();
 		
 		while(!quit) {
 			printMenu(mainMenu);
 			String operator = getInput("Select an option: ");
 			if(mainMenu) {
-				switch(operator) {
+				switch(operator.toUpperCase()) {
 					case "I":
 						while(true) {
-							String fileName = getInput("Input file name: ");
+							String fileName = getInput("Input file name (type"
+							  + " -1 to escape): ");
+							
+							if(fileName.equals("-1")) {
+								break;
+							}
 							try {
 								tree = TreeNavigator.buildTree(fileName);
 								break;
 							} catch(IllegalArgumentException e) {
-								print(e.getMessage() + " Try again.");
+								println(e.getMessage() + " Try again.");
 							}
 						}
 						break;
@@ -106,6 +111,7 @@ public class DecisionTreeClassifier {
 	 * @return User input as a String.
 	 */
 	public static String getInput(String prompt) {
+		print(prompt);
 		return scanner.nextLine();
 	}
 	

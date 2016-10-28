@@ -201,11 +201,33 @@ public class TreeNavigator {
 	 * @return The current path of the cursor.
 	 */
 	public String getPath() {
-		String path = "";
-		
-		
-		
+		if(cursor == null) {
+			return null;
+		}
+		String path = getPath(root, cursor);
+		String[] pathArray = path.split(",");
+		TreeNode tmp = root;
+		for(int i = pathArray.length - 1; i >= 0; i++) {
+			// TODO: finish this
+		}
 		return path;
+	}
+	
+	private String getPath(TreeNode root, TreeNode dest) {
+		if(root == null) {
+			return null;
+		}
+		String path = "";
+		if(root == dest || (path = getPath(root.getLeft(), dest)) != null || (path = getPath(root.getRight(), dest)) != null) {
+			String toAdd = "";
+			for(String key : root.getKeywords()) {
+				toAdd += key + "-";
+			}
+			toAdd += ",";
+			path += toAdd;
+			return path;
+		}
+		return null;
 	}
 	
 	/**
