@@ -29,13 +29,16 @@ public class DecisionTreeClassifier {
 		
 		boolean mainMenu = true;
 		boolean quit = false;
+		// Create new tree.
 		TreeNavigator tree = new TreeNavigator();
 		
 		while(!quit) {
 			printMenu(mainMenu);
 			String operator = getInput("Select an option: ");
+			// Check if using main menu or edit menu.
 			if(mainMenu) {
 				switch(operator.toUpperCase()) {
+					// Import.
 					case "I":
 						while(true) {
 							String fileName = getInput("Input file name (type"
@@ -45,6 +48,7 @@ public class DecisionTreeClassifier {
 								break;
 							}
 							try {
+								// Build tree.
 								tree = TreeNavigator.buildTree(fileName);
 								println("File successfully imported.");
 								break;
@@ -53,19 +57,25 @@ public class DecisionTreeClassifier {
 							}
 						}
 						break;
+					// Enter edit menu.
 					case "E":
 						mainMenu = false;
 						tree.resetCursor();
 						break;
+					// Classify.
 					case "C":
 						String text = getInput("Enter some text: ");
 						println("Your request is classified as: " + tree.classify(text));
 						break;
+					// Classify with path.
 					case "P":
 						text = getInput("Enter some text: ");
+						// Classify to move cursor.
 						tree.classify(text);
+						// Print path of cursor.
 						println("Decision path: " + tree.getPath());
 						break;
+					// Exit.
 					case "Q":
 						quit = true;
 						break;
@@ -75,23 +85,27 @@ public class DecisionTreeClassifier {
 				}
 			} else {
 				switch(operator.toUpperCase()) {
+					// Edit keywords.
 					case "E":
-						if(tree.getCursor() == null) {
-							println("Cursor is null.");
-							break;
-						}
 						while(true) {
 							String newKeys = getInput("Enter new keywords for "
 							  + "this node, seperated by a comma (type -1 to "
 							  + "quit): ");
 							
+							// Check if nothing was input.
 							if(newKeys == null || newKeys == "") {
 								println("Invalid new keywords. Try again.");
 							} else if(newKeys.equals("-1")) {
 								break;
 							} else {
+								if(tree.getCursor() == null) {
+									tree.createRoot();
+								}
+								// Split new keys into array.
 								String[] keywords = newKeys.split(",");
+								// Set keywords new keywords for cursor.
 								tree.getCursor().setKeywords(keywords);
+								// Print new keywords.
 								print("Keywords updated for cursor: ");
 								String toPrint = "";
 								for(String keyword : keywords) {
@@ -104,6 +118,7 @@ public class DecisionTreeClassifier {
 							}
 						}
 						break;
+					// Create children for leaf.
 					case "C":
 						TreeNode cursor = tree.getCursor();
 						if(cursor == null) {
@@ -126,6 +141,7 @@ public class DecisionTreeClassifier {
 						  "' no -> '" + left + "'");
 						
 						break;
+					// Delete.
 					case "D":
 						cursor = tree.getCursor();
 						if(cursor == null) {
@@ -143,18 +159,23 @@ public class DecisionTreeClassifier {
 						cursor.setKeywords(new String[]{newKeyword});
 						println("New keyword set for cursor: " + newKeyword);
 						break;
+					// Go down "no" child.
 					case "N":
 						tree.cursorLeft();
 						break;
+					// Go down "yes" child.
 					case "Y":
 						tree.cursorRight();
 						break;
+					// Reset cursor to root.
 					case "R":
 						tree.resetCursor();
 						break;
+					// Set cursor to parent.
 					case "P":
 						tree.cursorParent();
 						break;
+					// Go back to main menu.
 					case "M":
 						mainMenu = true;
 						break;

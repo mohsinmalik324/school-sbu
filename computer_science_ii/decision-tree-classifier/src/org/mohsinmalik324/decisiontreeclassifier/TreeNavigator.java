@@ -69,6 +69,7 @@ public class TreeNavigator {
 			throw new IllegalArgumentException("Invalid file name.");
 		}
 		File file = new File(treeFile);
+		// Check if file is valid.
 		if(!file.exists() || !file.isFile() || !file.canRead()) {
 			throw new IllegalArgumentException("Invalid file.");
 		}
@@ -80,7 +81,9 @@ public class TreeNavigator {
 			reader = new BufferedReader(new InputStreamReader(in));
 			String line = reader.readLine();
 			while(line != null) {
+				// Process line in file into a tree node.
 				tree.processLine(line);
+				// Get next line of text in file.
 				line = reader.readLine();
 			}
 		} catch (FileNotFoundException e) {
@@ -106,6 +109,7 @@ public class TreeNavigator {
 	 * @param line The line from the text file.
 	 */
 	private void processLine(String line) {
+		// Split all parts of line data into arrays.
 		String[] parts = line.split(";");
 		String[] nodePosition = parts[0].split("-");
 		String[] keys = parts[1].split(",");
@@ -114,6 +118,7 @@ public class TreeNavigator {
 		int maxDepth = nodePosition.length - 1;
 		
 		// Check if inserting root node.
+		// Otherwise insert node into tree.
 		if(maxDepth == 0) {
 			root = node;
 		} else if(maxDepth > 0) {
@@ -149,19 +154,26 @@ public class TreeNavigator {
 	 * @return The classification as a String.
 	 */
 	public String classify(String text) {
+		// Defailt classification.
 		String classification = "Could not process this request."
 				+ " Try something else.";
 		
+		// Split the words into array.
 		String[] words = text.split(" ");
+		// Start at root.
 		cursor = root;
 		
 		while(cursor != null) {
+			// If cursor is leaf, we return the keyword.
 			if(cursor.isLeaf()) {
 				classification = cursor.getKeywords()[0];
 				break;
 			}
+			// boolean to check if we need to go left or right.
 			boolean setRight = false;
 			for(String key : cursor.getKeywords()) {
+				// Check if sentence contains the word.
+				// If it does we go right, otherwise left.
 				if(doesSentenceContainWord(words, key)) {
 					cursor = cursor.getRight();
 					setRight = true;
@@ -182,7 +194,7 @@ public class TreeNavigator {
 	 * @param sentence The sentence as an array of Strings.
 	 * @param word The word to check for in the sentence.
 	 * 
-	 * @return If the sentence contains the word.
+	 * @return true if the sentence contains the word, otherwise false.
 	 */
 	private static boolean doesSentenceContainWord(String[] sentence, String word) {
 		for(String sentenceWord : sentence) {
@@ -191,6 +203,19 @@ public class TreeNavigator {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Creates the root if it is null.
+	 * 
+	 * <dt>Postconditions:
+	 *    <dd>cursor points to new root.
+	 */
+	public void createRoot() {
+		if(root == null) {
+			root = new TreeNode();
+			cursor = root;
+		}
 	}
 	
 	/**
@@ -364,15 +389,6 @@ public class TreeNavigator {
 		cursor = cursor.getRight();
 		DecisionTreeClassifier.println("Cursor moved to the right child. " +
 		  cursor.toString());
-	}
-	
-	/**
-	 * Sets the keywords for the current cursor.
-	 * 
-	 * @param text The keywords.
-	 */
-	public void editCursor(String text) {
-		
 	}
 	
 }
