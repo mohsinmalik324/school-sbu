@@ -65,7 +65,9 @@ public class DecisionTreeClassifier {
 					// Classify.
 					case "C":
 						String text = getInput("Enter some text: ");
-						println("Your request is classified as: " + tree.classify(text));
+						println("Your request is classified as: " +
+						  tree.classify(text));
+						
 						break;
 					// Classify with path.
 					case "P":
@@ -112,7 +114,9 @@ public class DecisionTreeClassifier {
 									toPrint += keyword + ", ";
 								}
 								// Get rid of last comma and space.
-								toPrint = toPrint.substring(0, toPrint.length() - 2);
+								toPrint = toPrint.
+								  substring(0, toPrint.length() - 2);
+								
 								println(toPrint);
 								break;
 							}
@@ -155,7 +159,9 @@ public class DecisionTreeClassifier {
 						cursor.setLeft(null);
 						cursor.setRight(null);
 						println("Cursor's children deleted.");
-						String newKeyword = getInput("Input new message for leaf: ");
+						String newKeyword = 
+						  getInput("Input new message for leaf: ");
+						
 						cursor.setKeywords(new String[]{newKeyword});
 						println("New keyword set for cursor: " + newKeyword);
 						break;
@@ -187,6 +193,8 @@ public class DecisionTreeClassifier {
 		}
 		
 		scanner.close();
+		
+		System.out.println("Thanks for using Decision Tree Classifier!");
 	}
 	
 	/**

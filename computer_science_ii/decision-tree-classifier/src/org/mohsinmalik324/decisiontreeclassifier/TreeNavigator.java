@@ -64,7 +64,9 @@ public class TreeNavigator {
 	 * @throws IllegalArgumentException treeFile is null, file does not exist,
 	 * file is not readable, or file is not valid.
 	 */
-	public static TreeNavigator buildTree(String treeFile) throws IllegalArgumentException {
+	public static TreeNavigator buildTree(String treeFile)
+	  throws IllegalArgumentException {
+		
 		if(treeFile == null) {
 			throw new IllegalArgumentException("Invalid file name.");
 		}
@@ -196,7 +198,9 @@ public class TreeNavigator {
 	 * 
 	 * @return true if the sentence contains the word, otherwise false.
 	 */
-	private static boolean doesSentenceContainWord(String[] sentence, String word) {
+	private static boolean doesSentenceContainWord
+	  (String[] sentence, String word) {
+		
 		for(String sentenceWord : sentence) {
 			if(sentenceWord.equalsIgnoreCase(word)) {
 				return true;
