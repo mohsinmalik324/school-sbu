@@ -21,6 +21,8 @@ import javafx.stage.Stage;
  */
 public class RoomLookup extends Application {
 	
+	private static Campus campus = new Campus();
+	
 	/**
 	 * Main method.
 	 * @param args Program arguments.
@@ -36,6 +38,10 @@ public class RoomLookup extends Application {
 		stage.setScene(scene);
 		stage.setTitle("Room Lookup");
 		stage.show();
+	}
+
+	public static Campus getCampus() {
+		return campus;
 	}
 	
 }
