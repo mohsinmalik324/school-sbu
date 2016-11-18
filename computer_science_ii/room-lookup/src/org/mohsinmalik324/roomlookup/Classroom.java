@@ -27,6 +27,20 @@ public class Classroom implements Serializable {
 	private String[] AVEquipmentList;
 	
 	/**
+	 * Returns a new instance of Classroom.
+	 * @param hasWhiteboard If the classroom has a whiteboard.
+	 * @param hasChalkboard If the classroom has a chalkboard.
+	 * @param numSeats The number of seats.
+	 * @param AVEquipmentList The AV equipment list.
+	 */
+	public Classroom(boolean hasWhiteboard, boolean hasChalkboard, int numSeats, String[] AVEquipmentList) {
+		this.hasWhiteboard = hasWhiteboard;
+		this.hasChalkboard = hasChalkboard;
+		this.numSeats = numSeats;
+		this.AVEquipmentList = AVEquipmentList;
+	}
+	
+	/**
 	 * Returns true if the room has a white board, otherwise false.
 	 * @return true if the room has a white board, otherwise false.
 	 */

@@ -1,10 +1,13 @@
 package org.mohsinmalik324.roomlookup;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -46,13 +49,45 @@ public class MainController {
 	@FXML
 	private Button removeRoom;
 	@FXML
-	private TextField addRoomName;
+	private TextField addRoomNumber;
+	@FXML
+	private TextField addRoomSeats;
+	@FXML
+	private TextField addRoomAV;
+	@FXML
+	private CheckBox addRoomWhiteboard;
+	@FXML
+	private CheckBox addRoomChalkboard;
 	@FXML
 	private Button addRoomButton;
 	@FXML
 	private Label selectBuildingText;
 	
+	private boolean firstTime = true;
+	
 	public void addBuilding(ActionEvent event) {
+		if(firstTime) {
+			firstTime = false;
+			choiceBox.getSelectionModel().selectedItemProperty().addListener(
+			  new ChangeListener<String>() {
+				@Override
+				public void changed(
+				  ObservableValue<? extends String> observable,
+				  String oldValue, String newValue) {
+					if(oldValue == null && newValue != null) {
+						Building building = RoomLookup.getCampus().
+						  getBuilding(newValue);
+						if(building != null) {
+							rooms.getItems().clear();
+							for(Integer roomName : building.keySet()) {
+								rooms.getItems().add("Room #" +
+								  roomName.toString());
+							}
+						}
+					}
+				}
+			});
+		}
 		String buildingName = addBuildingName.getText();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Adding Building", "Input a "
@@ -99,12 +134,6 @@ public class MainController {
 	}
 	
 	public void addRoom(ActionEvent event) {
-		String roomName = addRoomName.getText();
-		if(roomName == null || roomName.equalsIgnoreCase("")) {
-			alert(AlertType.ERROR, "Error", "Error Adding Room", "Input a name"
-			  + " for the room in the text field first.");
-			return;
-		}
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Adding Room",
@@ -117,7 +146,57 @@ public class MainController {
 			choiceBox.getItems().remove(buildingName);
 			return;
 		}
+		String roomNumberString = addRoomNumber.getText();
+		if(roomNumberString == null || roomNumberString.equalsIgnoreCase("")) {
+			alert(AlertType.ERROR, "Error", "Error Adding Room",
+			  "The 'Room Number' field can't be empty.");
+			return;
+		}
+		int roomNumber = 0;
+		try {
+			roomNumber = Integer.valueOf(roomNumberString);
+		} catch(NumberFormatException e) {
+			alert(AlertType.ERROR, "Error", "Error Adding Room",
+			  "The 'Room Number' field must contain a non-negative number.");
+			return;
+		}
+		if(roomNumber < 0) {
+			alert(AlertType.ERROR, "Error", "Error Adding Room",
+			  "The 'Room Number' field must contain a non-negative number.");
+			return;
+		}
+		String seatsString = addRoomSeats.getText();
+		if(seatsString == null || seatsString.equalsIgnoreCase("")) {
+			alert(AlertType.ERROR, "Error", "Error Adding Room",
+			  "The 'Number of Seats' field can't be empty.");
+			return;
+		}
+		int seats = 0;
+		try {
+			seats = Integer.valueOf(seatsString);
+		} catch(NumberFormatException e) {
+			alert(AlertType.ERROR, "Error", "Error Adding Room",
+			  "The 'Number of Seats' field must contain a "
+			  + "non-negative number.");
+			return;
+		}
+		if(seats < 0) {
+			alert(AlertType.ERROR, "Error", "Error Adding Room",
+			  "The 'Number of Seats' field must contain a "
+			  + "non-negative number.");
+			return;
+		}
+		String avString = addRoomAV.getText();
+		String[] av = null;
+		if(avString != null && avString.length() > 0) {
+			av = avString.split(",");
+		}
+		boolean whiteboard = addRoomWhiteboard.isSelected();
+		boolean chalkboard = addRoomChalkboard.isSelected();
+		building.addClassroom(roomNumber, new Classroom(
+		  whiteboard, chalkboard, seats, av));
 		// TODO
+		alert(AlertType.INFORMATION, "Success", "", "");
 	}
 	
 	public static void alert(AlertType alertType, String title,
