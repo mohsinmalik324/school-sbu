@@ -44,7 +44,7 @@ public class Classroom implements Serializable {
 	 * Returns true if the room has a white board, otherwise false.
 	 * @return true if the room has a white board, otherwise false.
 	 */
-	public boolean isHasWhiteboard() {
+	public boolean hasWhiteboard() {
 		return hasWhiteboard;
 	}
 	
@@ -60,7 +60,7 @@ public class Classroom implements Serializable {
 	 * Returns true if the room has a chalk board, otherwise false.
 	 * @return true if the room has a chalk board, otherwise false.
 	 */
-	public boolean isHasChalkboard() {
+	public boolean hasChalkboard() {
 		return hasChalkboard;
 	}
 

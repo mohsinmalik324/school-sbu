@@ -1,5 +1,8 @@
 package org.mohsinmalik324.roomlookup;
 
+import java.util.Comparator;
+import java.util.List;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -63,6 +66,12 @@ public class MainController {
 	@FXML
 	private Label selectBuildingText;
 	
+	// Room Search Tab
+	@FXML
+	private Tab roomSearchTab;
+	@FXML
+	private TextField findRoomNumber;
+	
 	private boolean firstTime = true;
 	
 	public void addBuilding(ActionEvent event) {
@@ -74,24 +83,26 @@ public class MainController {
 				public void changed(
 				  ObservableValue<? extends String> observable,
 				  String oldValue, String newValue) {
-					if(oldValue == null && newValue != null) {
+					System.out.println(1);
+					if(newValue != null) {
 						Building building = RoomLookup.getCampus().
 						  getBuilding(newValue);
 						if(building != null) {
 							rooms.getItems().clear();
-							for(Integer roomName : building.keySet()) {
-								rooms.getItems().add("Room #" +
-								  roomName.toString());
+							for(Integer roomNumber : building.keySet()) {
+								rooms.getItems().add("Room #" + roomNumber);
 							}
 						}
+					} else {
+						rooms.getItems().clear();
 					}
 				}
 			});
 		}
 		String buildingName = addBuildingName.getText();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
-			alert(AlertType.ERROR, "Error", "Error Adding Building", "Input a "
-			  + "name for the building in the text field first.");
+			alert(AlertType.ERROR, "Error", "Error Adding Building",
+			  "The 'Building Name' field can't be empty.");
 			return;
 		}
 		Building building = RoomLookup.getCampus().getBuilding(buildingName);
@@ -126,11 +137,36 @@ public class MainController {
 			  + "building '" + buildingName + "' already doesn't exist.");
 			return;
 		}
+		if(choiceBox.getSelectionModel().getSelectedItem().
+		  equalsIgnoreCase(buildingName)) {
+			rooms.getItems().clear();
+		}
 		buildings.getItems().remove(buildingName);
 		choiceBox.getItems().remove(buildingName);
 		if(buildings.getItems().isEmpty()) {
 			roomsTab.setDisable(true);
 		}
+	}
+	
+	public void buildingViewSummary(ActionEvent event) {
+		String buildingName = buildings.getSelectionModel().getSelectedItem();
+		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
+			alert(AlertType.ERROR, "Error",
+			  "Error Viewing Summary For Building",
+			  "Select a building from the list first.");
+			return;
+		}
+		Building building = RoomLookup.getCampus().getBuilding(buildingName);
+		if(building == null) {
+			buildings.getItems().remove(buildingName);
+			return;
+		}
+		alertShow(AlertType.INFORMATION, "Building Summary",
+		  "'" + buildingName + "' Summary",
+		  "Seats: " + building.getTotalSeats() + "\n"
+		  + "Percent with Whiteboard: " + building.percentWhiteboard() + "\n"
+		  + "Percent with Chalkboard: " + building.percentChalkboard() + "\n"
+		  + "AV Equipment: " + listToString(building.getAVEquipment()));
 	}
 	
 	public void addRoom(ActionEvent event) {
@@ -157,12 +193,18 @@ public class MainController {
 			roomNumber = Integer.valueOf(roomNumberString);
 		} catch(NumberFormatException e) {
 			alert(AlertType.ERROR, "Error", "Error Adding Room",
-			  "The 'Room Number' field must contain a non-negative number.");
+			  "The 'Room Number' field must contain a positive number.");
 			return;
 		}
-		if(roomNumber < 0) {
+		if(roomNumber < 1) {
 			alert(AlertType.ERROR, "Error", "Error Adding Room",
-			  "The 'Room Number' field must contain a non-negative number.");
+			  "The 'Room Number' field must contain a positive number.");
+			return;
+		}
+		Classroom classroom = building.getClassroom(roomNumber);
+		if(classroom != null) {
+			alert(AlertType.ERROR, "Error", "Error Adding Room",
+			  "A room with room number '" + roomNumber + "' already exists.");
 			return;
 		}
 		String seatsString = addRoomSeats.getText();
@@ -195,8 +237,86 @@ public class MainController {
 		boolean chalkboard = addRoomChalkboard.isSelected();
 		building.addClassroom(roomNumber, new Classroom(
 		  whiteboard, chalkboard, seats, av));
+		rooms.getItems().add("Room #" + roomNumber);
+		rooms.getItems().sort(new Comparator<String>() {
+			@Override
+			public int compare(String str1, String str2) {
+				int int1 = 0;
+				int int2 = 0;
+				try {
+					int1 = Integer.valueOf(str1.replace("Room #", ""));
+					int2 = Integer.valueOf(str2.replace("Room #", ""));
+				} catch(NumberFormatException e) {
+					return 0;
+				}
+				if(int1 < int2) {
+					return -1;
+				}
+				if(int1 > int2) {
+					return 1;
+				}
+				return 0;
+			}
+		});
+		addRoomNumber.setText("");
+		addRoomSeats.setText("");
+		addRoomAV.setText("");
+		addRoomChalkboard.setSelected(false);
+		addRoomWhiteboard.setSelected(false);
+	}
+	
+	public void removeRoom(ActionEvent event) {
+		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
+		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
+			rooms.getItems().clear();
+			alert(AlertType.ERROR, "Error", "Error Removing Room",
+			  "Select a building first.");
+			return;
+		}
+		Building building = RoomLookup.getCampus().getBuilding(buildingName);
+		if(building == null) {
+			buildings.getItems().remove(buildingName);
+			choiceBox.getItems().remove(buildingName);
+			return;
+		}
+		String roomNumberString = rooms.getSelectionModel().getSelectedItem();
+		if(roomNumberString == null || roomNumberString.equalsIgnoreCase("")) {
+			alert(AlertType.ERROR, "Error", "Error Removing Room", "Select "
+			  + "a room to remove from the list first.");
+			return;
+		}
+		rooms.getItems().remove(roomNumberString);
+		int roomNumber = 0;
+		try {
+			roomNumber = Integer.valueOf(roomNumberString.replace("Room #", ""));
+		} catch(NumberFormatException e) {
+			return;
+		}
+		try {
+			building.removeClassroom(roomNumber);
+		} catch(IllegalArgumentException e) {
+			alert(AlertType.ERROR, "Error", "Error Removing Room",
+			  "That room already doesn't exist.");
+			return;
+		}
+	}
+	
+	public void findRoom(ActionEvent event) {
+		String roomNumberString = findRoomNumber.getText();
+		if(roomNumberString == null || roomNumberString.equalsIgnoreCase("")) {
+			alert(AlertType.ERROR, "Error", "Error Finding Room",
+			  "Input a room number first.");
+			return;
+		}
+		int roomNumber = 0;
+		try {
+			roomNumber = Integer.valueOf(roomNumberString);
+		} catch(NumberFormatException e) {
+			alert(AlertType.ERROR, "Error", "Error Finding Room",
+			  "The room number must be a positive number.");
+			return;
+		}
 		// TODO
-		alert(AlertType.INFORMATION, "Success", "", "");
 	}
 	
 	public static void alert(AlertType alertType, String title,
@@ -206,6 +326,30 @@ public class MainController {
 		alert.setHeaderText(header);
 		alert.setContentText(error);
 		alert.showAndWait();
+	}
+	
+	public static void alertShow(AlertType alertType, String title,
+	  String header, String error) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(error);
+		alert.show();
+	}
+	
+	private static String listToString(List<String> list) {
+		if(list.isEmpty()) {
+			return "None";
+		}
+		String listString = "";
+		for(int i = 0; i < list.size(); i++) {
+			if(i != list.size() - 1) {
+				listString += list.get(i) + ", ";
+			} else {
+				listString += list.get(i);
+			}
+		}
+		return listString;
 	}
 	
 }
