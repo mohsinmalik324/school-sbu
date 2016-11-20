@@ -1,5 +1,6 @@
 package org.mohsinmalik324.roomlookup;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -65,12 +66,14 @@ public class MainController {
 	private Button addRoomButton;
 	@FXML
 	private Label selectBuildingText;
-	
-	// Room Search Tab
-	@FXML
-	private Tab roomSearchTab;
 	@FXML
 	private TextField findRoomNumber;
+	@FXML
+	private TextField searchAV;
+	@FXML
+	private Button searchChalkboard;
+	@FXML
+	private Button searchWhiteboard;
 	
 	private boolean firstTime = true;
 	
@@ -301,7 +304,23 @@ public class MainController {
 		}
 	}
 	
+	public void editRoom(ActionEvent event) {
+		
+	}
+	
 	public void findRoom(ActionEvent event) {
+		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
+		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
+			alert(AlertType.ERROR, "Error", "Error Finding Room",
+			  "Select a building first.");
+			return;
+		}
+		Building building = RoomLookup.getCampus().getBuilding(buildingName);
+		if(building == null) {
+			choiceBox.getItems().remove(buildingName);
+			buildings.getItems().remove(buildingName);
+			return;
+		}
 		String roomNumberString = findRoomNumber.getText();
 		if(roomNumberString == null || roomNumberString.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Finding Room",
@@ -316,6 +335,65 @@ public class MainController {
 			  "The room number must be a positive number.");
 			return;
 		}
+		if(roomNumber < 1) {
+			alert(AlertType.ERROR, "Error", "Error Finding Room",
+			  "The room number must be positive.");
+			return;
+		}
+		if(building.containsKey(roomNumber)) {
+			Classroom classroom = building.get(roomNumber);
+			String message = "Seats: " + classroom.getNumSeats() + "\n" +
+			  (classroom.hasWhiteboard() ? "Has Whiteboard" : "No Whiteboard")
+			  + "\n" + (classroom.hasChalkboard() ? "Has Chalkboard" :
+			  "No Chalkboard") + "\nAV Equipment: " + arrayToString(
+			  classroom.getAVEquipmentList());
+			alert(AlertType.INFORMATION, "Success",
+			  "Found Room #" + roomNumber, message);
+		} else {
+			alert(AlertType.ERROR, "Error", "Error Finding Room",
+			  "Room #" + roomNumber + " not found.");
+		}
+		findRoomNumber.setText("");
+	}
+	
+	public void searchAV(ActionEvent event) {
+		String av = searchAV.getText();
+		if(av == null || av.equalsIgnoreCase("")) {
+			alert(AlertType.ERROR, "Error", "Error Searching For Room",
+			  "The 'AV Equipment' field can't be empty.");
+			return;
+		}
+		if(buildings.getItems().isEmpty()) {
+			alert(AlertType.INFORMATION, "Room Search", "Room Not Found",
+			  "The room was not found.\nNote that you have not added any"
+			  + "buildings yet.");
+			return;
+		}
+		List<String> rooms = new ArrayList<>();
+		for(String buildingName : RoomLookup.getCampus().keySet()) {
+			Building building = RoomLookup.getCampus().get(buildingName);
+			for(Integer roomNumber : building.keySet()) {
+				Classroom classroom = building.get(roomNumber);
+				for(String equipment : classroom.getAVEquipmentList()) {
+					if(equipment.equalsIgnoreCase(av)) {
+						rooms.add(buildingName + " " + roomNumber.toString());
+					}
+				}
+			}
+		}
+		if(rooms.isEmpty()) {
+			alert(AlertType.INFORMATION, "Room Search", "Rooms Found", "None");
+		} else {
+			alert(AlertType.INFORMATION, "Room Search", "Rooms Found",
+			  listToString(rooms));
+		}
+	}
+	
+	public void searchWhiteboard(ActionEvent event) {
+		// TODO
+	}
+	
+	public void searchChalkboard(ActionEvent event) {
 		// TODO
 	}
 	
@@ -347,6 +425,21 @@ public class MainController {
 				listString += list.get(i) + ", ";
 			} else {
 				listString += list.get(i);
+			}
+		}
+		return listString;
+	}
+	
+	private static String arrayToString(String[] array) {
+		if(array == null || array.length == 0) {
+			return "None";
+		}
+		String listString = "";
+		for(int i = 0; i < array.length; i++) {
+			if(i != array.length - 1) {
+				listString += array[i] + ", ";
+			} else {
+				listString += array[i];
 			}
 		}
 		return listString;
