@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mohsinmalik324.roomlookup.MainController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mohsinmalik324.roomlookup.MainController">
   <tabs>
     <Tab text="Buildings">
       <content>
@@ -21,19 +21,21 @@
                   <ListView fx:id="buildings" layoutX="386.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" />
                   <Button layoutX="386.0" layoutY="245.0" mnemonicParsing="false" onAction="#removeBuilding" text="Remove" />
                   <Button layoutX="460.0" layoutY="245.0" mnemonicParsing="false" onAction="#buildingViewSummary" text="View Summary" />
-                  <Label fx:id="buildingsText" layoutX="386.0" layoutY="19.0" text="Buildings" />
+                  <Label layoutX="386.0" layoutY="19.0" text="Buildings" />
                   <Label layoutX="14.0" layoutY="145.0" text="Search for Room" />
                   <TextField fx:id="searchAV" layoutX="14.0" layoutY="166.0" promptText="AV Equipment " />
                   <Label layoutX="11.0" layoutY="9.0" text="Add Building" />
                   <Button layoutX="16.0" layoutY="198.0" mnemonicParsing="false" onAction="#searchAV" text="Search" />
-                  <Button layoutX="16.0" layoutY="245.0" mnemonicParsing="false" onAction="#searchChalkboard" text="Search for Chalkboard Rooms" />
-                  <Button layoutX="16.0" layoutY="275.0" mnemonicParsing="false" onAction="#searchWhiteboard" text="Search for Whiteboard Rooms" />
+                  <Button layoutX="16.0" layoutY="245.0" mnemonicParsing="false" onAction="#searchChalkboard" text="Search for Rooms with Chalkboard" />
+                  <Button layoutX="16.0" layoutY="275.0" mnemonicParsing="false" onAction="#searchWhiteboard" text="Search for Rooms with Whiteboard" />
+                  <Button layoutX="16.0" layoutY="326.0" mnemonicParsing="false" onAction="#save" text="Save" />
+                  <Button layoutX="67.0" layoutY="326.0" mnemonicParsing="false" onAction="#load" text="Load" />
                </children></AnchorPane>
       </content>
     </Tab>
     <Tab fx:id="roomsTab" disable="true" text="Rooms">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="548.0" prefWidth="600.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="381.0" prefWidth="600.0">
                <children>
                   <TextField fx:id="addRoomNumber" layoutX="14.0" layoutY="30.0" promptText="Room Number" />
                   <TextField fx:id="addRoomSeats" layoutX="14.0" layoutY="61.0" promptText="Number of Seats" />
@@ -44,18 +46,21 @@
                   <ChoiceBox fx:id="choiceBox" layoutX="386.0" layoutY="40.0" prefWidth="150.0" />
                   <ListView fx:id="rooms" layoutX="386.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" />
                   <Button layoutX="386.0" layoutY="292.0" mnemonicParsing="false" onAction="#removeRoom" text="Remove" />
-                  <Label fx:id="selectBuildingText" layoutX="386.0" layoutY="19.0" text="Select a Building" />
+                  <Label layoutX="386.0" layoutY="19.0" text="Select a Building" />
                   <Label layoutX="386.0" layoutY="71.0" text="Rooms" />
                   <Label layoutX="14.0" layoutY="9.0" text="Add Room" />
-                  <Button fx:id="editRoom" layoutX="460.0" layoutY="292.0" mnemonicParsing="false" onAction="#editRoom" text="Edit" />
                   <TextField fx:id="findRoomNumber" layoutX="14.0" layoutY="230.0" promptText="Room Number" />
                   <Button fx:id="findRoom" layoutX="15.0" layoutY="261.0" mnemonicParsing="false" onAction="#findRoom" text="Find" />
                   <Label layoutX="14.0" layoutY="209.0" text="Find Room" />
-                  <Label layoutX="386.0" layoutY="334.0" text="Edit Room" />
-                  <TextField layoutX="386.0" layoutY="357.0" promptText="Update Number of Seats" />
-                  <TextField layoutX="386.0" layoutY="388.0" promptText="Update AV Equipment" />
-                  <CheckBox layoutX="386.0" layoutY="422.0" mnemonicParsing="false" text="Whiteboard" />
-                  <CheckBox layoutX="386.0" layoutY="443.0" mnemonicParsing="false" text="Chalkboard" />
+                  <Label layoutX="14.0" layoutY="308.0" text="Edit Room" />
+                  <Label layoutX="14.0" layoutY="336.0" text="Select a Room to Edit" />
+                  <ChoiceBox fx:id="roomsEdit" layoutX="16.0" layoutY="357.0" prefWidth="150.0" />
+                  <TextField fx:id="editSeats" layoutX="14.0" layoutY="395.0" promptText="Update Number of Seats" />
+                  <TextField fx:id="editAV" layoutX="14.0" layoutY="426.0" promptText="Update AV Equipment" />
+                  <CheckBox fx:id="updateWhiteboard" layoutX="16.0" layoutY="460.0" mnemonicParsing="false" text="Whiteboard" />
+                  <CheckBox fx:id="updateChalkboard" layoutX="16.0" layoutY="481.0" mnemonicParsing="false" text="Chalkboard" />
+                  <Button layoutX="16.0" layoutY="505.0" mnemonicParsing="false" onAction="#editRoom" text="Edit" />
+                  <Button layoutX="460.0" layoutY="292.0" mnemonicParsing="false" onAction="#roomInfo" text="View Info" />
                </children></AnchorPane>
       </content>
     </Tab>

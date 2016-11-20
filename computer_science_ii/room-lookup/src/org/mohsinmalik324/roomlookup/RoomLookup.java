@@ -44,4 +44,8 @@ public class RoomLookup extends Application {
 		return campus;
 	}
 	
+	public static void setCampus(Campus campus) {
+		RoomLookup.campus = campus;
+	}
+	
 }

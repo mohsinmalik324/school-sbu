@@ -140,7 +140,11 @@ public class Building extends HashMap<Integer, Classroom>
 		List<String> av = new ArrayList<>();
 		for(Integer roomNumber : keySet()) {
 			Classroom classroom = get(roomNumber);
-			for(String avEquipment : classroom.getAVEquipmentList()) {
+			String[] avArray = classroom.getAVEquipmentList();
+			if(avArray == null) {
+				continue;
+			}
+			for(String avEquipment : avArray) {
 				if(!av.contains(avEquipment)) {
 					av.add(avEquipment);
 				}
