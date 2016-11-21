@@ -94,12 +94,14 @@ public class MainController {
 	public void addBuilding() {
 		firstTimeRun();
 		String buildingName = addBuildingName.getText();
+		// Check if necessary fields are filled.
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Adding Building",
 			  "The 'Building Name' field can't be empty.");
 			return;
 		}
 		Building building = RoomLookup.getCampus().getBuilding(buildingName);
+		// Check if building already exists.
 		if(building != null) {
 			alert(AlertType.ERROR, "Error", "Error Adding Building", "The "
 			  + "building '" + buildingName + "' already exists.");
@@ -120,6 +122,7 @@ public class MainController {
 	 */
 	public void removeBuilding() {
 		String buildingName = buildings.getSelectionModel().getSelectedItem();
+		// Check if fields are filled.
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Removing Building", "Select "
 			  + "a building to remove from the list first.");
@@ -137,6 +140,7 @@ public class MainController {
 			rooms.getItems().clear();
 			roomsEdit.getItems().clear();
 		}
+		// Remove building name from lists.
 		buildings.getItems().remove(buildingName);
 		choiceBox.getItems().remove(buildingName);
 		if(buildings.getItems().isEmpty()) {
@@ -149,6 +153,7 @@ public class MainController {
 	 */
 	public void buildingViewSummary() {
 		String buildingName = buildings.getSelectionModel().getSelectedItem();
+		// Check if fields are filled.
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error",
 			  "Error Viewing Summary For Building",
@@ -160,6 +165,7 @@ public class MainController {
 			buildings.getItems().remove(buildingName);
 			return;
 		}
+		// Format and display information.
 		DecimalFormat df = new DecimalFormat("#.00");
 		String percentWhiteboard = building.percentWhiteboard() == 0D ? "0"
 		  : df.format(building.percentWhiteboard());
@@ -177,6 +183,7 @@ public class MainController {
 	 * Add a room to a building.
 	 */
 	public void addRoom() {
+		// Check if fields are filled.
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Adding Room",
@@ -242,6 +249,7 @@ public class MainController {
 		}
 		boolean whiteboard = addRoomWhiteboard.isSelected();
 		boolean chalkboard = addRoomChalkboard.isSelected();
+		// Add room.
 		building.addClassroom(roomNumber, new Classroom(
 		  whiteboard, chalkboard, seats, av));
 		rooms.getItems().add("Room #" + roomNumber);
@@ -288,6 +296,7 @@ public class MainController {
 			}
 		});
 		
+		// Clear fields.
 		addRoomNumber.setText("");
 		addRoomSeats.setText("");
 		addRoomAV.setText("");
@@ -299,6 +308,7 @@ public class MainController {
 	 * Remove a room from a building.
 	 */
 	public void removeRoom() {
+		// Check if fields are filled.
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			rooms.getItems().clear();
@@ -318,6 +328,7 @@ public class MainController {
 			  + "a room to remove from the list first.");
 			return;
 		}
+		// Remove.
 		rooms.getItems().remove(roomNumberString);
 		roomsEdit.getItems().remove(roomNumberString);
 		int roomNumber = 0;
@@ -341,11 +352,14 @@ public class MainController {
 	public void load() {
 		firstTimeRun();
 		try {
+			// Get file.
 			FileInputStream file = new FileInputStream("storage.obj");
 			ObjectInputStream in = new ObjectInputStream(file);
+			// Read.
 			Campus campus = (Campus) in.readObject();
 			RoomLookup.setCampus(campus);
 			in.close();
+			// Add buildings to list.
 			for(String buildingName : campus.keySet()) {
 				Building building = campus.getBuilding(buildingName);
 				System.out.println(buildingName + " " + building.keySet().size());
@@ -370,8 +384,10 @@ public class MainController {
 	 */
 	public void save() {
 		try {
+			// Get file.
 			FileOutputStream file = new FileOutputStream("storage.obj");
 			ObjectOutputStream out = new ObjectOutputStream(file);
+			// Save.
 			out.writeObject(RoomLookup.getCampus());
 			out.close();
 		} catch (FileNotFoundException e) {
@@ -385,6 +401,7 @@ public class MainController {
 	 * Edit a room in a building.
 	 */
 	public void editRoom() {
+		// Check if fields are filled.
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Editing Room",
@@ -434,6 +451,7 @@ public class MainController {
 		if(avString != null && !avString.equalsIgnoreCase("")) {
 			classroom.setAVEquipmentList(avString.split(","));
 		}
+		// Update classroom variables.
 		classroom.setHasWhiteboard(updateWhiteboard.isSelected());
 		classroom.setHasChalkboard(updateChalkboard.isSelected());
 		editSeats.setText("");
@@ -446,6 +464,7 @@ public class MainController {
 	 * Display room info.
 	 */
 	public void roomInfo() {
+		// Check if fields are filled.s
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Viewing Room Info",
@@ -479,6 +498,7 @@ public class MainController {
 			roomsEdit.getItems().remove(roomNumberString);
 			return;
 		}
+		// Display information.
 		String message = "Seats: " + classroom.getNumSeats() + "\n" +
 		  (classroom.hasWhiteboard() ? "Has Whiteboard" : "No Whiteboard")
 		  + "\n" + (classroom.hasChalkboard() ? "Has Chalkboard" :
@@ -492,6 +512,7 @@ public class MainController {
 	 * Find a specific room.
 	 */
 	public void findRoom() {
+		// Check if fields are filled.
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Finding Room",
@@ -523,6 +544,7 @@ public class MainController {
 			  "The room number must be positive.");
 			return;
 		}
+		// Check if room exists.
 		if(building.containsKey(roomNumber)) {
 			Classroom classroom = building.get(roomNumber);
 			String message = "Seats: " + classroom.getNumSeats() + "\n" +
@@ -544,6 +566,7 @@ public class MainController {
 	 */
 	public void searchAV() {
 		String av = searchAV.getText();
+		// Check if fields are filled.
 		if(av == null || av.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Searching For Room",
 			  "The 'AV Equipment' field can't be empty.");
@@ -557,6 +580,7 @@ public class MainController {
 			return;
 		}
 		List<String> rooms = new ArrayList<>();
+		// Search for AV Equipment.
 		for(String buildingName : RoomLookup.getCampus().keySet()) {
 			Building building = RoomLookup.getCampus().get(buildingName);
 			for(Integer roomNumber : building.keySet()) {
@@ -568,6 +592,7 @@ public class MainController {
 				}
 			}
 		}
+		// Display.
 		if(rooms.isEmpty()) {
 			alert(AlertType.INFORMATION, "Room Search", "Rooms Found", "None");
 		} else {
@@ -587,6 +612,7 @@ public class MainController {
 			return;
 		}
 		List<String> rooms = new ArrayList<>();
+		// Search for rooms with whiteboard.
 		for(String buildingName : RoomLookup.getCampus().keySet()) {
 			Building building = RoomLookup.getCampus().getBuilding(buildingName);
 			for(Integer roomNumber : building.keySet()) {
@@ -615,6 +641,7 @@ public class MainController {
 			return;
 		}
 		List<String> rooms = new ArrayList<>();
+		// Search for rooms with chalkboard.
 		for(String buildingName : RoomLookup.getCampus().keySet()) {
 			Building building = RoomLookup.getCampus().getBuilding(buildingName);
 			for(Integer roomNumber : building.keySet()) {
@@ -694,6 +721,7 @@ public class MainController {
 	private void firstTimeRun() {
 		if(firstTime) {
 			firstTime = false;
+			// Add listeners for when the buildings choice box updates.
 			choiceBox.getSelectionModel().selectedItemProperty().addListener(
 			  new ChangeListener<String>() {
 				@Override

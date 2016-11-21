@@ -104,6 +104,7 @@ public class Building extends HashMap<Integer, Classroom>
 		}
 		double percent = 0D;
 		int withWhiteboard = 0;
+		// Add up number of rooms with whiteboard.
 		for(Integer roomNumber : keySet()) {
 			if(get(roomNumber).hasWhiteboard()) {
 				withWhiteboard++;
@@ -123,6 +124,7 @@ public class Building extends HashMap<Integer, Classroom>
 		}
 		double percent = 0D;
 		int withChalkboard = 0;
+		// Add up number of rooms with chalkboard
 		for(Integer roomNumber : keySet()) {
 			if(get(roomNumber).hasChalkboard()) {
 				withChalkboard++;
