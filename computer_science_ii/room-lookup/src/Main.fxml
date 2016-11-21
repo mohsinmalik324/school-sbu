@@ -29,7 +29,7 @@
                   <Button layoutX="16.0" layoutY="245.0" mnemonicParsing="false" onAction="#searchChalkboard" text="Search for Rooms with Chalkboard" />
                   <Button layoutX="16.0" layoutY="275.0" mnemonicParsing="false" onAction="#searchWhiteboard" text="Search for Rooms with Whiteboard" />
                   <Button layoutX="16.0" layoutY="326.0" mnemonicParsing="false" onAction="#save" text="Save" />
-                  <Button layoutX="67.0" layoutY="326.0" mnemonicParsing="false" onAction="#load" text="Load" />
+                  <Button layoutX="67.0" layoutY="326.0" mnemonicParsing="false" onAction="#load" text="Load Last Save" />
                </children></AnchorPane>
       </content>
     </Tab>

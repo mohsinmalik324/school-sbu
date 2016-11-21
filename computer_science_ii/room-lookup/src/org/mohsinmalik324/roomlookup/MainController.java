@@ -13,7 +13,6 @@ import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -89,7 +88,10 @@ public class MainController {
 	
 	private boolean firstTime = true;
 	
-	public void addBuilding(ActionEvent event) {
+	/**
+	 * Add a building.
+	 */
+	public void addBuilding() {
 		firstTimeRun();
 		String buildingName = addBuildingName.getText();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
@@ -111,11 +113,12 @@ public class MainController {
 		buildings.getItems().add(buildingName);
 		choiceBox.getItems().add(buildingName);
 		addBuildingName.setText("");
-		//alert(AlertType.CONFIRMATION, "Success", "Building Added", "The "
-		//  + "building '" + buildingName + "' has been added.");
 	}
 	
-	public void removeBuilding(ActionEvent event) {
+	/**
+	 * Remove a building.
+	 */
+	public void removeBuilding() {
 		String buildingName = buildings.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Removing Building", "Select "
@@ -129,9 +132,10 @@ public class MainController {
 			  + "building '" + buildingName + "' already doesn't exist.");
 			return;
 		}
-		if(choiceBox.getSelectionModel().getSelectedItem().
-		  equalsIgnoreCase(buildingName)) {
+		String selected = choiceBox.getSelectionModel().getSelectedItem();
+		if(selected != null && selected.equalsIgnoreCase(buildingName)) {
 			rooms.getItems().clear();
+			roomsEdit.getItems().clear();
 		}
 		buildings.getItems().remove(buildingName);
 		choiceBox.getItems().remove(buildingName);
@@ -140,7 +144,10 @@ public class MainController {
 		}
 	}
 	
-	public void buildingViewSummary(ActionEvent event) {
+	/**
+	 * View the summary of a building.
+	 */
+	public void buildingViewSummary() {
 		String buildingName = buildings.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error",
@@ -166,7 +173,10 @@ public class MainController {
 		  + "AV Equipment: " + listToString(building.getAVEquipment()));
 	}
 	
-	public void addRoom(ActionEvent event) {
+	/**
+	 * Add a room to a building.
+	 */
+	public void addRoom() {
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Adding Room",
@@ -285,7 +295,10 @@ public class MainController {
 		addRoomWhiteboard.setSelected(false);
 	}
 	
-	public void removeRoom(ActionEvent event) {
+	/**
+	 * Remove a room from a building.
+	 */
+	public void removeRoom() {
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			rooms.getItems().clear();
@@ -322,7 +335,10 @@ public class MainController {
 		}
 	}
 	
-	public void load(ActionEvent event) {
+	/**
+	 * Load the last save data.
+	 */
+	public void load() {
 		firstTimeRun();
 		try {
 			FileInputStream file = new FileInputStream("storage.obj");
@@ -349,7 +365,10 @@ public class MainController {
 		}
 	}
 	
-	public void save(ActionEvent event) {
+	/**
+	 * Save the current state to be loaded later.
+	 */
+	public void save() {
 		try {
 			FileOutputStream file = new FileOutputStream("storage.obj");
 			ObjectOutputStream out = new ObjectOutputStream(file);
@@ -362,7 +381,10 @@ public class MainController {
 		}
 	}
 	
-	public void editRoom(ActionEvent event) {
+	/**
+	 * Edit a room in a building.
+	 */
+	public void editRoom() {
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Editing Room",
@@ -420,7 +442,10 @@ public class MainController {
 		updateChalkboard.setSelected(false);
 	}
 	
-	public void roomInfo(ActionEvent event) {
+	/**
+	 * Display room info.
+	 */
+	public void roomInfo() {
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Viewing Room Info",
@@ -463,7 +488,10 @@ public class MainController {
 		  buildingName + " Room #" + roomNumber, message);
 	}
 	
-	public void findRoom(ActionEvent event) {
+	/**
+	 * Find a specific room.
+	 */
+	public void findRoom() {
 		String buildingName = choiceBox.getSelectionModel().getSelectedItem();
 		if(buildingName == null || buildingName.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Finding Room",
@@ -511,7 +539,10 @@ public class MainController {
 		findRoomNumber.setText("");
 	}
 	
-	public void searchAV(ActionEvent event) {
+	/**
+	 * Search for a room with specific AV equipment.
+	 */
+	public void searchAV() {
 		String av = searchAV.getText();
 		if(av == null || av.equalsIgnoreCase("")) {
 			alert(AlertType.ERROR, "Error", "Error Searching For Room",
@@ -545,7 +576,10 @@ public class MainController {
 		}
 	}
 	
-	public void searchWhiteboard(ActionEvent event) {
+	/**
+	 * Search for a room with a whiteboard.
+	 */
+	public void searchWhiteboard() {
 		if(buildings.getItems().isEmpty()) {
 			alert(AlertType.INFORMATION, "Room Search", "Room Not Found",
 			  "The room was not found.\nNote that you have not added any"
@@ -570,7 +604,10 @@ public class MainController {
 		}
 	}
 	
-	public void searchChalkboard(ActionEvent event) {
+	/**
+	 * Search for a room with a chalkboard.
+	 */
+	public void searchChalkboard() {
 		if(buildings.getItems().isEmpty()) {
 			alert(AlertType.INFORMATION, "Room Search", "Room Not Found",
 			  "The room was not found.\nNote that you have not added any"
@@ -595,6 +632,13 @@ public class MainController {
 		}
 	}
 	
+	/**
+	 * Display an alert dialog.
+	 * @param alertType The alert type.
+	 * @param title The title.
+	 * @param header The header info.
+	 * @param error The message content.
+	 */
 	public static void alert(AlertType alertType, String title,
 	  String header, String error) {
 		Alert alert = new Alert(alertType);
@@ -604,6 +648,11 @@ public class MainController {
 		alert.showAndWait();
 	}
 	
+	/**
+	 * Converts a list of strings to one string.
+	 * @param list The list.
+	 * @return A String of the list.
+	 */
 	private static String listToString(List<String> list) {
 		if(list.isEmpty()) {
 			return "None";
@@ -619,6 +668,11 @@ public class MainController {
 		return listString;
 	}
 	
+	/**
+	 * Converts an array of strings to one string.
+	 * @param array The array.
+	 * @return A String of the array.
+	 */
 	private static String arrayToString(String[] array) {
 		if(array == null || array.length == 0) {
 			return "None";
@@ -634,6 +688,9 @@ public class MainController {
 		return listString;
 	}
 	
+	/**
+	 * Code to be ran the first time the program is started.
+	 */
 	private void firstTimeRun() {
 		if(firstTime) {
 			firstTime = false;
@@ -648,12 +705,15 @@ public class MainController {
 						  getBuilding(newValue);
 						if(building != null) {
 							rooms.getItems().clear();
+							roomsEdit.getItems().clear();
 							for(Integer roomNumber : building.keySet()) {
 								rooms.getItems().add("Room #" + roomNumber);
+								roomsEdit.getItems().add("Room #" +roomNumber);
 							}
 						}
 					} else {
 						rooms.getItems().clear();
+						roomsEdit.getItems().clear();
 					}
 				}
 			});
