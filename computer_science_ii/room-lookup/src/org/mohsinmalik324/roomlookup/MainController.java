@@ -143,6 +143,7 @@ public class MainController {
 		// Remove building name from lists.
 		buildings.getItems().remove(buildingName);
 		choiceBox.getItems().remove(buildingName);
+		choiceBox.getSelectionModel().selectFirst();
 		if(buildings.getItems().isEmpty()) {
 			roomsTab.setDisable(true);
 		}
@@ -359,10 +360,10 @@ public class MainController {
 			Campus campus = (Campus) in.readObject();
 			RoomLookup.setCampus(campus);
 			in.close();
+			buildings.getItems().clear();
+			choiceBox.getItems().clear();
 			// Add buildings to list.
 			for(String buildingName : campus.keySet()) {
-				Building building = campus.getBuilding(buildingName);
-				System.out.println(buildingName + " " + building.keySet().size());
 				buildings.getItems().add(buildingName);
 				choiceBox.getItems().add(buildingName);
 			}

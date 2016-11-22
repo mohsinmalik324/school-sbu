@@ -26,7 +26,7 @@
                   <TextField fx:id="searchAV" layoutX="14.0" layoutY="166.0" promptText="AV Equipment " />
                   <Label layoutX="11.0" layoutY="9.0" text="Add Building" />
                   <Button layoutX="16.0" layoutY="198.0" mnemonicParsing="false" onAction="#searchAV" text="Search" />
-                  <Button layoutX="16.0" layoutY="245.0" mnemonicParsing="false" onAction="#searchChalkboard" text="Search for Rooms with Chalkboard" />
+                  <Button layoutX="16.0" layoutY="244.0" mnemonicParsing="false" onAction="#searchChalkboard" text="Search for Rooms with Chalkboard" />
                   <Button layoutX="16.0" layoutY="275.0" mnemonicParsing="false" onAction="#searchWhiteboard" text="Search for Rooms with Whiteboard" />
                   <Button layoutX="16.0" layoutY="326.0" mnemonicParsing="false" onAction="#save" text="Save" />
                   <Button layoutX="67.0" layoutY="326.0" mnemonicParsing="false" onAction="#load" text="Load Last Save" />
@@ -55,7 +55,7 @@
                   <Label layoutX="14.0" layoutY="308.0" text="Edit Room" />
                   <Label layoutX="14.0" layoutY="336.0" text="Select a Room to Edit" />
                   <ChoiceBox fx:id="roomsEdit" layoutX="16.0" layoutY="357.0" prefWidth="150.0" />
-                  <TextField fx:id="editSeats" layoutX="14.0" layoutY="395.0" promptText="Update Number of Seats" />
+                  <TextField fx:id="editSeats" layoutX="14.0" layoutY="395.0" prefHeight="31.0" prefWidth="343.0" promptText="Update Number of Seats (seperate with commas)" />
                   <TextField fx:id="editAV" layoutX="14.0" layoutY="426.0" promptText="Update AV Equipment" />
                   <CheckBox fx:id="updateWhiteboard" layoutX="16.0" layoutY="460.0" mnemonicParsing="false" text="Whiteboard" />
                   <CheckBox fx:id="updateChalkboard" layoutX="16.0" layoutY="481.0" mnemonicParsing="false" text="Chalkboard" />
