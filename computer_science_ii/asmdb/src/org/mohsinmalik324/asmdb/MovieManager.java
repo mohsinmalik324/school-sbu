@@ -75,4 +75,32 @@ public class MovieManager {
 		return actors;
 	}
 	
+	/**
+	 * Returns an Actor object based on the name.
+	 * @param name The name of the actor.
+	 * @return An Actor object if it exists, otherwise null.
+	 */
+	public Actor getActor(String name) {
+		for(Actor actor : actors) {
+			if(actor.getName().equalsIgnoreCase(name)) {
+				return actor;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns a Movie object based on the name.
+	 * @param name The name of the movie.
+	 * @return A Movie object if it exists, otherwise null.
+	 */
+	public Movie getMovie(String title) {
+		for(Movie movie : movies) {
+			if(movie.getTitle().equalsIgnoreCase(title)) {
+				return movie;
+			}
+		}
+		return null;
+	}
+	
 }
