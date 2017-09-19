@@ -1,0 +1,6 @@
+s0: IPDest0
+s1: IPDest1
+s2: IPDest2
+s3: IPDest3
+s4: BytesSent
+s5: Starting address of header
