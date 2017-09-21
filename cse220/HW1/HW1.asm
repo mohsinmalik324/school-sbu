@@ -5,11 +5,6 @@
 
 .data
 
-unsupported_str: .asciiz "Unsupported:IPv"
-ipv4_str: .asciiz "IPv4\n"
-comma_str: .asciiz ","
-period_str: .asciiz "."
-
 # include the file with the test case information
 .include "Header1.asm" #change this line to test with other inputs
 
@@ -23,6 +18,12 @@ period_str: .asciiz "."
 	AddressOfPayload: .word 0
 	Err_string: .asciiz "ERROR\n"
 	newline: .asciiz "\n"
+	unsupported_str: .asciiz "Unsupported:IPv"
+	ipv4_str: .asciiz "IPv4\n"
+	comma_str: .asciiz ","
+	period_str: .asciiz "."
+	plus_str: .asciiz "+"
+	equal_str: .asciiz "="
 	
 # Helper macro for accessing command line arguments via Label
 .macro load_args
@@ -208,13 +209,146 @@ after_version_check:
 	
 	sw $s0 16($s5) # store the ip into memory
 	
-	move $a0 $s0
+	move $a0 $s0 # print the ip address in hex
+	li $v0 34
+	syscall
+	
+	la $a0 newline # print new line char
+	li $v0 4
+	syscall
+	
+	lw $s1 AddressOfPayload # get the starting address of the payload
+	move $s2 $s1 # $s2 = $s1
+	li $s3 0 # number of bytes in payload
+	
+	#loop starts
+payload_size_loop_start:
+	lbu $t0 0($s2)
+	beqz $t0 payload_size_loop_done # if this runs loop ends
+	addi $s3 $s3 1 # $s3++
+	addi $s2 $s2 1 # $s2++
+	j payload_size_loop_start
+	
+payload_size_loop_done:
+	lbu $s2 3($s5) # $s2 = header length/version byte
+	andi $s2 $s2 0xf # $s2 = header length
+	li $t0 4 # multiply the header length by 4 to get number of bytes
+	mult $s2 $t0
+	mflo $s2
+	move $s7 $s2 # save contents for later
+	add $s2 $s2 $s3 # $s2 = $s2 + $s3; header length + payload size
+	sh $s2 0($s5)
+	
+	lhu $s2 4($s5) # $s2 = fragement offset and flags
+	
+	srl $a0 $s2 13 # isolate flag bits and print in binary
+	li $v0 35
+	syscall
+	
+	la $a0 comma_str # print comma
+	li $v0 4
+	syscall
+	
+	andi $a0 $s2 0x1fff # isolate fragment offset bits and print in binary
+	li $v0 35
+	syscall
+	
+	la $a0 newline # print newline
+	li $v0 4
+	syscall
+	
+	beqz $s3 bytes_sent_zero
+	beq $s3 -1 bytes_sent_negone
+	
+	# if BytesSent > 100
+	li $t0 0x8000
+	add $t0 $t0 $s4
+	
+	j after_bytes_sent_check
+	
+bytes_sent_zero:
+	li $t0 0
+	j after_bytes_sent_check
+	
+bytes_sent_negone:
+	li $t0 0x4000
+	j after_bytes_sent_check
+	
+after_bytes_sent_check:
+	sh $t0 4($s5) # store new byte 4 information
+	
+	# $s7 is header length * 4
+	# $s1 is address of payload
+	
+	move $t0 $s1
+	add $s2 $s5 $s7 # get address of where the payload should be stored
+	move $t1 $s2
+	
+	# $t0 is address of payload
+	# $t1 is address of where payload needs to be stored
+	
+payload_store_loop_start:
+	lbu $t2 0($t0)
+	sb $t2 0($t1)
+	beqz $t2 payload_store_loop_done # if this is true loop is over
+	addi $t0 $t0 1 # $t0++
+	addi $t1 $t1 1 # $t1++
+	j payload_store_loop_start
+	
+payload_store_loop_done:
+	move $a0 $s5
+	li $v0 34
+	syscall
+	
+	la $a0 comma_str
+	li $v0 4
+	syscall
+	
+	move $a0 $t1
 	li $v0 34
 	syscall
 	
 	la $a0 newline
-	li $v0 10
+	li $v0 4
 	syscall
+	
+	# store checksum in $s6 and track the byte we are at with $t2
+	li $t2 0
+	li $s6 0
+	# use $t0 to track which address of the header we are at
+	move $t0 $s5
+	
+	# $t0 = address of header we are at
+	# $t2 = byte number
+	# $s6 = checksum
+	
+checksum_loop_start:
+	# check if we are at the checksum bytes
+	beq $t2 8 checksum_loop_skip
+	
+	lhu $t1 0($t0)
+	
+	add $s6 $s6 $t1 # $s6 = $s6 + $t1
+	
+	addi $t2 $t2 2 # $t2 = $t2 + 2
+	addi $t0 $t0 2 # $t0 = $t0 + 2
+	beq $t2 $s7 checksum_loop_done
+	bgt $t2 $s7 checksum_loop_done
+
+	j checksum_loop_start
+	
+checksum_loop_skip:
+	addi $t2 $t2 2 # $t2 = $t2 + 2
+	addi $t0 $t0 2 # $t0 = $t0 + 2
+	j checksum_loop_start
+	
+checksum_loop_done:
+	andi $t0 $s6 0xffff0000 # isolate the carry bits
+	andi $t1 $s6 0x0000ffff # isolate the whole bits
+	srl $t0 $t0 16 # shift carry bits over
+	add $s6 $t0 $t1 # add carry and whole
+	not $s6 $s6 # not it to get checksum
+	sh $s6 8($s5)
 
 	j exit
 	
