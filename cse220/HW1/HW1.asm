@@ -6,7 +6,7 @@
 .data
 
 # include the file with the test case information
-.include "Header1.asm" #change this line to test with other inputs
+.include "Header2.asm" #change this line to test with other inputs
 
 .align 2
 	numargs: .word 0
@@ -56,6 +56,8 @@ main:
 	li $v0 84
 	syscall
 	beq $v1 -1 error
+	blt $v0 0 error
+	bgt $v0 255 error
 	move $s0 $v0
 	
 	#load and convert AddressOfIPDest1
@@ -63,6 +65,8 @@ main:
 	li $v0 84
 	syscall
 	beq $v1 -1 error
+	blt $v0 0 error
+	bgt $v0 255 error
 	move $s1 $v0
 	
 	#load and convert AddressOfIPDest2
@@ -70,6 +74,8 @@ main:
 	li $v0 84
 	syscall
 	beq $v1 -1 error
+	blt $v0 0 error
+	bgt $v0 255 error
 	move $s2 $v0
 	
 	#load and convert AddressOfIPDest3
@@ -77,6 +83,8 @@ main:
 	li $v0 84
 	syscall
 	beq $v1 -1 error
+	blt $v0 0 error
+	bgt $v0 255 error
 	move $s3 $v0
 	
 	#load and convert AddressOfBytesSent
@@ -257,10 +265,10 @@ payload_size_loop_done:
 	li $v0 4
 	syscall
 	
-	beqz $s3 bytes_sent_zero
-	beq $s3 -1 bytes_sent_negone
+	beqz $s4 bytes_sent_zero
+	beq $s4 -1 bytes_sent_negone
 	
-	# if BytesSent > 100
+	# if BytesSent > 0
 	li $t0 0x8000
 	add $t0 $t0 $s4
 	
@@ -289,8 +297,8 @@ after_bytes_sent_check:
 	
 payload_store_loop_start:
 	lbu $t2 0($t0)
-	sb $t2 0($t1)
 	beqz $t2 payload_store_loop_done # if this is true loop is over
+	sb $t2 0($t1)
 	addi $t0 $t0 1 # $t0++
 	addi $t1 $t1 1 # $t1++
 	j payload_store_loop_start
