@@ -6,7 +6,7 @@
 .data
 
 # include the file with the test case information
-.include "Header2.asm" #change this line to test with other inputs
+.include "Header1.asm" #change this line to test with other inputs
 
 .align 2
 	numargs: .word 0
