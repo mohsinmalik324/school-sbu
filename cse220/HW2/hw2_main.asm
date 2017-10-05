@@ -76,8 +76,8 @@ _start:
 	##################
 	# extractData
 	##################
-	la $a0, pktArray_ex1
-	li $a1, 1
+	la $a0, pktArray_ex4
+	li $a1, 4
 	la $a2, msg_buffer
 	jal extractData
 
@@ -123,7 +123,7 @@ toProcessDatagram:
 	# processDatagram
 	##################
 	la $a0, msg
-	li $a1, 26
+	li $a1, 0
 	la $a2, abcArray
 	jal processDatagram
 
