@@ -54,7 +54,7 @@ printStringArray:
 	blt $a2 0 printStringArray_err # a2 < 0
 	bge $a1 $a3 printStringArray_err # a1 >= a3
 	bge $a2 $a3 printStringArray_err # a2 >= a3
-	blt $a2 $s3 printStringArray_err # a2 < a1
+	blt $a2 $a1 printStringArray_err # a2 < a1
 	
 	# t0 - the address (index) of the array we are at
 	# t1 - our counter for the following loop
@@ -266,7 +266,8 @@ processDatagram:
 	ble $a1 0 processDatagram_err # a1 <= 0
 	
 	# save s registers we use onto the stack
-	addi $sp $sp -24
+	addi $sp $sp -28
+	sw $s6 24($sp)
 	sw $s5 20($sp)
 	sw $ra 16($sp)
 	sw $s4 12($sp)
@@ -274,15 +275,17 @@ processDatagram:
 	sw $s1 4($sp)
 	sw $s0 0($sp)
 
-	# s0 - starting address of string
+	# s0 - address of string
 	# s1 - num of bytes in string
 	# s2 - address of storage array
 	# s4 - number of strings we stored
+	# s6 - starting address of string
 
 	move $s0 $a0 # s0 = a0
 	move $s1 $a1 # s1 = s1
 	move $s2 $a2 # s2 = a2
 	li $s4 0 # s4 = 0
+	move $s6 $s0 # s6 = s0
 	
 	# t0 - null terminator char
 	# t1 - counter
@@ -321,14 +324,39 @@ processDatagram_loop:
 processDatagram_loop_done:
 	move $v0 $s4 # v0 = s4
 	lbu $s5 0($s5)
-	beqz $s5 processDatagram_revive_data
+	beqz $s5 processDatagram_store_addrs
 	addi $v0 $v0 1 # v0 = v0 + 1
 	
-	j processDatagram_revive_data
+	j processDatagram_store_addrs
 	
 processDatagram_err:
 	li $v0 -1
 	jr $ra
+	
+processDatagram_store_addrs:
+	li $t0 1
+	sw $s6 0($s2) # s6 -> s2
+	addi $s2 $s2 4 # s2 = s2 + 4
+	addi $s6 $s6 1 # s6 = s6 + 1
+	
+processDatagram_loop3:
+	bge $t0 $v0 processDatagram_revive_data # t0 >= v0
+	
+	lbu $t1 0($s6) # s6 -> t1
+	beqz $t1 processDatagram_loop3_found_null # t1 == 0
+	
+	addi $s6 $s6 1 # s6 = s6 + 1
+	
+	j processDatagram_loop3
+	
+processDatagram_loop3_found_null:
+	addi $t0 $t0 1 # t0 = t0 + 1
+	addi $s6 $s6 1 # s6 = s6 + 1
+	sw $s6 0($s2) # s6 -> s2
+	addi $s2 $s2 4 # s2 = s2 + 4
+	addi $s6 $s6 1 # s6 = s6 + 1
+	
+	j processDatagram_loop3
 	
 processDatagram_revive_data:
 	# restore s registers from stack
@@ -338,7 +366,8 @@ processDatagram_revive_data:
 	lw $s4 12($sp)
 	lw $ra 16($sp)
 	lw $s5 20($sp)
-	addi $sp $sp 24
+	lw $s6 24($sp)
+	addi $sp $sp 28
 
 	jr $ra
 
@@ -346,13 +375,68 @@ processDatagram_revive_data:
 # PART 3 FUNCTIONS
 ##############################
 
+# a0 - ipv4 packet array
+# a1 - number of packets in packet array
+# a2 - byte array
+# a3 - string array
 printDatagram:
-    #Define your code here
-    ############################################
-    # DELETE THIS CODE. Only here to allow main program to run without fully implementing the function
-    li $v0, -555
-    ############################################
-    jr $ra
+	addi $sp $sp -20
+	sw $ra 16($sp)
+	sw $s3 12($sp)
+	sw $s2 8($sp)
+	sw $s1 4($sp)
+	sw $s0 0($sp)
+	
+	# s0 - ipv4 packet array
+	# s1 - number of packets in packet array
+	# s2 - byte array
+	# s3 - string array
+	
+	move $s0 $a0 # s0 = a0
+	move $s1 $a1 # s1 = a1
+	move $s2 $a2 # s2 = a2
+	move $s3 $a3 # s3 = a3
+	
+	move $a0 $s0
+	move $a1 $s1
+	move $a2 $s2
+	
+	jal extractData
+	beq $v0 -1 printDatagram_err # v0 == -1
+	
+	move $a0 $s2 # a0 = s2
+	move $a1 $v1 # a1 = v1
+	move $a2 $s3 # a2 = a3
+	
+	jal processDatagram
+	beq $v0 -1 printDatagram_err # v0 == -1
+	
+	move $a0 $s3 # a0 = s3
+	li $a1 0 # a0 = 0
+	move $a2 $v0 # a2 = v0
+	addi $a2 $a2 -1 # a2 = a2 - 1
+	move $a3 $v0 # a3 = v0
+	
+	jal printStringArray
+	beq $v0 -1 printDatagram_err # v0 == -1
+	
+	li $v0 0 # v0 = 0
+	
+	j printDatagram_done
+	
+printDatagram_err:
+	li $v0 -1
+	j printDatagram_done
+	
+printDatagram_done:
+	lw $s0 0($sp)
+	lw $s1 4($sp)
+	lw $s2 8($sp)
+	lw $s3 12($sp)
+	lw $ra 16($sp)
+	addi $sp $sp 20
+
+	jr $ra
 
 #################################################################
 # Student defined data section

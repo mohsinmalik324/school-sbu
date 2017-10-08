@@ -31,7 +31,7 @@ _start:
 	##################
 	la $a0, FF
 	li $a1, 'F'
-	li $a2,	'B'
+	li $a2,	0xFF
 	jal replace1st
 
 	# print return value
@@ -47,7 +47,7 @@ _start:
 	##################
 	la $a0, sarray_ex1
 	li $a1, 3
-	li $a2, 4
+	li $a2, 2
 	li $a3, 5
 	jal printStringArray
 
@@ -62,7 +62,7 @@ _start:
 	##################
 	# verifyIPv4Checksum
 	##################
-	la $a0, valid_header_ex1
+	la $a0, invalid_header_ex2
 	jal verifyIPv4Checksum
 
 	# print return value
@@ -140,8 +140,8 @@ toProcessDatagram:
 	##################
 	# printDatagram
 	##################
-	la $a0, pktArray_ex3
-	li $a1, 1
+	la $a0, pktArray_ex4
+	li $a1, 4
 	la $a2, msg_buffer
 	la $a3, abcArray
 	jal printDatagram
