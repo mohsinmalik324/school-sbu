@@ -3,43 +3,76 @@
 .globl main
 
 main:
-	li $t1 0xffff0000
+	li $s0 0xffff0000
 	li $t2 2
 	li $t4 4
 	li $t8 8
+	li $t9 -1
 	
-	sh $t2 0($t1)
-	sh $t4 2($t1)
-	sh $t2 4($t1)
-	sh $t8 6($t1)
+	sh $t2 0($s0)
+	sh $t9 2($s0)
+	sh $t4 4($s0)
+	sh $t9 6($s0)
 	
-	sh $t4 8($t1)
-	sh $t2 10($t1)
-	li $t0 16
-	sh $t0 12($t1)
-	sh $t2 14($t1)
+	sh $t9 8($s0)
+	sh $t2 10($s0)
+	sh $t2 12($s0)
+	sh $t9 14($s0)
 	
-	sh $t2 16($t1)
-	sh $t4 18($t1)
-	sh $t8 20($t1)
-	sh $t4 22($t1)
+	sh $t9 16($s0)
+	sh $t9 18($s0)
+	sh $t9 20($s0)
+	sh $t9 22($s0)
 	
-	sh $t4 24($t1)
-	li $t0 64
-	sh $t0 26($t1)
-	li $t0 16
-	sh $t0 28($t1)
-	sh $t0 30($t1)
+	sh $t9 24($s0)
+	sh $t9 26($s0)
+	sh $t9 28($s0)
+	sh $t9 30($s0)
 	
 	#li $v0 10
 	#syscall
 	
-	move $a0 $t1
+	move $a0 $s0
 	li $a1 4
 	li $a2 4
-	jal check_state
+	li $a3 'D'
+	jal user_move
 	
-	move $t0 $v0
+	#li $v0 10
+	#syscall
+	
+	move $a0 $s0
+	li $a1 4
+	li $a2 4
+	li $a3 'R'
+	jal user_move
+	
+	#li $v0 10
+	#syscall
+	
+	move $a0 $s0
+	li $a1 4
+	li $a2 4
+	li $a3 'U'
+	jal user_move
+	
+	li $v0 10
+	syscall
+	
+	move $a0 $s0
+	li $a1 4
+	li $a2 4
+	li $a3 'U'
+	jal user_move
+	
+	#li $v0 10
+	#syscall
+	
+	move $a0 $s0
+	li $a1 4
+	li $a2 4
+	li $a3 'R'
+	jal user_move
 
 	li $v0 10
 	syscall

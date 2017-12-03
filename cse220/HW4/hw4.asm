@@ -616,7 +616,7 @@ merge_col_done:
 shift_row:
 	lw $t0 0($sp) # load direction argument
 
-	addi $sp $sp 32
+	addi $sp $sp -32
 	sw $s6 28($sp)
 	sw $s5 24($sp)
 	sw $s4 20($sp)
@@ -786,7 +786,7 @@ shift_row_done:
 shift_col:
 	lw $t0 0($sp) # load direction argument
 
-	addi $sp $sp 36
+	addi $sp $sp -36
 	sw $s7 32($sp)
 	sw $s6 28($sp)
 	sw $s5 24($sp)
@@ -1128,8 +1128,155 @@ check_state_done:
 
 	jr $ra
 
+# a0 - board
+# a1 - num rows
+# a2 - num cols
+# a3 - direction
 user_move:
+	addi $sp $sp -28
+	sw $s5 24($sp)
+	sw $s4 20($sp)
+	sw $s3 16($sp)
+	sw $s2 12($sp)
+	sw $s1 8($sp)
+	sw $s0 4($sp)
+	sw $ra 0($sp)
 	
+	# s0 - board
+	# s1 - num rows
+	# s2 - num cols
+	# s3 - direction
+	# s4 - row/col counter
+	# s5 - direction arg for functions
+	
+	move $s0 $a0
+	move $s1 $a1
+	move $s2 $a2
+	move $s3 $a3
+	li $s4 0 # s4 = 0
+	
+	li $t0 'L'
+	beq $s3 $t0 user_move_left
+	li $t0 'R'
+	beq $s3 $t0 user_move_right
+	li $t0 'U'
+	beq $s3 $t0 user_move_up
+	li $t0 'D'
+	beq $s3 $t0 user_move_down
+
+	j user_move_err
+	
+user_move_left: # dv = direction valid
+	li $s5 0 # s5 = 1
+	j user_move_row
+	
+user_move_right: # dv = direction valid
+	li $s5 1 # s5 = 0
+	j user_move_row
+	
+user_move_up: # dv = direction valid
+	li $s5 0 # s5 = 0
+	j user_move_col
+	
+user_move_down: # dv = direction valid
+	li $s5 1 # s5 = 1
+	j user_move_col
+	
+user_move_row:
+	bge $s4 $s1 user_move_cs # row counter >= num rows
+	
+	move $a0 $s0 # board arg
+	move $a1 $s1 # num rows arg
+	move $a2 $s2 # num cols arg
+	move $a3 $s4 # row arg
+	addi $sp $sp -4
+	sw $s5 0($sp) # direction arg
+	jal shift_row
+	addi $sp $sp 4
+	bltz $v0 user_move_err # v0 < 0
+	
+	move $a0 $s0 # board arg
+	move $a1 $s1 # num rows arg
+	move $a2 $s2 # num cols arg
+	move $a3 $s4 # row arg
+	addi $sp $sp -4
+	sw $s5 0($sp) # direction arg
+	jal merge_row
+	addi $sp $sp 4
+	bltz $v0 user_move_err # v0 < 0
+	
+	move $a0 $s0 # board arg
+	move $a1 $s1 # num rows arg
+	move $a2 $s2 # num cols arg
+	move $a3 $s4 # row arg
+	addi $sp $sp -4
+	sw $s5 0($sp) # direction arg
+	jal shift_row
+	addi $sp $sp 4
+	bltz $v0 user_move_err # v0 < 0
+	
+	addi $s4 $s4 1 # s4 = s4 + 1
+	j user_move_row
+
+user_move_col:
+	bge $s4 $s2 user_move_cs # col counter >= num cols
+	
+	move $a0 $s0 # board arg
+	move $a1 $s1 # num rows arg
+	move $a2 $s2 # num cols arg
+	move $a3 $s4 # col arg
+	addi $sp $sp -4
+	sw $s5 0($sp) # direction arg
+	jal shift_col
+	addi $sp $sp 4
+	bltz $v0 user_move_err # v0 < 0
+	
+	move $a0 $s0 # board arg
+	move $a1 $s1 # num rows arg
+	move $a2 $s2 # num cols arg
+	move $a3 $s4 # col arg
+	addi $sp $sp -4
+	sw $s5 0($sp) # direction arg
+	jal merge_col
+	addi $sp $sp 4
+	bltz $v0 user_move_err # v0 < 0
+	
+	move $a0 $s0 # board arg
+	move $a1 $s1 # num rows arg
+	move $a2 $s2 # num cols arg
+	move $a3 $s4 # col arg
+	addi $sp $sp -4
+	sw $s5 0($sp) # direction arg
+	jal shift_col
+	addi $sp $sp 4
+	bltz $v0 user_move_err # v0 < 0
+	
+	addi $s4 $s4 1 # s4 = s4 + 1
+	j user_move_col
+
+user_move_cs: # cs = check state
+	move $a0 $s0 # board argument
+	move $a1 $s1 # num rows arg
+	move $a2 $s2 # num cols arg
+	jal check_state
+	move $v1 $v0
+	li $v0 0
+	j user_move_done
+	
+user_move_err:
+	li $v0 -1 # v0 = -1
+	li $v1 -1 # v1 = -1
+	j user_move_done
+	
+user_move_done:
+	lw $ra 0($sp)
+	lw $s0 4($sp)
+	lw $s1 8($sp)
+	lw $s2 12($sp)
+	lw $s3 16($sp)
+	lw $s4 20($sp)
+	lw $s5 24($sp)
+	addi $sp $sp 28
 
 	jr $ra
 
