@@ -1,4 +1,5 @@
 import sys
+import copy
 
 def apply_choice(pss, row, col, val):
 	mask = valid_masks[val]
@@ -118,6 +119,18 @@ def get_solve_step(pss, psd):
 
 def solve(level):
 	pss = states[level]
+	#if level == 1:
+		#s = pss
+		#print(s.avail_mask)
+		#print("")
+		#print(s.row_avail_counts)
+		#print("")
+		#print(s.col_avail_counts)
+		#print("")
+		#print(s.box_avail_counts)
+		#print("")
+		#print(s.val_set)
+		#quit()
 	sd = SOLVE_DATA()
 	if get_solve_step(pss, sd) != 0:
 		return -1
@@ -127,8 +140,8 @@ def solve(level):
 			pss.val_set[sd.test_row][sd.test_col] = sd.solve_val
 			return 0
 		else:
+			states[level + 1] = copy.deepcopy(pss)
 			pssnxt = states[level + 1]
-			pssnxt = pss
 			if apply_choice(pssnxt, sd.test_row, sd.test_col, sd.solve_val) == 0:
 				if check_constraints(pssnxt) == 0:
 					if solve(level + 1) == 0:
@@ -220,7 +233,7 @@ def check_constraints(pss):
 							totResult |= resultMask
 					if baseMask == 0:
 						return -1
-					pss.avail_mask[row][col] = baseMask 
+					pss.avail_mask[row][col] = baseMask
 					if totResult != 0:
 						for i in range(9):
 							if (valid_masks[i] & totResult) != 0:
@@ -256,6 +269,7 @@ def scan_constraints():
 				line = f_split[index]
 				index += 1
 				scan_convert(constraints[5 * i + 2 * j + 1], 9, line)
+	index += 1
 
 def search_init():
 	pss = states[0]
@@ -300,7 +314,7 @@ STYP_BOX = 3
 ALL_MASK = 511
 constraints = [None] * 15
 for i in range(15):
-	constraints[i] = [None] * 9
+	constraints[i] = [0] * 9
 states = [None] * 81
 for i in range(81):
 	states[i] = SEARCH_STATE()
@@ -316,13 +330,24 @@ index = 2
 
 for curprob in range(1, nprob + 1):
 	search_init()
+	#s = states[0]
+	#print(s.avail_mask)
+	#print("")
+	#print(s.row_avail_counts)
+	#print("")
+	#print(s.col_avail_counts)
+	#print("")
+	#print(s.box_avail_counts)
+	#print("")
+	#print(s.val_set)
+	#quit()
 	scan_constraints()
 	#print(constraints)
 	#quit()
 	if check_constraints(states[0]) != 0:
 		print("problem index " + str(curprob) + " init check constraints failed")
 	if solve(0) != 0:
-		print("error")
+		print("problem " + str(curprob) + " no solution")
 	else:
 		print(str(curprob))
 		for i in range(9):
