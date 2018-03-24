@@ -1,0 +1,9 @@
+Q1.1. List Operators
+
+
+
+
+
+Write a program that takes a text file as an input.
+
+

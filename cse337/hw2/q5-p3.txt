@@ -1,0 +1,25 @@
+[-+]?\d+(\.\d*)?F\b
+Works (all answers have a space at the end):
+1F 
++23F 
+-123.123F 
+
+Doesn't work:
+a
+b
+c
+
+s/(#?)1|one/[\1January]/ig
+Works:
+
+
+/((.*?)\d)\s\2/
+Works (all answers have a space at the end):
+1 
+2 
+3 
+
+Doesn't work:
+a
+b
+c

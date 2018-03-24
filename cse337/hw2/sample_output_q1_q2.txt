@@ -1,0 +1,121 @@
+===========================
+Question 1
+===========================
+
+$ perl q1_p1.pl
+
+nobody, -2
+root, 0
+_uucp, 4
+_networkd, 24
+_lp, 26
+_ces, 32
+_mcxalr, 54
+_geod, 56
+_serialnumberd, 58
+_sandbox, 60
+_www, 70
+_cvs, 72
+_mysql, 74
+_qtss, 76
+_mailman, 78
+_clamav, 82
+_jabber, 84
+_windowserver, 88
+_securityagent, 92
+_teamsserver, 94
+_installer, 96
+_ftp, 98
+
+
+$ perl q1_p2.pl
+
+sorted uids: 99 98 97 96 95 94 93 92 91 89 88 87 84 83 82 79 78 77 76 75 74 73 72 71 70 67 65 60 59 58 56 55 54 33 32 31 27 26 25 24 13 4 1 0 -2
+usernames: _unknown _ftp _atsserver _installer _update_sharing _teamsserver _calendar _securityagent _tokend _spotlight _windowserver _appowner _jabber _amavisd _clamav _appserver _mailman _cyrus _qtss _sshd _mysql _svn _cvs _eppc _www _ard _mdnsresponder _sandbox _devdocs _serialnumberd _geod _appleevents _mcxalr _appstore _ces _scsd _postfix _lp _installassistant _networkd _taskgated _uucp daemon root nobody
+
+
+$ perl q1_p3.pl
+
+group 89 has 1 users
+group 60 has 1 users
+group 25 has 1 users
+group 93 has 1 users
+group 94 has 1 users
+group 84 has 1 users
+group 70 has 1 users
+group 0 has 1 users
+group 92 has 1 users
+group 33 has 1 users
+group 79 has 1 users
+group 88 has 1 users
+group 55 has 1 users
+group 56 has 1 users
+group 31 has 1 users
+group 26 has 1 users
+group 73 has 1 users
+group 27 has 1 users
+group 6 has 1 users
+group 54 has 1 users
+group 1 has 1 users
+group 91 has 1 users
+group 74 has 1 users
+group 58 has 1 users
+group 99 has 1 users
+group 78 has 1 users
+group 97 has 1 users
+group 76 has 1 users
+group 72 has 1 users
+group 71 has 1 users
+group 65 has 1 users
+group 24 has 1 users
+group 87 has 1 users
+group 32 has 1 users
+group 59 has 1 users
+group 82 has 1 users
+group 67 has 1 users
+group 83 has 1 users
+group 75 has 1 users
+group 4 has 1 users
+group 13 has 1 users
+group -2 has 4 users
+
+
+$ perl q1_p4.pl
+
+Add the following entry to file:
+Zhibo Yang:*:100:91:New User:/home/:/bin/bash
+
+
+
+===========================
+Question 2
+===========================
+
+$ perl q2_p1.pl sample_input_q2.txt
+
+SORTED TEXT:
+Putting up.
+Like a cup.
+It would be life,
+Behind the shelf.
+And life is over there 
+I cannot live with you, 
+Our life, his porcelain,
+The sexton keeps the key to, 
+
+$ perl q2_p2.pl sample_input_q2.txt 15
+
+FITTED TEXT:
+I cannot live 
+with you, It 
+would be life, 
+And life is 
+over there 
+Behind the 
+shelf. The 
+sexton keeps 
+the key to, 
+Putting up. Our 
+life, his 
+porcelain, Like 
+a cup. 

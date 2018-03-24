@@ -1,0 +1,2 @@
+m/(very ){1,2}((agile|fluffy|big) ){1,2}cat/
+m/\w+[?.!][^?!]/
