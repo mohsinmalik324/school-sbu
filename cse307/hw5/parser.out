@@ -1,0 +1,3499 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> block
+Rule 1     block -> LBRACE inblock RBRACE
+Rule 2     inblock -> smt inblock
+Rule 3     inblock -> smt
+Rule 4     smt -> print_smt
+Rule 5     smt -> assign_smt
+Rule 6     smt -> assign_index_smt
+Rule 7     smt -> if_smt
+Rule 8     smt -> if_else_smt
+Rule 9     smt -> while_smt
+Rule 10    while_smt -> WHILE LPAREN expression RPAREN block
+Rule 11    if_smt -> IF LPAREN expression RPAREN block
+Rule 12    if_else_smt -> IF LPAREN expression RPAREN block ELSE block
+Rule 13    assign_smt -> NAME EQUALS expression SEMI
+Rule 14    assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression SEMI
+Rule 15    print_smt -> PRINT LPAREN expression RPAREN SEMI
+Rule 16    expression -> NOT expression
+Rule 17    expression -> expression PLUS expression
+Rule 18    expression -> expression MINUS expression
+Rule 19    expression -> expression TIMES expression
+Rule 20    expression -> expression DIVIDE expression
+Rule 21    expression -> expression FDIVIDE expression
+Rule 22    expression -> expression MOD expression
+Rule 23    expression -> expression POW expression
+Rule 24    expression -> expression GT expression
+Rule 25    expression -> expression GTE expression
+Rule 26    expression -> expression LT expression
+Rule 27    expression -> expression LTE expression
+Rule 28    expression -> expression EQUALSS expression
+Rule 29    expression -> expression NEQUALS expression
+Rule 30    expression -> expression AND expression
+Rule 31    expression -> expression OR expression
+Rule 32    expression -> expression IN expression
+Rule 33    expression -> num
+Rule 34    expression -> str
+Rule 35    expression -> bool
+Rule 36    expression -> list
+Rule 37    expression -> NAME
+Rule 38    expression -> LPAREN expression RPAREN
+Rule 39    expression -> expression LBRACKET expression RBRACKET
+Rule 40    list -> LBRACKET innerlist RBRACKET
+Rule 41    list -> LBRACKET RBRACKET
+Rule 42    innerlist -> innerlist COMMA expression
+Rule 43    innerlist -> expression
+Rule 44    num -> NUMBER
+Rule 45    str -> STRING
+Rule 46    bool -> BOOLEAN
+
+Terminals, with rules where they appear
+
+AND                  : 30
+BOOLEAN              : 46
+COMMA                : 42
+DIVIDE               : 20
+ELSE                 : 12
+EQUALS               : 13 14
+EQUALSS              : 28
+FDIVIDE              : 21
+GT                   : 24
+GTE                  : 25
+IF                   : 11 12
+IN                   : 32
+LBRACE               : 1
+LBRACKET             : 14 39 40 41
+LPAREN               : 10 11 12 15 38
+LT                   : 26
+LTE                  : 27
+MINUS                : 18
+MOD                  : 22
+NAME                 : 13 14 37
+NEQUALS              : 29
+NOT                  : 16
+NUMBER               : 44
+OR                   : 31
+PLUS                 : 17
+POW                  : 23
+PRINT                : 15
+RBRACE               : 1
+RBRACKET             : 14 39 40 41
+RPAREN               : 10 11 12 15 38
+SEMI                 : 13 14 15
+STRING               : 45
+TIMES                : 19
+WHILE                : 10
+error                : 
+
+Nonterminals, with rules where they appear
+
+assign_index_smt     : 6
+assign_smt           : 5
+block                : 10 11 12 12 0
+bool                 : 35
+expression           : 10 11 12 13 14 14 15 16 17 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 38 39 39 42 43
+if_else_smt          : 8
+if_smt               : 7
+inblock              : 1 2
+innerlist            : 40 42
+list                 : 36
+num                  : 33
+print_smt            : 4
+smt                  : 2 3
+str                  : 34
+while_smt            : 9
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . block
+    (1) block -> . LBRACE inblock RBRACE
+
+    LBRACE          shift and go to state 2
+
+    block                          shift and go to state 1
+
+state 1
+
+    (0) S' -> block .
+
+
+
+state 2
+
+    (1) block -> LBRACE . inblock RBRACE
+    (2) inblock -> . smt inblock
+    (3) inblock -> . smt
+    (4) smt -> . print_smt
+    (5) smt -> . assign_smt
+    (6) smt -> . assign_index_smt
+    (7) smt -> . if_smt
+    (8) smt -> . if_else_smt
+    (9) smt -> . while_smt
+    (15) print_smt -> . PRINT LPAREN expression RPAREN SEMI
+    (13) assign_smt -> . NAME EQUALS expression SEMI
+    (14) assign_index_smt -> . NAME LBRACKET expression RBRACKET EQUALS expression SEMI
+    (11) if_smt -> . IF LPAREN expression RPAREN block
+    (12) if_else_smt -> . IF LPAREN expression RPAREN block ELSE block
+    (10) while_smt -> . WHILE LPAREN expression RPAREN block
+
+    PRINT           shift and go to state 11
+    NAME            shift and go to state 12
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+
+    inblock                        shift and go to state 3
+    smt                            shift and go to state 4
+    print_smt                      shift and go to state 5
+    assign_smt                     shift and go to state 6
+    assign_index_smt               shift and go to state 7
+    if_smt                         shift and go to state 8
+    if_else_smt                    shift and go to state 9
+    while_smt                      shift and go to state 10
+
+state 3
+
+    (1) block -> LBRACE inblock . RBRACE
+
+    RBRACE          shift and go to state 15
+
+
+state 4
+
+    (2) inblock -> smt . inblock
+    (3) inblock -> smt .
+    (2) inblock -> . smt inblock
+    (3) inblock -> . smt
+    (4) smt -> . print_smt
+    (5) smt -> . assign_smt
+    (6) smt -> . assign_index_smt
+    (7) smt -> . if_smt
+    (8) smt -> . if_else_smt
+    (9) smt -> . while_smt
+    (15) print_smt -> . PRINT LPAREN expression RPAREN SEMI
+    (13) assign_smt -> . NAME EQUALS expression SEMI
+    (14) assign_index_smt -> . NAME LBRACKET expression RBRACKET EQUALS expression SEMI
+    (11) if_smt -> . IF LPAREN expression RPAREN block
+    (12) if_else_smt -> . IF LPAREN expression RPAREN block ELSE block
+    (10) while_smt -> . WHILE LPAREN expression RPAREN block
+
+    RBRACE          reduce using rule 3 (inblock -> smt .)
+    PRINT           shift and go to state 11
+    NAME            shift and go to state 12
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+
+    smt                            shift and go to state 4
+    inblock                        shift and go to state 16
+    print_smt                      shift and go to state 5
+    assign_smt                     shift and go to state 6
+    assign_index_smt               shift and go to state 7
+    if_smt                         shift and go to state 8
+    if_else_smt                    shift and go to state 9
+    while_smt                      shift and go to state 10
+
+state 5
+
+    (4) smt -> print_smt .
+
+    PRINT           reduce using rule 4 (smt -> print_smt .)
+    NAME            reduce using rule 4 (smt -> print_smt .)
+    IF              reduce using rule 4 (smt -> print_smt .)
+    WHILE           reduce using rule 4 (smt -> print_smt .)
+    RBRACE          reduce using rule 4 (smt -> print_smt .)
+
+
+state 6
+
+    (5) smt -> assign_smt .
+
+    PRINT           reduce using rule 5 (smt -> assign_smt .)
+    NAME            reduce using rule 5 (smt -> assign_smt .)
+    IF              reduce using rule 5 (smt -> assign_smt .)
+    WHILE           reduce using rule 5 (smt -> assign_smt .)
+    RBRACE          reduce using rule 5 (smt -> assign_smt .)
+
+
+state 7
+
+    (6) smt -> assign_index_smt .
+
+    PRINT           reduce using rule 6 (smt -> assign_index_smt .)
+    NAME            reduce using rule 6 (smt -> assign_index_smt .)
+    IF              reduce using rule 6 (smt -> assign_index_smt .)
+    WHILE           reduce using rule 6 (smt -> assign_index_smt .)
+    RBRACE          reduce using rule 6 (smt -> assign_index_smt .)
+
+
+state 8
+
+    (7) smt -> if_smt .
+
+    PRINT           reduce using rule 7 (smt -> if_smt .)
+    NAME            reduce using rule 7 (smt -> if_smt .)
+    IF              reduce using rule 7 (smt -> if_smt .)
+    WHILE           reduce using rule 7 (smt -> if_smt .)
+    RBRACE          reduce using rule 7 (smt -> if_smt .)
+
+
+state 9
+
+    (8) smt -> if_else_smt .
+
+    PRINT           reduce using rule 8 (smt -> if_else_smt .)
+    NAME            reduce using rule 8 (smt -> if_else_smt .)
+    IF              reduce using rule 8 (smt -> if_else_smt .)
+    WHILE           reduce using rule 8 (smt -> if_else_smt .)
+    RBRACE          reduce using rule 8 (smt -> if_else_smt .)
+
+
+state 10
+
+    (9) smt -> while_smt .
+
+    PRINT           reduce using rule 9 (smt -> while_smt .)
+    NAME            reduce using rule 9 (smt -> while_smt .)
+    IF              reduce using rule 9 (smt -> while_smt .)
+    WHILE           reduce using rule 9 (smt -> while_smt .)
+    RBRACE          reduce using rule 9 (smt -> while_smt .)
+
+
+state 11
+
+    (15) print_smt -> PRINT . LPAREN expression RPAREN SEMI
+
+    LPAREN          shift and go to state 17
+
+
+state 12
+
+    (13) assign_smt -> NAME . EQUALS expression SEMI
+    (14) assign_index_smt -> NAME . LBRACKET expression RBRACKET EQUALS expression SEMI
+
+    EQUALS          shift and go to state 18
+    LBRACKET        shift and go to state 19
+
+
+state 13
+
+    (11) if_smt -> IF . LPAREN expression RPAREN block
+    (12) if_else_smt -> IF . LPAREN expression RPAREN block ELSE block
+
+    LPAREN          shift and go to state 20
+
+
+state 14
+
+    (10) while_smt -> WHILE . LPAREN expression RPAREN block
+
+    LPAREN          shift and go to state 21
+
+
+state 15
+
+    (1) block -> LBRACE inblock RBRACE .
+
+    $end            reduce using rule 1 (block -> LBRACE inblock RBRACE .)
+    ELSE            reduce using rule 1 (block -> LBRACE inblock RBRACE .)
+    PRINT           reduce using rule 1 (block -> LBRACE inblock RBRACE .)
+    NAME            reduce using rule 1 (block -> LBRACE inblock RBRACE .)
+    IF              reduce using rule 1 (block -> LBRACE inblock RBRACE .)
+    WHILE           reduce using rule 1 (block -> LBRACE inblock RBRACE .)
+    RBRACE          reduce using rule 1 (block -> LBRACE inblock RBRACE .)
+
+
+state 16
+
+    (2) inblock -> smt inblock .
+
+    RBRACE          reduce using rule 2 (inblock -> smt inblock .)
+
+
+state 17
+
+    (15) print_smt -> PRINT LPAREN . expression RPAREN SEMI
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 23
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 18
+
+    (13) assign_smt -> NAME EQUALS . expression SEMI
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 34
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 19
+
+    (14) assign_index_smt -> NAME LBRACKET . expression RBRACKET EQUALS expression SEMI
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 35
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 20
+
+    (11) if_smt -> IF LPAREN . expression RPAREN block
+    (12) if_else_smt -> IF LPAREN . expression RPAREN block ELSE block
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 36
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 21
+
+    (10) while_smt -> WHILE LPAREN . expression RPAREN block
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 37
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 22
+
+    (38) expression -> LPAREN . expression RPAREN
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 38
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 23
+
+    (15) print_smt -> PRINT LPAREN expression . RPAREN SEMI
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          shift and go to state 39
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 24
+
+    (16) expression -> NOT . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 57
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 25
+
+    (33) expression -> num .
+
+    RPAREN          reduce using rule 33 (expression -> num .)
+    PLUS            reduce using rule 33 (expression -> num .)
+    MINUS           reduce using rule 33 (expression -> num .)
+    TIMES           reduce using rule 33 (expression -> num .)
+    DIVIDE          reduce using rule 33 (expression -> num .)
+    FDIVIDE         reduce using rule 33 (expression -> num .)
+    MOD             reduce using rule 33 (expression -> num .)
+    POW             reduce using rule 33 (expression -> num .)
+    GT              reduce using rule 33 (expression -> num .)
+    GTE             reduce using rule 33 (expression -> num .)
+    LT              reduce using rule 33 (expression -> num .)
+    LTE             reduce using rule 33 (expression -> num .)
+    EQUALSS         reduce using rule 33 (expression -> num .)
+    NEQUALS         reduce using rule 33 (expression -> num .)
+    AND             reduce using rule 33 (expression -> num .)
+    OR              reduce using rule 33 (expression -> num .)
+    IN              reduce using rule 33 (expression -> num .)
+    LBRACKET        reduce using rule 33 (expression -> num .)
+    SEMI            reduce using rule 33 (expression -> num .)
+    RBRACKET        reduce using rule 33 (expression -> num .)
+    COMMA           reduce using rule 33 (expression -> num .)
+
+
+state 26
+
+    (34) expression -> str .
+
+    RPAREN          reduce using rule 34 (expression -> str .)
+    PLUS            reduce using rule 34 (expression -> str .)
+    MINUS           reduce using rule 34 (expression -> str .)
+    TIMES           reduce using rule 34 (expression -> str .)
+    DIVIDE          reduce using rule 34 (expression -> str .)
+    FDIVIDE         reduce using rule 34 (expression -> str .)
+    MOD             reduce using rule 34 (expression -> str .)
+    POW             reduce using rule 34 (expression -> str .)
+    GT              reduce using rule 34 (expression -> str .)
+    GTE             reduce using rule 34 (expression -> str .)
+    LT              reduce using rule 34 (expression -> str .)
+    LTE             reduce using rule 34 (expression -> str .)
+    EQUALSS         reduce using rule 34 (expression -> str .)
+    NEQUALS         reduce using rule 34 (expression -> str .)
+    AND             reduce using rule 34 (expression -> str .)
+    OR              reduce using rule 34 (expression -> str .)
+    IN              reduce using rule 34 (expression -> str .)
+    LBRACKET        reduce using rule 34 (expression -> str .)
+    SEMI            reduce using rule 34 (expression -> str .)
+    RBRACKET        reduce using rule 34 (expression -> str .)
+    COMMA           reduce using rule 34 (expression -> str .)
+
+
+state 27
+
+    (35) expression -> bool .
+
+    RPAREN          reduce using rule 35 (expression -> bool .)
+    PLUS            reduce using rule 35 (expression -> bool .)
+    MINUS           reduce using rule 35 (expression -> bool .)
+    TIMES           reduce using rule 35 (expression -> bool .)
+    DIVIDE          reduce using rule 35 (expression -> bool .)
+    FDIVIDE         reduce using rule 35 (expression -> bool .)
+    MOD             reduce using rule 35 (expression -> bool .)
+    POW             reduce using rule 35 (expression -> bool .)
+    GT              reduce using rule 35 (expression -> bool .)
+    GTE             reduce using rule 35 (expression -> bool .)
+    LT              reduce using rule 35 (expression -> bool .)
+    LTE             reduce using rule 35 (expression -> bool .)
+    EQUALSS         reduce using rule 35 (expression -> bool .)
+    NEQUALS         reduce using rule 35 (expression -> bool .)
+    AND             reduce using rule 35 (expression -> bool .)
+    OR              reduce using rule 35 (expression -> bool .)
+    IN              reduce using rule 35 (expression -> bool .)
+    LBRACKET        reduce using rule 35 (expression -> bool .)
+    SEMI            reduce using rule 35 (expression -> bool .)
+    RBRACKET        reduce using rule 35 (expression -> bool .)
+    COMMA           reduce using rule 35 (expression -> bool .)
+
+
+state 28
+
+    (36) expression -> list .
+
+    RPAREN          reduce using rule 36 (expression -> list .)
+    PLUS            reduce using rule 36 (expression -> list .)
+    MINUS           reduce using rule 36 (expression -> list .)
+    TIMES           reduce using rule 36 (expression -> list .)
+    DIVIDE          reduce using rule 36 (expression -> list .)
+    FDIVIDE         reduce using rule 36 (expression -> list .)
+    MOD             reduce using rule 36 (expression -> list .)
+    POW             reduce using rule 36 (expression -> list .)
+    GT              reduce using rule 36 (expression -> list .)
+    GTE             reduce using rule 36 (expression -> list .)
+    LT              reduce using rule 36 (expression -> list .)
+    LTE             reduce using rule 36 (expression -> list .)
+    EQUALSS         reduce using rule 36 (expression -> list .)
+    NEQUALS         reduce using rule 36 (expression -> list .)
+    AND             reduce using rule 36 (expression -> list .)
+    OR              reduce using rule 36 (expression -> list .)
+    IN              reduce using rule 36 (expression -> list .)
+    LBRACKET        reduce using rule 36 (expression -> list .)
+    SEMI            reduce using rule 36 (expression -> list .)
+    RBRACKET        reduce using rule 36 (expression -> list .)
+    COMMA           reduce using rule 36 (expression -> list .)
+
+
+state 29
+
+    (37) expression -> NAME .
+
+    RPAREN          reduce using rule 37 (expression -> NAME .)
+    PLUS            reduce using rule 37 (expression -> NAME .)
+    MINUS           reduce using rule 37 (expression -> NAME .)
+    TIMES           reduce using rule 37 (expression -> NAME .)
+    DIVIDE          reduce using rule 37 (expression -> NAME .)
+    FDIVIDE         reduce using rule 37 (expression -> NAME .)
+    MOD             reduce using rule 37 (expression -> NAME .)
+    POW             reduce using rule 37 (expression -> NAME .)
+    GT              reduce using rule 37 (expression -> NAME .)
+    GTE             reduce using rule 37 (expression -> NAME .)
+    LT              reduce using rule 37 (expression -> NAME .)
+    LTE             reduce using rule 37 (expression -> NAME .)
+    EQUALSS         reduce using rule 37 (expression -> NAME .)
+    NEQUALS         reduce using rule 37 (expression -> NAME .)
+    AND             reduce using rule 37 (expression -> NAME .)
+    OR              reduce using rule 37 (expression -> NAME .)
+    IN              reduce using rule 37 (expression -> NAME .)
+    LBRACKET        reduce using rule 37 (expression -> NAME .)
+    SEMI            reduce using rule 37 (expression -> NAME .)
+    RBRACKET        reduce using rule 37 (expression -> NAME .)
+    COMMA           reduce using rule 37 (expression -> NAME .)
+
+
+state 30
+
+    (40) list -> LBRACKET . innerlist RBRACKET
+    (41) list -> LBRACKET . RBRACKET
+    (42) innerlist -> . innerlist COMMA expression
+    (43) innerlist -> . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    RBRACKET        shift and go to state 59
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    innerlist                      shift and go to state 58
+    expression                     shift and go to state 60
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 31
+
+    (44) num -> NUMBER .
+
+    RPAREN          reduce using rule 44 (num -> NUMBER .)
+    PLUS            reduce using rule 44 (num -> NUMBER .)
+    MINUS           reduce using rule 44 (num -> NUMBER .)
+    TIMES           reduce using rule 44 (num -> NUMBER .)
+    DIVIDE          reduce using rule 44 (num -> NUMBER .)
+    FDIVIDE         reduce using rule 44 (num -> NUMBER .)
+    MOD             reduce using rule 44 (num -> NUMBER .)
+    POW             reduce using rule 44 (num -> NUMBER .)
+    GT              reduce using rule 44 (num -> NUMBER .)
+    GTE             reduce using rule 44 (num -> NUMBER .)
+    LT              reduce using rule 44 (num -> NUMBER .)
+    LTE             reduce using rule 44 (num -> NUMBER .)
+    EQUALSS         reduce using rule 44 (num -> NUMBER .)
+    NEQUALS         reduce using rule 44 (num -> NUMBER .)
+    AND             reduce using rule 44 (num -> NUMBER .)
+    OR              reduce using rule 44 (num -> NUMBER .)
+    IN              reduce using rule 44 (num -> NUMBER .)
+    LBRACKET        reduce using rule 44 (num -> NUMBER .)
+    SEMI            reduce using rule 44 (num -> NUMBER .)
+    RBRACKET        reduce using rule 44 (num -> NUMBER .)
+    COMMA           reduce using rule 44 (num -> NUMBER .)
+
+
+state 32
+
+    (45) str -> STRING .
+
+    RPAREN          reduce using rule 45 (str -> STRING .)
+    PLUS            reduce using rule 45 (str -> STRING .)
+    MINUS           reduce using rule 45 (str -> STRING .)
+    TIMES           reduce using rule 45 (str -> STRING .)
+    DIVIDE          reduce using rule 45 (str -> STRING .)
+    FDIVIDE         reduce using rule 45 (str -> STRING .)
+    MOD             reduce using rule 45 (str -> STRING .)
+    POW             reduce using rule 45 (str -> STRING .)
+    GT              reduce using rule 45 (str -> STRING .)
+    GTE             reduce using rule 45 (str -> STRING .)
+    LT              reduce using rule 45 (str -> STRING .)
+    LTE             reduce using rule 45 (str -> STRING .)
+    EQUALSS         reduce using rule 45 (str -> STRING .)
+    NEQUALS         reduce using rule 45 (str -> STRING .)
+    AND             reduce using rule 45 (str -> STRING .)
+    OR              reduce using rule 45 (str -> STRING .)
+    IN              reduce using rule 45 (str -> STRING .)
+    LBRACKET        reduce using rule 45 (str -> STRING .)
+    SEMI            reduce using rule 45 (str -> STRING .)
+    RBRACKET        reduce using rule 45 (str -> STRING .)
+    COMMA           reduce using rule 45 (str -> STRING .)
+
+
+state 33
+
+    (46) bool -> BOOLEAN .
+
+    RPAREN          reduce using rule 46 (bool -> BOOLEAN .)
+    PLUS            reduce using rule 46 (bool -> BOOLEAN .)
+    MINUS           reduce using rule 46 (bool -> BOOLEAN .)
+    TIMES           reduce using rule 46 (bool -> BOOLEAN .)
+    DIVIDE          reduce using rule 46 (bool -> BOOLEAN .)
+    FDIVIDE         reduce using rule 46 (bool -> BOOLEAN .)
+    MOD             reduce using rule 46 (bool -> BOOLEAN .)
+    POW             reduce using rule 46 (bool -> BOOLEAN .)
+    GT              reduce using rule 46 (bool -> BOOLEAN .)
+    GTE             reduce using rule 46 (bool -> BOOLEAN .)
+    LT              reduce using rule 46 (bool -> BOOLEAN .)
+    LTE             reduce using rule 46 (bool -> BOOLEAN .)
+    EQUALSS         reduce using rule 46 (bool -> BOOLEAN .)
+    NEQUALS         reduce using rule 46 (bool -> BOOLEAN .)
+    AND             reduce using rule 46 (bool -> BOOLEAN .)
+    OR              reduce using rule 46 (bool -> BOOLEAN .)
+    IN              reduce using rule 46 (bool -> BOOLEAN .)
+    LBRACKET        reduce using rule 46 (bool -> BOOLEAN .)
+    SEMI            reduce using rule 46 (bool -> BOOLEAN .)
+    RBRACKET        reduce using rule 46 (bool -> BOOLEAN .)
+    COMMA           reduce using rule 46 (bool -> BOOLEAN .)
+
+
+state 34
+
+    (13) assign_smt -> NAME EQUALS expression . SEMI
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    SEMI            shift and go to state 61
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 35
+
+    (14) assign_index_smt -> NAME LBRACKET expression . RBRACKET EQUALS expression SEMI
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RBRACKET        shift and go to state 62
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 36
+
+    (11) if_smt -> IF LPAREN expression . RPAREN block
+    (12) if_else_smt -> IF LPAREN expression . RPAREN block ELSE block
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          shift and go to state 63
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 37
+
+    (10) while_smt -> WHILE LPAREN expression . RPAREN block
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          shift and go to state 64
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 38
+
+    (38) expression -> LPAREN expression . RPAREN
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          shift and go to state 65
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 39
+
+    (15) print_smt -> PRINT LPAREN expression RPAREN . SEMI
+
+    SEMI            shift and go to state 66
+
+
+state 40
+
+    (17) expression -> expression PLUS . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 67
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 41
+
+    (18) expression -> expression MINUS . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 68
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 42
+
+    (19) expression -> expression TIMES . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 69
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 43
+
+    (20) expression -> expression DIVIDE . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 70
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 44
+
+    (21) expression -> expression FDIVIDE . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 71
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 45
+
+    (22) expression -> expression MOD . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 72
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 46
+
+    (23) expression -> expression POW . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 73
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 47
+
+    (24) expression -> expression GT . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 74
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 48
+
+    (25) expression -> expression GTE . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 75
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 49
+
+    (26) expression -> expression LT . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 76
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 50
+
+    (27) expression -> expression LTE . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 77
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 51
+
+    (28) expression -> expression EQUALSS . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 78
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 52
+
+    (29) expression -> expression NEQUALS . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 79
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 53
+
+    (30) expression -> expression AND . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 80
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 54
+
+    (31) expression -> expression OR . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 81
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 55
+
+    (32) expression -> expression IN . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 82
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 56
+
+    (39) expression -> expression LBRACKET . expression RBRACKET
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 83
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 57
+
+    (16) expression -> NOT expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 16 (expression -> NOT expression .)
+    AND             reduce using rule 16 (expression -> NOT expression .)
+    OR              reduce using rule 16 (expression -> NOT expression .)
+    LBRACKET        reduce using rule 16 (expression -> NOT expression .)
+    SEMI            reduce using rule 16 (expression -> NOT expression .)
+    RBRACKET        reduce using rule 16 (expression -> NOT expression .)
+    COMMA           reduce using rule 16 (expression -> NOT expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! MINUS           [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! TIMES           [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! DIVIDE          [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! FDIVIDE         [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! MOD             [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! POW             [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! GT              [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! GTE             [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! LT              [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! LTE             [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! EQUALSS         [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! NEQUALS         [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! IN              [ reduce using rule 16 (expression -> NOT expression .) ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 58
+
+    (40) list -> LBRACKET innerlist . RBRACKET
+    (42) innerlist -> innerlist . COMMA expression
+
+    RBRACKET        shift and go to state 84
+    COMMA           shift and go to state 85
+
+
+state 59
+
+    (41) list -> LBRACKET RBRACKET .
+
+    RPAREN          reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    PLUS            reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    MINUS           reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    TIMES           reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    DIVIDE          reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    FDIVIDE         reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    MOD             reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    POW             reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    GT              reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    GTE             reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    LT              reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    LTE             reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    EQUALSS         reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    NEQUALS         reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    AND             reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    OR              reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    IN              reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    LBRACKET        reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    SEMI            reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    RBRACKET        reduce using rule 41 (list -> LBRACKET RBRACKET .)
+    COMMA           reduce using rule 41 (list -> LBRACKET RBRACKET .)
+
+
+state 60
+
+    (43) innerlist -> expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RBRACKET        reduce using rule 43 (innerlist -> expression .)
+    COMMA           reduce using rule 43 (innerlist -> expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 61
+
+    (13) assign_smt -> NAME EQUALS expression SEMI .
+
+    PRINT           reduce using rule 13 (assign_smt -> NAME EQUALS expression SEMI .)
+    NAME            reduce using rule 13 (assign_smt -> NAME EQUALS expression SEMI .)
+    IF              reduce using rule 13 (assign_smt -> NAME EQUALS expression SEMI .)
+    WHILE           reduce using rule 13 (assign_smt -> NAME EQUALS expression SEMI .)
+    RBRACE          reduce using rule 13 (assign_smt -> NAME EQUALS expression SEMI .)
+
+
+state 62
+
+    (14) assign_index_smt -> NAME LBRACKET expression RBRACKET . EQUALS expression SEMI
+
+    EQUALS          shift and go to state 86
+
+
+state 63
+
+    (11) if_smt -> IF LPAREN expression RPAREN . block
+    (12) if_else_smt -> IF LPAREN expression RPAREN . block ELSE block
+    (1) block -> . LBRACE inblock RBRACE
+
+    LBRACE          shift and go to state 2
+
+    block                          shift and go to state 87
+
+state 64
+
+    (10) while_smt -> WHILE LPAREN expression RPAREN . block
+    (1) block -> . LBRACE inblock RBRACE
+
+    LBRACE          shift and go to state 2
+
+    block                          shift and go to state 88
+
+state 65
+
+    (38) expression -> LPAREN expression RPAREN .
+
+    RPAREN          reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    FDIVIDE         reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    MOD             reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    POW             reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    GT              reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    GTE             reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    LT              reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    LTE             reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    EQUALSS         reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    NEQUALS         reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    AND             reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    OR              reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    IN              reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    LBRACKET        reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    SEMI            reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    RBRACKET        reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 38 (expression -> LPAREN expression RPAREN .)
+
+
+state 66
+
+    (15) print_smt -> PRINT LPAREN expression RPAREN SEMI .
+
+    PRINT           reduce using rule 15 (print_smt -> PRINT LPAREN expression RPAREN SEMI .)
+    NAME            reduce using rule 15 (print_smt -> PRINT LPAREN expression RPAREN SEMI .)
+    IF              reduce using rule 15 (print_smt -> PRINT LPAREN expression RPAREN SEMI .)
+    WHILE           reduce using rule 15 (print_smt -> PRINT LPAREN expression RPAREN SEMI .)
+    RBRACE          reduce using rule 15 (print_smt -> PRINT LPAREN expression RPAREN SEMI .)
+
+
+state 67
+
+    (17) expression -> expression PLUS expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 17 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 17 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 17 (expression -> expression PLUS expression .)
+    GT              reduce using rule 17 (expression -> expression PLUS expression .)
+    GTE             reduce using rule 17 (expression -> expression PLUS expression .)
+    LT              reduce using rule 17 (expression -> expression PLUS expression .)
+    LTE             reduce using rule 17 (expression -> expression PLUS expression .)
+    EQUALSS         reduce using rule 17 (expression -> expression PLUS expression .)
+    NEQUALS         reduce using rule 17 (expression -> expression PLUS expression .)
+    AND             reduce using rule 17 (expression -> expression PLUS expression .)
+    OR              reduce using rule 17 (expression -> expression PLUS expression .)
+    IN              reduce using rule 17 (expression -> expression PLUS expression .)
+    LBRACKET        reduce using rule 17 (expression -> expression PLUS expression .)
+    SEMI            reduce using rule 17 (expression -> expression PLUS expression .)
+    RBRACKET        reduce using rule 17 (expression -> expression PLUS expression .)
+    COMMA           reduce using rule 17 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+
+  ! TIMES           [ reduce using rule 17 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 17 (expression -> expression PLUS expression .) ]
+  ! FDIVIDE         [ reduce using rule 17 (expression -> expression PLUS expression .) ]
+  ! MOD             [ reduce using rule 17 (expression -> expression PLUS expression .) ]
+  ! POW             [ reduce using rule 17 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 40 ]
+  ! MINUS           [ shift and go to state 41 ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 68
+
+    (18) expression -> expression MINUS expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 18 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 18 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 18 (expression -> expression MINUS expression .)
+    GT              reduce using rule 18 (expression -> expression MINUS expression .)
+    GTE             reduce using rule 18 (expression -> expression MINUS expression .)
+    LT              reduce using rule 18 (expression -> expression MINUS expression .)
+    LTE             reduce using rule 18 (expression -> expression MINUS expression .)
+    EQUALSS         reduce using rule 18 (expression -> expression MINUS expression .)
+    NEQUALS         reduce using rule 18 (expression -> expression MINUS expression .)
+    AND             reduce using rule 18 (expression -> expression MINUS expression .)
+    OR              reduce using rule 18 (expression -> expression MINUS expression .)
+    IN              reduce using rule 18 (expression -> expression MINUS expression .)
+    LBRACKET        reduce using rule 18 (expression -> expression MINUS expression .)
+    SEMI            reduce using rule 18 (expression -> expression MINUS expression .)
+    RBRACKET        reduce using rule 18 (expression -> expression MINUS expression .)
+    COMMA           reduce using rule 18 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+
+  ! TIMES           [ reduce using rule 18 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 18 (expression -> expression MINUS expression .) ]
+  ! FDIVIDE         [ reduce using rule 18 (expression -> expression MINUS expression .) ]
+  ! MOD             [ reduce using rule 18 (expression -> expression MINUS expression .) ]
+  ! POW             [ reduce using rule 18 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 40 ]
+  ! MINUS           [ shift and go to state 41 ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 69
+
+    (19) expression -> expression TIMES expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 19 (expression -> expression TIMES expression .)
+    PLUS            reduce using rule 19 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 19 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 19 (expression -> expression TIMES expression .)
+    DIVIDE          reduce using rule 19 (expression -> expression TIMES expression .)
+    FDIVIDE         reduce using rule 19 (expression -> expression TIMES expression .)
+    MOD             reduce using rule 19 (expression -> expression TIMES expression .)
+    GT              reduce using rule 19 (expression -> expression TIMES expression .)
+    GTE             reduce using rule 19 (expression -> expression TIMES expression .)
+    LT              reduce using rule 19 (expression -> expression TIMES expression .)
+    LTE             reduce using rule 19 (expression -> expression TIMES expression .)
+    EQUALSS         reduce using rule 19 (expression -> expression TIMES expression .)
+    NEQUALS         reduce using rule 19 (expression -> expression TIMES expression .)
+    AND             reduce using rule 19 (expression -> expression TIMES expression .)
+    OR              reduce using rule 19 (expression -> expression TIMES expression .)
+    IN              reduce using rule 19 (expression -> expression TIMES expression .)
+    LBRACKET        reduce using rule 19 (expression -> expression TIMES expression .)
+    SEMI            reduce using rule 19 (expression -> expression TIMES expression .)
+    RBRACKET        reduce using rule 19 (expression -> expression TIMES expression .)
+    COMMA           reduce using rule 19 (expression -> expression TIMES expression .)
+    POW             shift and go to state 46
+
+  ! POW             [ reduce using rule 19 (expression -> expression TIMES expression .) ]
+  ! PLUS            [ shift and go to state 40 ]
+  ! MINUS           [ shift and go to state 41 ]
+  ! TIMES           [ shift and go to state 42 ]
+  ! DIVIDE          [ shift and go to state 43 ]
+  ! FDIVIDE         [ shift and go to state 44 ]
+  ! MOD             [ shift and go to state 45 ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 70
+
+    (20) expression -> expression DIVIDE expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 20 (expression -> expression DIVIDE expression .)
+    PLUS            reduce using rule 20 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 20 (expression -> expression DIVIDE expression .)
+    TIMES           reduce using rule 20 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 20 (expression -> expression DIVIDE expression .)
+    FDIVIDE         reduce using rule 20 (expression -> expression DIVIDE expression .)
+    MOD             reduce using rule 20 (expression -> expression DIVIDE expression .)
+    GT              reduce using rule 20 (expression -> expression DIVIDE expression .)
+    GTE             reduce using rule 20 (expression -> expression DIVIDE expression .)
+    LT              reduce using rule 20 (expression -> expression DIVIDE expression .)
+    LTE             reduce using rule 20 (expression -> expression DIVIDE expression .)
+    EQUALSS         reduce using rule 20 (expression -> expression DIVIDE expression .)
+    NEQUALS         reduce using rule 20 (expression -> expression DIVIDE expression .)
+    AND             reduce using rule 20 (expression -> expression DIVIDE expression .)
+    OR              reduce using rule 20 (expression -> expression DIVIDE expression .)
+    IN              reduce using rule 20 (expression -> expression DIVIDE expression .)
+    LBRACKET        reduce using rule 20 (expression -> expression DIVIDE expression .)
+    SEMI            reduce using rule 20 (expression -> expression DIVIDE expression .)
+    RBRACKET        reduce using rule 20 (expression -> expression DIVIDE expression .)
+    COMMA           reduce using rule 20 (expression -> expression DIVIDE expression .)
+    POW             shift and go to state 46
+
+  ! POW             [ reduce using rule 20 (expression -> expression DIVIDE expression .) ]
+  ! PLUS            [ shift and go to state 40 ]
+  ! MINUS           [ shift and go to state 41 ]
+  ! TIMES           [ shift and go to state 42 ]
+  ! DIVIDE          [ shift and go to state 43 ]
+  ! FDIVIDE         [ shift and go to state 44 ]
+  ! MOD             [ shift and go to state 45 ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 71
+
+    (21) expression -> expression FDIVIDE expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    PLUS            reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    MINUS           reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    FDIVIDE         reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    GT              reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    GTE             reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    LT              reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    LTE             reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    EQUALSS         reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    NEQUALS         reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    AND             reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    OR              reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    IN              reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    LBRACKET        reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    SEMI            reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    RBRACKET        reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    COMMA           reduce using rule 21 (expression -> expression FDIVIDE expression .)
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+
+  ! TIMES           [ reduce using rule 21 (expression -> expression FDIVIDE expression .) ]
+  ! DIVIDE          [ reduce using rule 21 (expression -> expression FDIVIDE expression .) ]
+  ! MOD             [ reduce using rule 21 (expression -> expression FDIVIDE expression .) ]
+  ! POW             [ reduce using rule 21 (expression -> expression FDIVIDE expression .) ]
+  ! PLUS            [ shift and go to state 40 ]
+  ! MINUS           [ shift and go to state 41 ]
+  ! FDIVIDE         [ shift and go to state 44 ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 72
+
+    (22) expression -> expression MOD expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 22 (expression -> expression MOD expression .)
+    PLUS            reduce using rule 22 (expression -> expression MOD expression .)
+    MINUS           reduce using rule 22 (expression -> expression MOD expression .)
+    FDIVIDE         reduce using rule 22 (expression -> expression MOD expression .)
+    MOD             reduce using rule 22 (expression -> expression MOD expression .)
+    GT              reduce using rule 22 (expression -> expression MOD expression .)
+    GTE             reduce using rule 22 (expression -> expression MOD expression .)
+    LT              reduce using rule 22 (expression -> expression MOD expression .)
+    LTE             reduce using rule 22 (expression -> expression MOD expression .)
+    EQUALSS         reduce using rule 22 (expression -> expression MOD expression .)
+    NEQUALS         reduce using rule 22 (expression -> expression MOD expression .)
+    AND             reduce using rule 22 (expression -> expression MOD expression .)
+    OR              reduce using rule 22 (expression -> expression MOD expression .)
+    IN              reduce using rule 22 (expression -> expression MOD expression .)
+    LBRACKET        reduce using rule 22 (expression -> expression MOD expression .)
+    SEMI            reduce using rule 22 (expression -> expression MOD expression .)
+    RBRACKET        reduce using rule 22 (expression -> expression MOD expression .)
+    COMMA           reduce using rule 22 (expression -> expression MOD expression .)
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    POW             shift and go to state 46
+
+  ! TIMES           [ reduce using rule 22 (expression -> expression MOD expression .) ]
+  ! DIVIDE          [ reduce using rule 22 (expression -> expression MOD expression .) ]
+  ! POW             [ reduce using rule 22 (expression -> expression MOD expression .) ]
+  ! PLUS            [ shift and go to state 40 ]
+  ! MINUS           [ shift and go to state 41 ]
+  ! FDIVIDE         [ shift and go to state 44 ]
+  ! MOD             [ shift and go to state 45 ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 73
+
+    (23) expression -> expression POW expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 23 (expression -> expression POW expression .)
+    PLUS            reduce using rule 23 (expression -> expression POW expression .)
+    MINUS           reduce using rule 23 (expression -> expression POW expression .)
+    TIMES           reduce using rule 23 (expression -> expression POW expression .)
+    DIVIDE          reduce using rule 23 (expression -> expression POW expression .)
+    FDIVIDE         reduce using rule 23 (expression -> expression POW expression .)
+    MOD             reduce using rule 23 (expression -> expression POW expression .)
+    GT              reduce using rule 23 (expression -> expression POW expression .)
+    GTE             reduce using rule 23 (expression -> expression POW expression .)
+    LT              reduce using rule 23 (expression -> expression POW expression .)
+    LTE             reduce using rule 23 (expression -> expression POW expression .)
+    EQUALSS         reduce using rule 23 (expression -> expression POW expression .)
+    NEQUALS         reduce using rule 23 (expression -> expression POW expression .)
+    AND             reduce using rule 23 (expression -> expression POW expression .)
+    OR              reduce using rule 23 (expression -> expression POW expression .)
+    IN              reduce using rule 23 (expression -> expression POW expression .)
+    LBRACKET        reduce using rule 23 (expression -> expression POW expression .)
+    SEMI            reduce using rule 23 (expression -> expression POW expression .)
+    RBRACKET        reduce using rule 23 (expression -> expression POW expression .)
+    COMMA           reduce using rule 23 (expression -> expression POW expression .)
+    POW             shift and go to state 46
+
+  ! POW             [ reduce using rule 23 (expression -> expression POW expression .) ]
+  ! PLUS            [ shift and go to state 40 ]
+  ! MINUS           [ shift and go to state 41 ]
+  ! TIMES           [ shift and go to state 42 ]
+  ! DIVIDE          [ shift and go to state 43 ]
+  ! FDIVIDE         [ shift and go to state 44 ]
+  ! MOD             [ shift and go to state 45 ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 74
+
+    (24) expression -> expression GT expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 24 (expression -> expression GT expression .)
+    GT              reduce using rule 24 (expression -> expression GT expression .)
+    GTE             reduce using rule 24 (expression -> expression GT expression .)
+    LT              reduce using rule 24 (expression -> expression GT expression .)
+    LTE             reduce using rule 24 (expression -> expression GT expression .)
+    EQUALSS         reduce using rule 24 (expression -> expression GT expression .)
+    NEQUALS         reduce using rule 24 (expression -> expression GT expression .)
+    AND             reduce using rule 24 (expression -> expression GT expression .)
+    OR              reduce using rule 24 (expression -> expression GT expression .)
+    LBRACKET        reduce using rule 24 (expression -> expression GT expression .)
+    SEMI            reduce using rule 24 (expression -> expression GT expression .)
+    RBRACKET        reduce using rule 24 (expression -> expression GT expression .)
+    COMMA           reduce using rule 24 (expression -> expression GT expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! MINUS           [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! TIMES           [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! DIVIDE          [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! FDIVIDE         [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! MOD             [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! POW             [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! IN              [ reduce using rule 24 (expression -> expression GT expression .) ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 75
+
+    (25) expression -> expression GTE expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 25 (expression -> expression GTE expression .)
+    GT              reduce using rule 25 (expression -> expression GTE expression .)
+    GTE             reduce using rule 25 (expression -> expression GTE expression .)
+    LT              reduce using rule 25 (expression -> expression GTE expression .)
+    LTE             reduce using rule 25 (expression -> expression GTE expression .)
+    EQUALSS         reduce using rule 25 (expression -> expression GTE expression .)
+    NEQUALS         reduce using rule 25 (expression -> expression GTE expression .)
+    AND             reduce using rule 25 (expression -> expression GTE expression .)
+    OR              reduce using rule 25 (expression -> expression GTE expression .)
+    LBRACKET        reduce using rule 25 (expression -> expression GTE expression .)
+    SEMI            reduce using rule 25 (expression -> expression GTE expression .)
+    RBRACKET        reduce using rule 25 (expression -> expression GTE expression .)
+    COMMA           reduce using rule 25 (expression -> expression GTE expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! MINUS           [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! TIMES           [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! DIVIDE          [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! FDIVIDE         [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! MOD             [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! POW             [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! IN              [ reduce using rule 25 (expression -> expression GTE expression .) ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 76
+
+    (26) expression -> expression LT expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 26 (expression -> expression LT expression .)
+    GT              reduce using rule 26 (expression -> expression LT expression .)
+    GTE             reduce using rule 26 (expression -> expression LT expression .)
+    LT              reduce using rule 26 (expression -> expression LT expression .)
+    LTE             reduce using rule 26 (expression -> expression LT expression .)
+    EQUALSS         reduce using rule 26 (expression -> expression LT expression .)
+    NEQUALS         reduce using rule 26 (expression -> expression LT expression .)
+    AND             reduce using rule 26 (expression -> expression LT expression .)
+    OR              reduce using rule 26 (expression -> expression LT expression .)
+    LBRACKET        reduce using rule 26 (expression -> expression LT expression .)
+    SEMI            reduce using rule 26 (expression -> expression LT expression .)
+    RBRACKET        reduce using rule 26 (expression -> expression LT expression .)
+    COMMA           reduce using rule 26 (expression -> expression LT expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! MINUS           [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! TIMES           [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! DIVIDE          [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! FDIVIDE         [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! MOD             [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! POW             [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! IN              [ reduce using rule 26 (expression -> expression LT expression .) ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 77
+
+    (27) expression -> expression LTE expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 27 (expression -> expression LTE expression .)
+    GT              reduce using rule 27 (expression -> expression LTE expression .)
+    GTE             reduce using rule 27 (expression -> expression LTE expression .)
+    LT              reduce using rule 27 (expression -> expression LTE expression .)
+    LTE             reduce using rule 27 (expression -> expression LTE expression .)
+    EQUALSS         reduce using rule 27 (expression -> expression LTE expression .)
+    NEQUALS         reduce using rule 27 (expression -> expression LTE expression .)
+    AND             reduce using rule 27 (expression -> expression LTE expression .)
+    OR              reduce using rule 27 (expression -> expression LTE expression .)
+    LBRACKET        reduce using rule 27 (expression -> expression LTE expression .)
+    SEMI            reduce using rule 27 (expression -> expression LTE expression .)
+    RBRACKET        reduce using rule 27 (expression -> expression LTE expression .)
+    COMMA           reduce using rule 27 (expression -> expression LTE expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! MINUS           [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! TIMES           [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! DIVIDE          [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! FDIVIDE         [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! MOD             [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! POW             [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! IN              [ reduce using rule 27 (expression -> expression LTE expression .) ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 78
+
+    (28) expression -> expression EQUALSS expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 28 (expression -> expression EQUALSS expression .)
+    GT              reduce using rule 28 (expression -> expression EQUALSS expression .)
+    GTE             reduce using rule 28 (expression -> expression EQUALSS expression .)
+    LT              reduce using rule 28 (expression -> expression EQUALSS expression .)
+    LTE             reduce using rule 28 (expression -> expression EQUALSS expression .)
+    EQUALSS         reduce using rule 28 (expression -> expression EQUALSS expression .)
+    NEQUALS         reduce using rule 28 (expression -> expression EQUALSS expression .)
+    AND             reduce using rule 28 (expression -> expression EQUALSS expression .)
+    OR              reduce using rule 28 (expression -> expression EQUALSS expression .)
+    LBRACKET        reduce using rule 28 (expression -> expression EQUALSS expression .)
+    SEMI            reduce using rule 28 (expression -> expression EQUALSS expression .)
+    RBRACKET        reduce using rule 28 (expression -> expression EQUALSS expression .)
+    COMMA           reduce using rule 28 (expression -> expression EQUALSS expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! MINUS           [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! TIMES           [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! DIVIDE          [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! FDIVIDE         [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! MOD             [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! POW             [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! IN              [ reduce using rule 28 (expression -> expression EQUALSS expression .) ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 79
+
+    (29) expression -> expression NEQUALS expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 29 (expression -> expression NEQUALS expression .)
+    GT              reduce using rule 29 (expression -> expression NEQUALS expression .)
+    GTE             reduce using rule 29 (expression -> expression NEQUALS expression .)
+    LT              reduce using rule 29 (expression -> expression NEQUALS expression .)
+    LTE             reduce using rule 29 (expression -> expression NEQUALS expression .)
+    EQUALSS         reduce using rule 29 (expression -> expression NEQUALS expression .)
+    NEQUALS         reduce using rule 29 (expression -> expression NEQUALS expression .)
+    AND             reduce using rule 29 (expression -> expression NEQUALS expression .)
+    OR              reduce using rule 29 (expression -> expression NEQUALS expression .)
+    LBRACKET        reduce using rule 29 (expression -> expression NEQUALS expression .)
+    SEMI            reduce using rule 29 (expression -> expression NEQUALS expression .)
+    RBRACKET        reduce using rule 29 (expression -> expression NEQUALS expression .)
+    COMMA           reduce using rule 29 (expression -> expression NEQUALS expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! MINUS           [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! TIMES           [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! DIVIDE          [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! FDIVIDE         [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! MOD             [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! POW             [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! IN              [ reduce using rule 29 (expression -> expression NEQUALS expression .) ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 80
+
+    (30) expression -> expression AND expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 30 (expression -> expression AND expression .)
+    AND             reduce using rule 30 (expression -> expression AND expression .)
+    OR              reduce using rule 30 (expression -> expression AND expression .)
+    LBRACKET        reduce using rule 30 (expression -> expression AND expression .)
+    SEMI            reduce using rule 30 (expression -> expression AND expression .)
+    RBRACKET        reduce using rule 30 (expression -> expression AND expression .)
+    COMMA           reduce using rule 30 (expression -> expression AND expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! MINUS           [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! TIMES           [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! DIVIDE          [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! FDIVIDE         [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! MOD             [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! POW             [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! GT              [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! GTE             [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! LT              [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! LTE             [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! EQUALSS         [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! NEQUALS         [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! IN              [ reduce using rule 30 (expression -> expression AND expression .) ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 81
+
+    (31) expression -> expression OR expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 31 (expression -> expression OR expression .)
+    OR              reduce using rule 31 (expression -> expression OR expression .)
+    LBRACKET        reduce using rule 31 (expression -> expression OR expression .)
+    SEMI            reduce using rule 31 (expression -> expression OR expression .)
+    RBRACKET        reduce using rule 31 (expression -> expression OR expression .)
+    COMMA           reduce using rule 31 (expression -> expression OR expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    IN              shift and go to state 55
+
+  ! PLUS            [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! MINUS           [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! TIMES           [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! DIVIDE          [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! FDIVIDE         [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! MOD             [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! POW             [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! GT              [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! GTE             [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! LT              [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! LTE             [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! EQUALSS         [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! NEQUALS         [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! AND             [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! IN              [ reduce using rule 31 (expression -> expression OR expression .) ]
+  ! OR              [ shift and go to state 54 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 82
+
+    (32) expression -> expression IN expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RPAREN          reduce using rule 32 (expression -> expression IN expression .)
+    GT              reduce using rule 32 (expression -> expression IN expression .)
+    GTE             reduce using rule 32 (expression -> expression IN expression .)
+    LT              reduce using rule 32 (expression -> expression IN expression .)
+    LTE             reduce using rule 32 (expression -> expression IN expression .)
+    EQUALSS         reduce using rule 32 (expression -> expression IN expression .)
+    NEQUALS         reduce using rule 32 (expression -> expression IN expression .)
+    AND             reduce using rule 32 (expression -> expression IN expression .)
+    OR              reduce using rule 32 (expression -> expression IN expression .)
+    IN              reduce using rule 32 (expression -> expression IN expression .)
+    LBRACKET        reduce using rule 32 (expression -> expression IN expression .)
+    SEMI            reduce using rule 32 (expression -> expression IN expression .)
+    RBRACKET        reduce using rule 32 (expression -> expression IN expression .)
+    COMMA           reduce using rule 32 (expression -> expression IN expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+
+  ! PLUS            [ reduce using rule 32 (expression -> expression IN expression .) ]
+  ! MINUS           [ reduce using rule 32 (expression -> expression IN expression .) ]
+  ! TIMES           [ reduce using rule 32 (expression -> expression IN expression .) ]
+  ! DIVIDE          [ reduce using rule 32 (expression -> expression IN expression .) ]
+  ! FDIVIDE         [ reduce using rule 32 (expression -> expression IN expression .) ]
+  ! MOD             [ reduce using rule 32 (expression -> expression IN expression .) ]
+  ! POW             [ reduce using rule 32 (expression -> expression IN expression .) ]
+  ! GT              [ shift and go to state 47 ]
+  ! GTE             [ shift and go to state 48 ]
+  ! LT              [ shift and go to state 49 ]
+  ! LTE             [ shift and go to state 50 ]
+  ! EQUALSS         [ shift and go to state 51 ]
+  ! NEQUALS         [ shift and go to state 52 ]
+  ! AND             [ shift and go to state 53 ]
+  ! OR              [ shift and go to state 54 ]
+  ! IN              [ shift and go to state 55 ]
+  ! LBRACKET        [ shift and go to state 56 ]
+
+
+state 83
+
+    (39) expression -> expression LBRACKET expression . RBRACKET
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RBRACKET        shift and go to state 89
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 84
+
+    (40) list -> LBRACKET innerlist RBRACKET .
+
+    RPAREN          reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    PLUS            reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    MINUS           reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    TIMES           reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    DIVIDE          reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    FDIVIDE         reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    MOD             reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    POW             reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    GT              reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    GTE             reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    LT              reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    LTE             reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    EQUALSS         reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    NEQUALS         reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    AND             reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    OR              reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    IN              reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    LBRACKET        reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    SEMI            reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    RBRACKET        reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+    COMMA           reduce using rule 40 (list -> LBRACKET innerlist RBRACKET .)
+
+
+state 85
+
+    (42) innerlist -> innerlist COMMA . expression
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 90
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 86
+
+    (14) assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS . expression SEMI
+    (16) expression -> . NOT expression
+    (17) expression -> . expression PLUS expression
+    (18) expression -> . expression MINUS expression
+    (19) expression -> . expression TIMES expression
+    (20) expression -> . expression DIVIDE expression
+    (21) expression -> . expression FDIVIDE expression
+    (22) expression -> . expression MOD expression
+    (23) expression -> . expression POW expression
+    (24) expression -> . expression GT expression
+    (25) expression -> . expression GTE expression
+    (26) expression -> . expression LT expression
+    (27) expression -> . expression LTE expression
+    (28) expression -> . expression EQUALSS expression
+    (29) expression -> . expression NEQUALS expression
+    (30) expression -> . expression AND expression
+    (31) expression -> . expression OR expression
+    (32) expression -> . expression IN expression
+    (33) expression -> . num
+    (34) expression -> . str
+    (35) expression -> . bool
+    (36) expression -> . list
+    (37) expression -> . NAME
+    (38) expression -> . LPAREN expression RPAREN
+    (39) expression -> . expression LBRACKET expression RBRACKET
+    (44) num -> . NUMBER
+    (45) str -> . STRING
+    (46) bool -> . BOOLEAN
+    (40) list -> . LBRACKET innerlist RBRACKET
+    (41) list -> . LBRACKET RBRACKET
+
+    NOT             shift and go to state 24
+    NAME            shift and go to state 29
+    LPAREN          shift and go to state 22
+    NUMBER          shift and go to state 31
+    STRING          shift and go to state 32
+    BOOLEAN         shift and go to state 33
+    LBRACKET        shift and go to state 30
+
+    expression                     shift and go to state 91
+    num                            shift and go to state 25
+    str                            shift and go to state 26
+    bool                           shift and go to state 27
+    list                           shift and go to state 28
+
+state 87
+
+    (11) if_smt -> IF LPAREN expression RPAREN block .
+    (12) if_else_smt -> IF LPAREN expression RPAREN block . ELSE block
+
+    PRINT           reduce using rule 11 (if_smt -> IF LPAREN expression RPAREN block .)
+    NAME            reduce using rule 11 (if_smt -> IF LPAREN expression RPAREN block .)
+    IF              reduce using rule 11 (if_smt -> IF LPAREN expression RPAREN block .)
+    WHILE           reduce using rule 11 (if_smt -> IF LPAREN expression RPAREN block .)
+    RBRACE          reduce using rule 11 (if_smt -> IF LPAREN expression RPAREN block .)
+    ELSE            shift and go to state 92
+
+
+state 88
+
+    (10) while_smt -> WHILE LPAREN expression RPAREN block .
+
+    PRINT           reduce using rule 10 (while_smt -> WHILE LPAREN expression RPAREN block .)
+    NAME            reduce using rule 10 (while_smt -> WHILE LPAREN expression RPAREN block .)
+    IF              reduce using rule 10 (while_smt -> WHILE LPAREN expression RPAREN block .)
+    WHILE           reduce using rule 10 (while_smt -> WHILE LPAREN expression RPAREN block .)
+    RBRACE          reduce using rule 10 (while_smt -> WHILE LPAREN expression RPAREN block .)
+
+
+state 89
+
+    (39) expression -> expression LBRACKET expression RBRACKET .
+
+    RPAREN          reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    PLUS            reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    MINUS           reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    TIMES           reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    DIVIDE          reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    FDIVIDE         reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    MOD             reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    POW             reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    GT              reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    GTE             reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    LT              reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    LTE             reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    EQUALSS         reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    NEQUALS         reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    AND             reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    OR              reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    IN              reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    LBRACKET        reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    SEMI            reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    RBRACKET        reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+    COMMA           reduce using rule 39 (expression -> expression LBRACKET expression RBRACKET .)
+
+
+state 90
+
+    (42) innerlist -> innerlist COMMA expression .
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    RBRACKET        reduce using rule 42 (innerlist -> innerlist COMMA expression .)
+    COMMA           reduce using rule 42 (innerlist -> innerlist COMMA expression .)
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 91
+
+    (14) assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression . SEMI
+    (17) expression -> expression . PLUS expression
+    (18) expression -> expression . MINUS expression
+    (19) expression -> expression . TIMES expression
+    (20) expression -> expression . DIVIDE expression
+    (21) expression -> expression . FDIVIDE expression
+    (22) expression -> expression . MOD expression
+    (23) expression -> expression . POW expression
+    (24) expression -> expression . GT expression
+    (25) expression -> expression . GTE expression
+    (26) expression -> expression . LT expression
+    (27) expression -> expression . LTE expression
+    (28) expression -> expression . EQUALSS expression
+    (29) expression -> expression . NEQUALS expression
+    (30) expression -> expression . AND expression
+    (31) expression -> expression . OR expression
+    (32) expression -> expression . IN expression
+    (39) expression -> expression . LBRACKET expression RBRACKET
+
+    SEMI            shift and go to state 93
+    PLUS            shift and go to state 40
+    MINUS           shift and go to state 41
+    TIMES           shift and go to state 42
+    DIVIDE          shift and go to state 43
+    FDIVIDE         shift and go to state 44
+    MOD             shift and go to state 45
+    POW             shift and go to state 46
+    GT              shift and go to state 47
+    GTE             shift and go to state 48
+    LT              shift and go to state 49
+    LTE             shift and go to state 50
+    EQUALSS         shift and go to state 51
+    NEQUALS         shift and go to state 52
+    AND             shift and go to state 53
+    OR              shift and go to state 54
+    IN              shift and go to state 55
+    LBRACKET        shift and go to state 56
+
+
+state 92
+
+    (12) if_else_smt -> IF LPAREN expression RPAREN block ELSE . block
+    (1) block -> . LBRACE inblock RBRACE
+
+    LBRACE          shift and go to state 2
+
+    block                          shift and go to state 94
+
+state 93
+
+    (14) assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression SEMI .
+
+    PRINT           reduce using rule 14 (assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression SEMI .)
+    NAME            reduce using rule 14 (assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression SEMI .)
+    IF              reduce using rule 14 (assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression SEMI .)
+    WHILE           reduce using rule 14 (assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression SEMI .)
+    RBRACE          reduce using rule 14 (assign_index_smt -> NAME LBRACKET expression RBRACKET EQUALS expression SEMI .)
+
+
+state 94
+
+    (12) if_else_smt -> IF LPAREN expression RPAREN block ELSE block .
+
+    PRINT           reduce using rule 12 (if_else_smt -> IF LPAREN expression RPAREN block ELSE block .)
+    NAME            reduce using rule 12 (if_else_smt -> IF LPAREN expression RPAREN block ELSE block .)
+    IF              reduce using rule 12 (if_else_smt -> IF LPAREN expression RPAREN block ELSE block .)
+    WHILE           reduce using rule 12 (if_else_smt -> IF LPAREN expression RPAREN block ELSE block .)
+    RBRACE          reduce using rule 12 (if_else_smt -> IF LPAREN expression RPAREN block ELSE block .)
+
