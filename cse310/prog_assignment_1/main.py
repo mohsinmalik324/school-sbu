@@ -19,15 +19,14 @@ e404 = '404 NOT FOUND\n'
 bad_args = protocol + ' ' + e400
 
 while True:
-	msg = str(clientsocket.recv(256))
-	msg = msg[2:]
-	msg = msg[:-5]
-	#clientsocket.send((msg + '\n').encode())
+	msg = clientsocket.recv(256)
+	msg = msg.decode()
+	msg = msg[:-2]
+	print("'" + msg + "'")
 	if msg == 'QUIT':
 		clientsocket.send('Goodbye!\n'.encode())
 		break
 	args = msg.split(' ')
-	#print(args[0])
 	resp = protocol + ' ';
 	if args[0] == 'GET':
 		if len(args) == 2:
