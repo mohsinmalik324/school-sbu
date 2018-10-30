@@ -22,7 +22,7 @@ while True:
 	msg = clientsocket.recv(256)
 	msg = msg.decode()
 	msg = msg[:-2]
-	print("'" + msg + "'")
+	#print("'" + msg + "'")
 	if msg == 'QUIT':
 		clientsocket.send('Goodbye!\n'.encode())
 		break
